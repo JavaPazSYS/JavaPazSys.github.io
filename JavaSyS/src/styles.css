@@ -1,0 +1,55 @@
+/* You can add global styles to this file, and also import other style files */
+:root{
+   color-scheme: light dark;
+   font-family: 'Inter', sans-serif;
+   /* Neutros */
+  --color-black: #000000;
+  --color-black-light:#222222;
+  --color-white: #f4f4f4;
+  --color-gray-dark: #4a4848;
+  --color-gray: #444444;
+  --color-gray-ligth: #b1b0b0;
+  /* Rosa principal y variantes */
+  --color-pink: #e4598e;
+  --color-pink-light: #f8c4d7;
+  --color-pink-dark: #a83261;
+
+  /* Extras sugeridos */
+  --color-bg: var(--color-white);
+  --color-text: var(--color-gray);
+  --color-heading: var(--color-black);
+  --color-accent: var(--color-pink);
+
+  --font-title:'Syne', sans-serif;
+  --font-body:'Roboto', sans-serif;
+
+  
+}
+main {
+  margin-top: 100px; /* Ajusta este valor al alto real de tu header */
+  padding: 1rem;
+}
+h1,h2,h3{
+  font-family: var(--font-title);
+  letter-spacing: 0.02em;
+  font-weight: 700;
+  line-height: 1.4–1.6;
+  font-size: 2rem;
+
+}
+p,a,i{
+  font-weight: 400; /* normal */
+  font-family: var(--font-body);
+  line-height: 1.2; /* legible */
+  font-size: 0.8rem;
+}
+
+
+body {
+  margin-top: 0;
+  padding-bottom: 1rem;
+
+}
+
+
+

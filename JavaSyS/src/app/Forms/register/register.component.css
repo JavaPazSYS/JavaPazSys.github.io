@@ -1,0 +1,109 @@
+form {
+  margin: 5% auto;
+  padding: 2rem;
+  max-width: 400px;
+  background-color: var(--color-white);
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  color: var(--color-pink);
+}
+.eye-icon {
+  right: 0.75rem;
+  cursor: pointer;
+  color: var(--color-pink-light) !important;
+  position: absolute;
+  font-size: 1rem;
+}
+
+h1 {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.form-group {
+  margin-bottom: 1.5rem;
+  display: flex;
+  flex-direction: column;
+}
+
+label {
+  margin-bottom: 0.5rem;
+  font-weight: bold;
+  padding-left: 0.5rem;
+}
+
+.input-icon {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.input-icon i {
+  position: absolute;
+  font-size: 1rem;
+  color: var(--color-gray);
+}
+
+.input-icon .fa-lock,
+.input-icon .fa-user,
+.input-icon .fa-envelope {
+  left: 0.75rem;
+}
+
+.eye-icon {
+  right: 0.75rem;
+  cursor: pointer;
+  color: var(--color-pink-light);
+  position: absolute;
+  font-size: 1rem;
+}
+
+.input-icon input {
+  width: 100%;
+  padding: 0.5rem 2.5rem 0.5rem 2rem; /* espacio para íconos */
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  color: var(--color-gray-dark);
+  background-color: var(--color-white);
+  font-size: 1rem;
+  box-sizing: border-box;
+}
+
+small {
+  color: var(--color-pink);
+  margin-top: 0.3rem;
+  font-size: 0.875rem;
+  padding-left: 0.5rem;
+}
+
+form button[type="submit"] {
+  width: 100%;
+  padding: 0.75rem;
+  margin-top: 1rem;
+  background-color: var(--color-pink);
+  border: none;
+  border-radius: 6px;
+  color: var(--color-white);
+  font-size: 1rem;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+form button[type="submit"]:disabled,
+button:disabled {
+  background-color: var(--color-gray-ligth);
+  cursor: not-allowed;
+}
+
+form button[type="submit"]:hover:not(:disabled),
+button:hover:not(:disabled) {
+  background-color: var(--color-pink-dark);
+}
+
+a {
+  font-size: 1rem;
+  color: var(--color-pink);
+  text-decoration: none;
+  margin-top: 1rem;
+  display: inline-block;
+}

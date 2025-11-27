@@ -1,0 +1,325 @@
+section[id] {
+  scroll-margin-top: 6rem; /* Ajusta según el tamaño de tu header */
+}
+h1,h2,h3{
+  font-family: var(--font-title);
+  letter-spacing: 0.02em;
+  font-weight: 700;
+  line-height: 1.4–1.6;
+  font-size: 1.2rem;
+
+}
+h4{
+  font-family: var(--font-title);
+  letter-spacing: 0.04em;
+  font-weight: 900;
+  line-height: 1.4–1.6;
+  font-size: 1rem;
+
+}
+p,a,i{
+  font-weight: 400; /* normal */
+  font-family: var(--font-body);
+  line-height: 1.2; /* legible */
+  font-size: 0.8rem;
+  max-width: 90%;
+  text-justify: inter-word;
+  text-align: justify;
+  margin: 0 auto;          /* Centrado dentro del contenedor */
+
+
+}
+
+/* -------- ANIMACIONES -------- */
+@keyframes fadeZoomIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes typing {
+  from {
+    width: 0;
+  }
+  to {
+    width: 100%;
+  }
+}
+
+@keyframes blink {
+  0%, 100% {
+    border-color: currentColor;
+  }
+  50% {
+    border-color: transparent;
+  }
+}
+
+@keyframes hide-cursor {
+  to {
+    border-right: none;
+  }
+}
+
+/* -------- EFECTO H2: Fade + Zoom (1.5s) -------- */
+.fade-zoom {
+  opacity: 0;
+  animation: fadeZoomIn 1.5s ease-out forwards;
+  animation-delay: 0.3s;
+}
+
+/* -------- EFECTO P: Mecanografía (después del h2) -------- */
+.typewriter {
+  display: inline-block;
+  overflow: hidden;
+  white-space: nowrap;
+  border-right: 2px solid currentColor;
+  color: var(--color-gray);
+  width: 0;
+
+  animation:
+    typing 3s steps(30, end) 1.8s forwards,
+    blink 0.7s step-end 4.8s 3,
+    hide-cursor 0s linear 3.5s forwards;
+    /* 1.8s delay + 3s typing + (0.7s * 3) = 6.9s total */
+}
+
+/* -------- ESTILOS VISUALES -------- */
+.destacado {
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+  padding: 8rem 2rem;
+  max-width: 100%;
+  background: var(--color-pink);
+  text-align: center;
+  color: var(--color-white);
+  
+}
+
+.destacado h2 {
+  font-size: 6rem;
+  letter-spacing: 1rem;
+  text-align: center;
+  margin: 0;
+  font-weight: 700;
+}
+
+.destacado p {
+  font-size: 1.5rem;
+  letter-spacing: 0.2rem;
+  text-align: center;
+  margin-top: 1rem;
+  font-weight: 200;
+}
+
+.contenido-miself {
+  display: flex;
+  gap: 1rem;
+  padding: 1rem;
+}
+.col-izq h3{
+  text-align: left;
+  padding-left: 2rem;
+}
+.col-der h3{
+  text-align: left;
+  padding-left: 1.2rem;
+}
+.col-izq {
+  flex: 0.618;
+  background: var(--color-white);
+  padding: 1rem;
+  color: var(--color-gray);
+
+}
+
+.col-der {
+  flex: 0.382;
+  background: var(--color-pink-dark);
+  padding: 1rem;
+  color: var(--color-white);
+
+}
+
+.contenido-skills {
+  display: flex;
+  gap: 1rem;
+  padding-top: 0rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  transition: all 0.3s ease-in-out;
+}
+.contenido-skills i {
+  display: block; /* para que cada <i> esté en línea separada */
+  margin-bottom: 0.5rem; /* espacio entre ellos */
+  font-style: normal; /* si no quieres que se vea en cursiva */
+  padding-left: 1rem;
+  position: relative;
+}
+.contenido-skills i::before {
+  content: "•";
+  position: absolute;
+  left: 0;
+  color: currentColor;
+}
+.contenido-skills > section {
+  flex:23.6%;
+  transition: flex 0.5s ease;
+  
+}
+
+.col-2 {
+  background: var(--color-white);
+  padding: 1rem;
+  color: var(--color-black);
+}
+
+.col-1 {
+  background: var(--color-pink);
+  padding: 1rem;
+  color: var(--color-white);
+}
+.col-3{
+  background: var(--color-black-light);
+  padding: 1rem;
+  color: var(--color-white);
+}
+
+.contenido-skills > section:hover {
+  flex: 38.2%;
+  transform: scale(1.05); /* Zoom del 5% */
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.2); /* sombra más fuerte */
+}
+
+.contenido-skills > section:hover > h3{
+  text-align: center;
+  
+}
+
+.contenido-skills > section:not(:hover) h3 {
+  text-align: center;
+}
+.Contacto-wrapper {
+  text-align: center;
+  padding: 1rem;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+.Contacto-wrapper > h2 {
+  margin: 1rem 0;
+  font-size: 2rem;
+}
+
+.contact-blocks {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  padding-bottom: 1rem;
+  flex-wrap: wrap;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.Email,
+.Linkedin {
+  flex: 1 1 45%;
+  min-width: 300px;
+  padding: 1rem;
+  border-radius: 12px;
+  box-sizing: border-box;
+  transition: all 0.3s ease;
+}
+.DescargaCV
+{
+  flex: 0 1 1 20%;
+  min-width: 300px;
+  padding: 0 1rem 1rem 1rem;
+  border-radius: 12px;
+  box-sizing: border-box;
+  transition: all 0.3s ease;
+}
+/* --- Estados iniciales --- */
+.Email {
+  background: var(--color-white);
+  color: var(--color-gray);
+  box-shadow: 0 0 8px rgba(0,0,0,0.1);
+}
+
+.Linkedin {
+  background: var(--color-pink-dark);
+  color: var(--color-white);
+  box-shadow: 0 0 8px rgba(0,0,0,0.15);
+}
+
+/* --- Botones comunes --- */
+.DescargaCV button,
+.Email button,
+.Linkedin button {
+  width: 100%;
+  padding: 1rem;
+  margin-top: 1.5rem;
+  cursor: pointer;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 1.1rem;
+  text-align: center;
+  white-space: normal;
+  word-wrap: break-word;
+  transition: all 0.3s ease;
+  box-sizing: border-box;
+}
+
+/* --- Botones normales --- */
+.Email button {
+  background: var(--color-pink-dark);
+  color: var(--color-white);
+}
+.DescargaCV button{
+  background: var(--color-pink);
+  color: var(--color-white);
+}
+.Linkedin button {
+  background: var(--color-white);
+  color: var(--color-pink-dark);
+}
+
+/* === EFECTO INVERTIR COLORES AL HOVER === */
+.Email:hover {
+  background: var(--color-pink-dark);
+  color: var(--color-white);
+
+}
+.DescargaCV:hover {
+  background: var(--color-white);
+
+}
+.DescargaCV:hover button{
+  transform: scale(1.05); /* Zoom del 5% */
+  background: var(--color-pink-dark);
+}
+.Email:hover button{
+  background: var(--color-white);
+  color: var(--color-pink-dark);
+}
+
+.Linkedin:hover {
+  background: var(--color-white);
+  color: var(--color-gray);
+}
+
+.Linkedin:hover button {
+  background: var(--color-pink-dark);
+  color: var(--color-white);
+}
+.Email:hover,
+.Linkedin:hover {
+  transform: scale(1.05); /* Zoom del 5% */
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.2); /* sombra más fuerte */
+}

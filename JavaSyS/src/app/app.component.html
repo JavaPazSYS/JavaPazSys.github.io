@@ -1,0 +1,15 @@
+
+<header>
+     <a [routerLink]="['/']" class="logo-link"><h1>Java/SyS</h1></a>
+    <nav>
+      <a href="#Miself"> Sobre mi</a> 
+      <a href="#Skills"> Tecnologias</a> 
+      <a href="#Contacto"> Contacto</a> 
+      <a [routerLink]="['/repositorio']" routerLinkActive="active"> Repositorio</a> 
+      <a href="#">Proyectos</a>
+    </nav>
+</header>
+
+<main>
+  <router-outlet></router-outlet>
+</main>
