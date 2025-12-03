@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { LoginComponent } from '../login/login.component';
-import { RegisterComponent } from '../register/register.component';
+import { LoginComponent } from '../Forms/login/login.component';
+import { RegisterComponent } from '../Forms/register/register.component';
 
 @Component({
   selector: 'app-repositorio',
