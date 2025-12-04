@@ -323,3 +323,85 @@ p,a,i{
   transform: scale(1.05); /* Zoom del 5% */
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.2); /* sombra más fuerte */
 }
+/* ============================ */
+/* RESPONSIVE GENERAL < 768px   */
+/* ============================ */
+
+@media (max-width: 768px) {
+
+  /* contenido-miself: columnas a vertical */
+  .contenido-miself {
+    flex-direction: column;
+    gap: 1rem;
+    padding: 0.5rem;
+  }
+
+  .col-izq,
+  .col-der {
+    flex: 1 1 100%;
+    padding: 1rem;
+  }
+
+  .col-izq h3,
+  .col-der h3 {
+    padding-left: 0.5rem;
+    text-align: center;
+  }
+
+  /* contenido-skills: se apilan */
+  .contenido-skills {
+    flex-direction: column;
+    gap: 1rem;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+  }
+
+  .contenido-skills > section {
+    flex: 1 1 100%;
+    transform: scale(1);
+  }
+
+  .contenido-skills > section:hover {
+    flex: 1 1 100%; /* sin zoom lateral */
+    transform: scale(1.02); /* solo un zoom muy leve */
+    box-shadow: 0 0 15px rgba(0,0,0,0.15);
+  }
+
+  .contenido-skills > section h3 {
+    text-align: center;
+  }
+
+  /* contact-blocks: apilar verticalmente */
+  .contact-blocks {
+    flex-direction: column;
+    gap: 1rem;
+    padding: 0.5rem;
+  }
+
+  .Email,
+  .Linkedin,
+  .DescargaCV {
+    flex: 1 1 100%;
+    min-width: unset;
+    padding: 0.5rem;
+  }
+
+  /* ajustar botones */
+  .DescargaCV button,
+  .Email button,
+  .Linkedin button {
+    font-size: 1rem;
+    padding: 0.8rem;
+  }
+
+  /* destacado: texto más pequeño */
+  .destacado h2 {
+    font-size: 3rem;
+    letter-spacing: 0.5rem;
+  }
+
+  .destacado p {
+    font-size: 1rem;
+    letter-spacing: 0.1rem;
+  }
+}

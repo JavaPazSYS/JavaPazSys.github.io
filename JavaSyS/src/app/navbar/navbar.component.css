@@ -1,0 +1,163 @@
+/* ============================
+   NAV BASE
+============================ */
+
+.nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  background: var(--color-black);
+  padding: 2rem;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+}
+
+body { padding-top: 6rem; } /* espacio para navbar fija */
+
+/* ============================
+   LOGO
+============================ */
+.nav__logo a {
+  font-family: var(--font-title);
+  font-size: 3rem;
+  color: var(--color-white);
+  text-decoration: none;
+  transition: transform 0.3s ease;
+  letter-spacing: 0.25em; /* espaciado del 25% */
+}
+
+.nav__logo a:hover {
+  transform: scale(1.05);
+}
+
+.nav__logo .logo-sys {
+  font-family: var(--font-logo); /* fuente distinta para la Y */
+  color: var(--color-accent);  /* color distinto */
+}
+
+
+/* ============================
+   LINKS
+============================ */
+.nav__links {
+  display: flex;
+  gap: 2rem;
+  list-style: none;
+  margin-right: 8rem;
+  margin-left: 4rem;
+}
+
+.nav__links li { font-size: 1rem; }
+
+.nav__links a {
+  font-size: 1.5rem;
+  color: var(--color-white);
+  text-decoration: none;
+  font-family: var(--font-title);
+  font-weight: 500;
+  position: relative;
+  padding: 0.2rem 0;
+  transition: color 0.3s ease;
+}
+
+.nav__links a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -3px;
+  width: 0%;
+  height: 2px;
+  background: var(--color-accent);
+  transition: width 0.3s ease;
+}
+
+.nav__links a:hover,
+.nav__links a:focus {
+  color: var(--color-accent);
+}
+
+.nav__links a:hover::after,
+.nav__links a:focus::after {
+  width: 100%;
+}
+
+.nav__links a.active {
+  color: var(--color-accent);
+}
+
+.nav__links a.active::after {
+  width: 100%;
+}
+
+/* ============================
+   CONTACTO
+============================ */
+#contact-link { transition: color 0.3s ease; }
+
+#contact-link.active-footer {
+  color: var(--color-accent);
+}
+
+#contact-link.active-footer::after {
+  width: 100%;
+}
+
+/* ============================
+   BOTÓN TOGGLE MÓVIL
+============================ */
+.nav__toggle {
+  margin-right: 6rem;
+  display: none;
+  font-size: 2rem;
+  background: none;
+  border: none;
+  color: var(--color-white);
+  cursor: pointer;
+}
+
+/* ============================
+   RESPONSIVE < 768px
+============================ */
+@media(max-width: 768px) {
+  .nav {
+    padding: 1rem 1.5rem;
+  }
+
+  .nav__toggle {
+    display: block;
+  }
+
+  .nav__links {
+    position: fixed;
+    top: 0;
+    left: 0; /* lo dejamos 0 porque el transform lo mueve fuera */
+    height: 100%;
+    width: 250px;
+    background: var(--color-black);
+    flex-direction: column;
+    padding: 5rem 1rem 1rem 1rem; /* top, right, bottom, left */
+    gap: 1rem;
+    z-index: 2000;
+
+    transform: translateX(-500%); /* oculto totalmente a la izquierda */
+    transition: transform 0.3s ease;
+  }
+
+  .nav__links.show {
+    transform: translateX(0);
+    margin-left: 0; /* se desliza al presionar toggle */
+  }
+
+  .nav__links li {
+    width: 100%;
+  }
+
+  .nav__links a {
+    font-size: 1.2rem;
+    width: 100%;
+  }
+}

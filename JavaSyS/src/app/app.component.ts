@@ -1,17 +1,21 @@
-import { RouterOutlet } from '@angular/router';
-import {FormsModule} from '@angular/forms';
-import { CommonModule } from '@angular/common';
-import { RepositorioComponent } from './repositorio/repositorio.component';
 import { Component } from '@angular/core';
-import { RouterModule } from '@angular/router';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { RouterOutlet, RouterModule } from '@angular/router';
+import { NavbarComponent } from './navbar/navbar.component';
+import { RepositorioComponent } from './repositorio/repositorio.component';
 import { HomeComponent } from './home/home.component';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet,FormsModule,CommonModule,RepositorioComponent,RouterModule,HomeComponent],
+  standalone: true,
+  imports: [
+  CommonModule,
+  RouterOutlet,
+  NavbarComponent
+],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.css'
-  
+  styleUrls: ['./app.component.css'] 
 })
 export class AppComponent {
   title = 'JavaSyS';
