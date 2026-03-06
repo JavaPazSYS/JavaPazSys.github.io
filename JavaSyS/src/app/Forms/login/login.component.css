@@ -1,29 +1,47 @@
+/* ==========================================================================
+   LOGIN FORM — Responsive Auth Form (Angular Component)
+   ========================================================================== */
+
+/* ── Formulario centrado (el componente es solo el <form>) ── */
 form {
-  margin: 5% auto;
-  padding: 2rem;
-  max-width: 400px;
-  background-color: var(--color-white);
-  border-radius: 10px;
-  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  width: 100%;
+  max-width: 420px;
+  margin: var(--space-xl) auto;
+  padding: var(--space-xl);
+  background-color: var(--glass-bg);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--border-radius-lg);
+  box-shadow: var(--shadow-modern);
   color: var(--color-pink);
 }
 
+/* ── Título ── */
 h1 {
   text-align: center;
-  margin-bottom: 2rem;
+  margin-bottom: var(--space-xl);
+  margin-top: 0;
+  font-size: clamp(1.5rem, 3vw, 2rem);
+  color: var(--color-heading);
 }
 
+/* ── Grupos de campo ── */
 .form-group {
-  margin-bottom: 1.5rem;
+  margin-bottom: var(--space-lg);
   display: flex;
   flex-direction: column;
 }
 
 label {
-  margin-bottom: 0.5rem;
+  margin-bottom: var(--space-xs);
   font-weight: bold;
-  padding-left: 0.5rem;
+  padding-left: var(--space-xs);
+  font-size: 0.9rem;
+  color: var(--color-text-light);
 }
+
+/* ── Input con ícono ── */
 .input-icon {
   position: relative;
   display: flex;
@@ -34,6 +52,7 @@ label {
   position: absolute;
   font-size: 1rem;
   color: var(--color-gray);
+  pointer-events: none;
 }
 
 .input-icon .fa-lock,
@@ -43,59 +62,148 @@ label {
 }
 
 .input-icon .fa-eye,
-.input-icon .fa-eye-slash  {
+.input-icon .fa-eye-slash {
   right: 0.75rem;
   cursor: pointer;
   color: var(--color-pink-light);
+  pointer-events: auto;
 }
 
 .input-icon input {
   width: 100%;
-  padding: 0.5rem 2.5rem 0.5rem 2rem; /* left = 2rem para ícono, right = 2.5rem para el ojo */
-  border-radius: 5px;
-  border: 1px solid #ccc;
-  color: var(--color-gray-dark);
-  background-color: var(--color-white);
+  padding: var(--space-sm) 2.5rem var(--space-sm) 2rem;
+  border-radius: var(--border-radius-sm);
+  border: 1px solid var(--color-border);
+  color: var(--color-text-light);
+  background-color: var(--glass-bg-solid);
   font-size: 1rem;
   box-sizing: border-box;
+  transition: var(--transition-smooth);
+  font-family: inherit;
 }
 
+.input-icon input:focus {
+  outline: none;
+  border-color: var(--color-pink);
+  box-shadow: 0 0 5px var(--color-pink-light);
+  background-color: var(--glass-bg);
+  color: var(--color-white);
+}
 
+/* ── Mensajes de validación ── */
 small {
   color: var(--color-pink);
-  margin-top: 0.3rem;
+  margin-top: var(--space-xs);
   font-size: 0.875rem;
-  padding-left: 0.5rem;
+  padding-left: var(--space-xs);
 }
 
-form button[type="submit"] {
+.feedback-content {
+
+  align-items: center;
+  padding: var(--space-md);
+  border: 1px solid var(--color-success);
+  border-radius: var(--border-radius-lg);
+  margin-bottom: var(--space-lg);
+  align-content: center;
+  margin: 0 auto;
+}
+
+.feedback-close {
+  margin-top: var(--space-md);
   width: 100%;
-  padding: 0.75rem;
-  margin-top: 1rem;
-  background-color: var(--color-pink);
+  padding: var(--space-md);
+  background-color: var(--color-pink-dark);
   border: none;
-  border-radius: 6px;
+  border-radius: var(--border-radius-sm);
   color: var(--color-white);
   font-size: 1rem;
   cursor: pointer;
-  transition:  0.3s ease;
+  transition: var(--transition-smooth);
+  font-family: inherit;
+  font-weight: 600;
 }
+
+/* ── Botón Submit ── */
+form button[type="submit"] {
+  width: 100%;
+  padding: var(--space-md);
+  margin-top: var(--space-md);
+  background-color: var(--color-pink);
+  border: none;
+  border-radius: var(--border-radius-sm);
+  color: var(--color-white);
+  font-size: 1rem;
+  cursor: pointer;
+  transition: var(--transition-smooth);
+  font-family: inherit;
+  font-weight: 600;
+}
+
 
 form button[type="submit"]:disabled,
 button:disabled {
   background-color: var(--color-gray-ligth);
   cursor: not-allowed;
+  opacity: 0.7;
 }
 
 form button[type="submit"]:hover:not(:disabled),
 button:hover:not(:disabled) {
-  background-color:var(--color-pink-dark);
+  background-color: var(--color-pink-dark);
+  transform: translateY(-2px);
 }
 
-a {
+/*__Button Registrate__*/
+
+.Register {
+  width: 100%;
+  padding: var(--space-md);
+  margin-top: var(--space-md);
+  background-color: var(--color-pink);
+  border: none;
+  border-radius: var(--border-radius-sm);
+  color: var(--color-white);
   font-size: 1rem;
+  cursor: pointer;
+  transition: var(--transition-smooth);
+  font-family: inherit;
+  font-weight: 600;
+  background-color: var(--color-pink-dark);
+  transform: translateY(-2px);
+}
+
+/* ── Link de recuperación ── */
+a {
+  font-size: 0.95rem;
   color: var(--color-pink);
   text-decoration: none;
-  margin-top: 1rem;
+  margin-top: var(--space-md);
   display: inline-block;
+  transition: var(--transition-fast);
+}
+
+a:hover {
+  color: var(--color-pink-light);
+}
+
+/* ==================== RESPONSIVE ==================== */
+
+/* Móvil pequeño (≤ 480px) */
+@media (max-width: 480px) {
+  form {
+    padding: var(--space-lg);
+    margin: var(--space-md) auto;
+  }
+
+  h1 {
+    font-size: 1.4rem;
+  }
+}
+
+/* Móvil muy pequeño (≤ 320px) */
+@media (max-width: 320px) {
+  form {
+    padding: var(--space-md);
+  }
 }

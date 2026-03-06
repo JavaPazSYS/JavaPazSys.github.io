@@ -1,38 +1,42 @@
-html, body {
-  height: 100%;
-  margin: 0;
-  padding: 0;
-}
+/* ==========================================================================
+   REPOSITORIO COMPONENT — Responsive File Browser
+   ========================================================================== */
 
 .repositorio-layout {
   display: flex;
-  width: 100%; /* ocupa toda la pantalla */
+  width: 100%;
+  min-height: calc(100vh - var(--navbar-height) - var(--space-xl));
   overflow: hidden;
-  height: 100%;
-  scroll-margin-top: 0rem; /* Ajusta según el tamaño de tu header */
-
 }
 
+/* ── Sidebar ── */
 .sidebar {
-  flex: 0 0 14%; 
-  background-color: var(--color-black);
-  padding: 1rem;
+  flex: 0 0 clamp(140px, 16%, 220px);
+  background-color: var(--glass-bg-solid);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  padding: var(--space-md);
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: var(--space-sm);
   color: var(--color-white);
-  border-radius: 2rem;
+  border-right: 1px solid var(--glass-border-light);
+  border-radius: 0 var(--border-radius-lg) var(--border-radius-lg) 0;
+  box-shadow: var(--shadow-soft);
+  overflow-y: auto;
 }
 
+/* ── Content Area ── */
 .content {
-  flex: 1; /* ocupa el resto */
-  padding: 1rem;
+  flex: 1;
+  padding: var(--space-lg);
   overflow-y: auto;
   position: relative;
+  min-width: 0;
 }
 
-/* Fade-in sencillo para contenido al cambiar */
-.content > * {
+/* Fade-in al cambiar contenido */
+.content>* {
   opacity: 0;
   animation: fadeIn 0.3s forwards;
 }
@@ -43,23 +47,82 @@ html, body {
   }
 }
 
-/* Sidebar h3 estilos */
+/* ── Sidebar items ── */
 .sidebar h3 {
-  font-size: 1rem;
-  margin: 0.5rem 0;
+  font-size: 0.95rem;
+  margin: 0;
   cursor: pointer;
-  color: var(--color-white);
-  transition: all 0.2s ease-in-out;
+  color: var(--color-text-muted);
+  transition: var(--transition-fast);
   font-weight: 400;
-  transform: scale(1);
+  padding: var(--space-xs) var(--space-sm);
+  border-radius: var(--border-radius-md);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .sidebar h3:hover {
-  transform: scale(1.02);
+  transform: translateY(-2px);
+  background: var(--glass-bg);
+  color: var(--color-pink-light);
 }
 
 .sidebar h3.active {
   color: var(--color-pink);
   font-weight: 700;
-  transform: scale(1.1);
+  background: var(--glass-border-light);
+  transform: translateY(0);
+}
+
+/* ==================== RESPONSIVE ==================== */
+
+/* Tablet (≤ 768px): sidebar colapsa a la parte superior */
+@media (max-width: 768px) {
+  .repositorio-layout {
+    flex-direction: column;
+    min-height: auto;
+    overflow: visible;
+  }
+
+  .sidebar {
+    flex: none;
+    width: 100%;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    overflow-y: hidden;
+    border-right: none;
+    border-bottom: 1px solid var(--glass-border-light);
+    border-radius: var(--border-radius-lg) var(--border-radius-lg) 0 0;
+    padding: var(--space-sm) var(--space-md);
+    gap: var(--space-xs);
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .sidebar h3 {
+    flex-shrink: 0;
+    white-space: nowrap;
+    font-size: 0.85rem;
+  }
+
+  .sidebar h3:hover {
+    transform: none;
+  }
+
+  .content {
+    padding: var(--space-md);
+    min-height: 300px;
+  }
+}
+
+/* Móvil pequeño (≤ 480px) */
+@media (max-width: 480px) {
+  .content {
+    padding: var(--space-sm);
+  }
+
+  .sidebar {
+    padding: var(--space-xs) var(--space-sm);
+  }
 }

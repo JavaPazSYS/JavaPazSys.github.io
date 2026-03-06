@@ -1,0 +1,287 @@
+/* ===============================
+   FORGET PASSWORD FORM
+   =============================== */
+
+.form-section {
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    min-height: 70vh;
+    padding: var(--space-xl) var(--space-md);
+
+}
+
+/* ───── CARD ───── */
+
+.form-card {
+
+    width: 100%;
+    max-width: 420px;
+
+    background: var(--glass-bg);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+
+    padding: var(--space-xl);
+
+    border-radius: var(--border-radius-lg);
+
+    border: 1px solid var(--glass-border);
+
+    box-shadow: var(--shadow-modern);
+
+    color: var(--color-text-light);
+
+}
+
+/* ───── TITULO ───── */
+
+h2 {
+
+    text-align: center;
+    margin-bottom: var(--space-xs);
+    margin-top: 0;
+
+    color: var(--color-heading);
+
+}
+
+.form-description {
+
+    text-align: center;
+    margin-bottom: var(--space-lg);
+
+    color: var(--color-gray-light);
+    font-size: 0.9rem;
+
+}
+
+/* ───── CAMPOS ───── */
+
+.form-group {
+
+    margin-bottom: var(--space-lg);
+
+}
+
+label {
+
+    display: block;
+    margin-bottom: var(--space-xs);
+
+    font-weight: 600;
+    font-size: 0.85rem;
+
+    color: var(--color-text-light);
+
+}
+
+/* ───── INPUT CON ICONO ───── */
+
+.input-icon {
+
+    display: flex;
+    align-items: center;
+    position: relative;
+
+}
+
+.input-icon i:first-child {
+
+    position: absolute;
+    left: 0.8rem;
+
+    color: var(--color-gray);
+
+}
+
+.input-icon input {
+
+    width: 100%;
+
+    padding: 0.65rem 0.75rem 0.65rem 2.2rem;
+
+    border-radius: var(--border-radius-sm);
+    border: 1px solid var(--color-border);
+
+    background: var(--glass-bg-solid);
+
+    color: var(--color-text-light);
+    font-size: 0.95rem;
+
+    transition: var(--transition-smooth);
+
+}
+
+.input-icon input:focus {
+
+    outline: none;
+
+    border-color: var(--color-pink);
+
+    box-shadow: 0 0 6px var(--color-pink-light);
+
+    background: var(--glass-bg);
+
+    color: var(--color-white);
+
+}
+
+/* ───── ERRORES ───── */
+
+small {
+
+    color: var(--color-pink);
+    font-size: 0.8rem;
+
+    margin-top: 4px;
+    display: block;
+
+}
+
+/* ───── BOTONES ───── */
+button {
+
+    width: 100%;
+    padding: 12px;
+
+    border: none;
+    border-radius: 6px;
+
+    font-family: inherit;
+    font-size: 1rem;
+
+    transition: var(--transition-smooth);
+
+}
+
+/* BOTON BLOQUEADO */
+
+.btn-disabled {
+
+    background: var(--color-gray);
+    color: var(--color-white);
+
+    cursor: not-allowed;
+    opacity: 0.7;
+
+}
+
+/* BOTON LISTO */
+
+.btn-ready {
+
+    background: var(--color-pink);
+    color: var(--color-white);
+
+    cursor: pointer;
+
+}
+
+.btn-ready:hover {
+
+    background: var(--color-pink-dark);
+
+}
+
+.btn-primary {
+
+    width: 100%;
+    padding: 12px;
+
+    border: none;
+    border-radius: 6px;
+
+    background: var(--color-pink);
+    color: var(--color-white);
+
+    cursor: pointer;
+
+    transition: var(--transition-smooth);
+
+}
+
+.btn-primary:hover {
+
+    background: var(--color-pink-dark);
+
+}
+
+.btn-secondary {
+
+    width: 100%;
+    padding: 12px;
+
+    border: none;
+    border-radius: 6px;
+
+    background: var(--color-gray);
+    color: var(--color-white);
+
+    cursor: not-allowed;
+
+    opacity: 0.7;
+
+}
+
+.btn-link {
+
+    background: none;
+    border: none;
+
+    color: var(--color-pink);
+
+    cursor: pointer;
+    font-weight: 500;
+
+}
+
+.btn-link:hover {
+
+    color: var(--color-pink-light);
+
+}
+
+/* ───── SUCCESS BOX ───── */
+
+.success-box {
+
+    text-align: center;
+
+    padding: var(--space-lg);
+
+    border: 1px solid var(--color-pink);
+    border-radius: var(--border-radius-lg);
+
+    background: rgba(228, 89, 142, 0.08);
+
+}
+
+/* ───── ACCIONES ───── */
+
+.actions {
+
+    display: flex;
+    gap: var(--space-md);
+
+    justify-content: center;
+
+    margin-top: var(--space-lg);
+
+}
+
+/* ===============================
+   RESPONSIVE
+   =============================== */
+
+@media (max-width:480px) {
+
+    .form-card {
+
+        padding: var(--space-lg);
+
+    }
+
+}

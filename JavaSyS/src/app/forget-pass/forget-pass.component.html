@@ -1,0 +1,78 @@
+<section class="form-section">
+
+    <div class="form-card">
+
+        <h2>Recuperar contraseña</h2>
+
+        <p class="form-description">
+            Ingresa tu correo y te enviaremos instrucciones para restablecer tu contraseña.
+        </p>
+
+        <!-- FORMULARIO -->
+        <form *ngIf="!emailSent" (ngSubmit)="onSubmit()" novalidate>
+
+            <div class="form-group">
+
+                <label for="reset-email">Correo electrónico</label>
+
+                <div class="input-icon">
+
+                    <i class="fas fa-envelope"></i>
+
+                    <input id="reset-email" name="email" type="email" [(ngModel)]="email" (blur)="validateEmail()"
+                        placeholder="correo@ejemplo.com" autocomplete="email" />
+
+                </div>
+
+                <small *ngIf="errors.email">
+                    {{ errors.email }}
+                </small>
+
+            </div>
+
+            <button class="btn-primary" type="submit" [disabled]="isLoading">
+
+                <span *ngIf="!isLoading">Enviar instrucciones</span>
+                <span *ngIf="isLoading">Enviando...</span>
+
+            </button>
+
+        </form>
+
+
+        <!-- MENSAJE ENVIADO -->
+
+        <div *ngIf="emailSent" class="success-box">
+
+            <h3>Correo enviado</h3>
+
+            <p>
+                Si el correo existe en nuestro sistema,
+                recibirás instrucciones para restablecer tu contraseña.
+            </p>
+
+            <div class="actions">
+
+                <button (click)="resendEmail()" [disabled]="resendDisabled" [ngClass]="{
+    'btn-disabled': resendDisabled,
+    'btn-ready': !resendDisabled
+  }">
+
+                    <i class="fas fa-paper-plane"></i>
+
+                    {{ resendDisabled
+                    ? 'Reenviar en ' + resendCountdown + 's'
+                    : 'Reenviar correo' }}
+
+                </button>
+                <button class="btn-link" routerLink="/login">
+                    Volver al login
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>

@@ -1,0 +1,20 @@
+/* ==========================================================================
+   APP COMPONENT — Layout raíz
+   ========================================================================== */
+
+.main-content {
+    /* Respeta la altura fija de la navbar usando la variable centralizada */
+    padding-top: var(--navbar-height);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    overflow-x: hidden;
+}
+
+/* ── Responsive: en móvil la navbar puede ser un poco menor ── */
+@media (max-width: 480px) {
+    .main-content {
+        padding-top: var(--navbar-height);
+    }
+}

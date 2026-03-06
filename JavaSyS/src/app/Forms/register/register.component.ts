@@ -1,113 +1,135 @@
-import { Component} from '@angular/core';
-import { FormsModule } from '@angular/forms'; 
+import { Component } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-register',
   standalone: true,
-  imports: [FormsModule,CommonModule],
+  imports: [FormsModule, CommonModule],
   templateUrl: './register.component.html',
   styleUrl: './register.component.css'
 })
 export class RegisterComponent {
+
+  // ── Estado del formulario ─────────────────────────────────────────────────
   email: string = '';
+  user: string = '';
   password: string = '';
-  isFormValid: boolean = false;
+  passwordconfirm: string = '';
   showPassword: boolean = false;
   showPasswordConfirm: boolean = false;
-  user: string = '';
-  passwordconfirm: string = '';
-  
-  errors: { email?: string; password?: string; passwordconfirm?: string ;user?: string } = {};
+  isFormValid: boolean = false;
+  isLoading: boolean = false;
 
-  // Validación de email
+  // Estado post-submit
+  registerSuccess: boolean = false;
+
+  errors: {
+    email?: string;
+    user?: string;
+    password?: string;
+    passwordconfirm?: string;
+  } = {};
+
+  // ── Validaciones ──────────────────────────────────────────────────────────
+
   validateEmail(): void {
-    const emailTrimmed = this.email.trim();
-    if (!emailTrimmed) {
-      this.errors.email = 'El correo es obligatorio.';
-    } else if (!this.isEmailValid(emailTrimmed)) {
-      this.errors.email = 'Debe ser un correo válido.';
-    } else {
-      this.errors.email = '';
-    }
-
-    this.checkFormValidity();  // Actualiza la validez del formulario después de validar el campo
+    const v = this.email.trim();
+    if (!v) this.errors.email = 'El correo es obligatorio.';
+    else if (!this.isEmailValid(v)) this.errors.email = 'Debe ser un correo válido.';
+    else this.errors.email = '';
+    this.checkFormValidity();
   }
-  // Validación de email
+
   validateUser(): void {
-    const userTrimmed = this.user.trim();
-    if (!userTrimmed) {
-      this.errors.user = 'El user es obligatorio.';
-    } else {
-      this.errors.user = '';
-    }
-
-    this.checkFormValidity();  // Actualiza la validez del formulario después de validar el campo
+    const v = this.user.trim();
+    if (!v) this.errors.user = 'El usuario es obligatorio.';
+    else if (v.length < 3) this.errors.user = 'Debe tener al menos 3 caracteres.';
+    else this.errors.user = '';
+    this.checkFormValidity();
   }
 
-  // Validación de contraseña
   validatePassword(): void {
-    const passwordTrimmed = this.password.trim();
-    if (!passwordTrimmed) {
-      this.errors.password = 'La contraseña es obligatoria.';
-    } else if (passwordTrimmed.length < 6) {
-      this.errors.password = 'Debe tener al menos 6 caracteres.';
-    } else {
-      this.errors.password = '';
-    }
-
-    this.checkFormValidity();  // Actualiza la validez del formulario después de validar el campo
+    const v = this.password.trim();
+    if (!v) this.errors.password = 'La contraseña es obligatoria.';
+    else if (v.length < 6) this.errors.password = 'Debe tener al menos 6 caracteres.';
+    else this.errors.password = '';
+    // Re-validar confirmación al cambiar la contraseña principal
+    if (this.passwordconfirm) this.validatePasswordConfirm();
+    this.checkFormValidity();
   }
-  // Validación de contraseña confirm
+
   validatePasswordConfirm(): void {
-    const passwordConfirmTrimmed = this.passwordconfirm.trim();
-    if (!passwordConfirmTrimmed) {
-      this.errors.passwordconfirm = 'La contraseña es obligatoria.';
-    } else if (passwordConfirmTrimmed.length < 6) {
-      this.errors.passwordconfirm = 'Debe tener al menos 6 caracteres.';
-    } else {
-      this.errors.passwordconfirm = '';
-    }
-
-    this.checkFormValidity();  // Actualiza la validez del formulario después de validar el campo
+    const v = this.passwordconfirm.trim();
+    if (!v) this.errors.passwordconfirm = 'Confirma tu contraseña.';
+    else if (v !== this.password.trim()) this.errors.passwordconfirm = 'Las contraseñas no coinciden.';
+    else this.errors.passwordconfirm = '';
+    this.checkFormValidity();
   }
 
-  // Función para validar el formulario en el submit
-  onSubmit(): void {
-    this.clearErrors();
-    this.validateEmail();
-    this.validatePassword();
-    this.validatePasswordConfirm();
-    this.validateUser();
-
-    if (this.errors.email || this.errors.password) {
-      console.log('Formulario inválido');
-      return;
-    }
-
-    console.log('Login válido:', { email: this.email, password: this.password });
-  }
-
-  // Función para verificar si el email es válido
   private isEmailValid(email: string): boolean {
-    const regex = /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/;
-    return regex.test(email);
+    return /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/.test(email);
   }
 
-  // Limpiar los errores previos
+  private checkFormValidity(): void {
+    this.isFormValid =
+      !this.errors.email &&
+      !this.errors.user &&
+      !this.errors.password &&
+      !this.errors.passwordconfirm &&
+      this.email.trim() !== '' &&
+      this.user.trim() !== '' &&
+      this.password.trim() !== '' &&
+      this.passwordconfirm.trim() !== '';
+  }
+
   private clearErrors(): void {
     this.errors = {};
   }
 
-  // Verificar si todos los campos son válidos
-  private checkFormValidity(): void {
-    // Formulario es válido solo si no hay errores y los campos no están vacíos
-    this.isFormValid = !this.errors.email && !this.errors.password && this.email.trim() !== '' && this.password.trim() !== '';
+  // ── Toggle contraseña ─────────────────────────────────────────────────────
+  togglePasswordVisibility(): void {
+    this.showPassword = !this.showPassword;
   }
 
-  togglePasswordVisibility(): void {
-  this.showPassword = !this.showPassword;}
-
   togglePasswordConfirmVisibility(): void {
-  this.showPasswordConfirm = !this.showPasswordConfirm;}
+    this.showPasswordConfirm = !this.showPasswordConfirm;
+  }
+
+  // ── Submit ────────────────────────────────────────────────────────────────
+
+  /**
+   * Simula el registro de usuario con datos mock.
+   * TODO: conectar con API de registro → POST /api/auth/register
+   * TODO: reemplazar simulación por llamada al servicio:
+   *   this.authService.register({ email, user, password }).subscribe(...)
+   */
+  onSubmit(): void {
+    this.clearErrors();
+    this.validateEmail();
+    this.validateUser();
+    this.validatePassword();
+    this.validatePasswordConfirm();
+
+    if (!this.isFormValid) return;
+
+    this.isLoading = true;
+    setTimeout(() => {
+      // TODO: conectar base de datos aquí → guardar usuario real
+      this.isLoading = false;
+      this.registerSuccess = true;
+      console.log('Registro mock:', { email: this.email, user: this.user });
+    }, 1000);
+  }
+
+  /** Resetea el formulario para registrar otro usuario */
+  resetForm(): void {
+    this.email = '';
+    this.user = '';
+    this.password = '';
+    this.passwordconfirm = '';
+    this.registerSuccess = false;
+    this.errors = {};
+    this.isFormValid = false;
+  }
 }

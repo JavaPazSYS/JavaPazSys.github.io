@@ -1,16 +1,21 @@
 <nav class="nav" aria-label="Navegación principal">
   <div class="nav__logo">
-    <a routerLink="/" aria-label="Ir al inicio">
+    <a href="#Inicio" aria-label="Ir al inicio">
       &lt; Java/S<span class="logo-sys">y</span>S &gt;
     </a>
   </div>
 
-  <button class="nav__toggle" (click)="toggleMenu()">☰</button>
-
-  <ul class="nav__links" [class.show]="menuOpen">
-    <li><a href="#Miself">Sobre mi</a></li>
-    <li><a href="#Skills">Tecnologías</a></li>
-    <li><a href="#Contacto" id="contact-link">Contacto</a></li>
-    <li><a href="#">Proyectos</a></li>
+  <ul class="nav__links" [class.show]="menuOpen" role="menu">
+    <li role="menuitem"><a href="#Inicio" (click)="closeMenu()">Inicio</a></li>
+    <li role="menuitem"><a href="#AboutMe" (click)="closeMenu()">Sobre mí</a></li>
+    <li role="menuitem"><a href="#Skills" (click)="closeMenu()">Tecnologías</a></li>
+    <li role="menuitem"><a href="#Contacto" id="contact-link" (click)="closeMenu()">Contacto</a></li>
   </ul>
+
+  <!-- Overlay para cerrar el menú al tocar fuera -->
+  <div class="nav__overlay" [class.show]="menuOpen" (click)="closeMenu()" aria-hidden="true"></div>
+
+  <button class="nav__toggle" (click)="toggleMenu()" [attr.aria-expanded]="menuOpen" aria-label="Abrir o cerrar menú">
+    {{ menuOpen ? '✕' : '☰' }}
+  </button>
 </nav>

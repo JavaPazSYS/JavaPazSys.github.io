@@ -1,53 +1,69 @@
 <form (ngSubmit)="onSubmit()">
-  <div class="form-group">
-    <h1>Login Form</h1>
-    <label for="email">Correo:</label>
-    <div class="input-icon">
-      <i class="fas fa-envelope"></i>
-      <input
-        id="email"
-        name="email"
-        type="text"
-        [(ngModel)]="email"
-        (ngModelChange)="validateEmail()"  
-        (blur)="validateEmail()"  
-        class="form-input"
-      />
+  <h1>Iniciar Sesión</h1>
+
+  <!-- ── Feedback de éxito post-login ── -->
+  <div *ngIf="loginSuccess" class="auth-feedback success">
+    <div class="feedback-content">
+      <i class="fas fa-check-circle"></i>
+      <strong> ¡Bienvenido, {{ loggedUserName }}!</strong>
+      <p>Sesión iniciada correctamente.</p>
+      <!-- TODO: En producción usar Router para redirigir al dashboard -->
     </div>
-    <div *ngIf="errors.email" class="error-message">
-      <small>{{ errors.email }}</small> 
+    <button type="button" class="feedback-close" (click)="resetForm()">
+      Cerrar Sesión
+      <i class="fas fa-times"></i>
+    </button>
+  </div>
+
+
+  <!-- ── Error de credenciales ── -->
+  <div *ngIf="loginError" class="auth-feedback error">
+    <i class="fas fa-exclamation-triangle"></i>
+    <span>{{ loginError }}</span>
+  </div>
+
+  <!-- Formulario oculto si login fue exitoso -->
+  <ng-container *ngIf="!loginSuccess">
+
+    <!-- EMAIL -->
+    <div class="form-group">
+      <label for="login-email">Correo:</label>
+      <div class="input-icon">
+        <i class="fas fa-envelope"></i>
+        <input id="login-email" name="email" type="text" [(ngModel)]="email" (ngModelChange)="validateEmail()"
+          (blur)="validateEmail()" placeholder="admin@javapaz.dev" autocomplete="email" />
+      </div>
+      <small *ngIf="errors.email">{{ errors.email }}</small>
     </div>
-  </div>
-  <div class="form-group">
-  <label for="password">Contraseña:</label>
-  <div class="input-icon">
-    <i class="fas fa-lock"></i>
-    <input
-      id="password"
-      name="password"
-      [type]="showPassword ? 'text' : 'password'"
-      [(ngModel)]="password"
-      (ngModelChange)="validatePassword()"
-      (blur)="validatePassword()"
-      class="form-input"
-    />
-    <i
-      class="fas"
-      [class.fa-eye]="!showPassword"
-      [class.fa-eye-slash]="showPassword"
-      (click)="togglePasswordVisibility()"
-    ></i>
-  </div>
-  <div *ngIf="errors.password" class="error-message">
-    <small>{{ errors.password }}</small>
-  </div>
-</div>
+
+    <!-- CONTRASEÑA -->
+    <div class="form-group">
+      <label for="login-password">Contraseña:</label>
+      <div class="input-icon">
+        <i class="fas fa-lock"></i>
+        <input id="login-password" name="password" [type]="showPassword ? 'text' : 'password'" [(ngModel)]="password"
+          (ngModelChange)="validatePassword()" (blur)="validatePassword()" placeholder="••••••••"
+          autocomplete="current-password" />
+        <i class="fas" [class.fa-eye]="!showPassword" [class.fa-eye-slash]="showPassword"
+          (click)="togglePasswordVisibility()" title="Mostrar/ocultar contraseña"
+          style="cursor:pointer; pointer-events:auto;"></i>
+      </div>
+      <small *ngIf="errors.password">{{ errors.password }}</small>
+    </div>
+
+    <!-- Hint de credenciales mock -->
+    <div class="mock-hint">
+      <i class="fas fa-info-circle"></i>
+      Prueba: <strong>admin&#64;javapaz.dev</strong> / <strong>admin123</strong>
+    </div>
+
+    <button type="submit" [disabled]="!isFormValid || isLoading">
+      <i class="fas" [class.fa-spinner]="isLoading" [class.fa-spin]="isLoading" [class.fa-sign-in-alt]="!isLoading"></i>
+      {{ isLoading ? 'Verificando...' : 'Iniciar sesión' }}
+    </button>
 
 
-  <a href="">¿Olvidaste tu Contraseña?</a>
+    <a>¿Olvidaste tu contraseña?</a>
 
-  <div>
-    <button type="submit" [disabled]="!isFormValid" class="submit-btn">Iniciar sesión</button>
-    <button type="submit" class="btn">Registrarte</button>
-  </div>
+  </ng-container>
 </form>

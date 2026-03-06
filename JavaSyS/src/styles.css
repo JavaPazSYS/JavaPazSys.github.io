@@ -1,59 +1,202 @@
-/* You can add global styles to this file, and also import other style files */
-:root{
-   color-scheme: light dark;
-   font-family: 'Inter', sans-serif;
-   /* Neutros */
+/* ==========================================================================
+   GLOBAL STYLES - JavaSyS Portfolio
+   Sistema de diseño centralizado (Dark Theme)
+   ========================================================================== */
+
+/* ── Box Model Universal ── */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* ── Variables de diseño ── */
+:root {
+  color-scheme: dark;
+  font-family: 'Inter', sans-serif;
+
+  /* ── Neutros ── */
   --color-black: #000000;
-  --color-black-light:#222222;
+  --color-black-light: #222222;
   --color-white: #f4f4f4;
   --color-gray-dark: #4a4848;
   --color-gray: #444444;
   --color-gray-ligth: #b1b0b0;
-  /* Rosa principal y variantes */
+
+  /* ── Rosa principal y variantes ── */
   --color-pink: #e4598e;
   --color-pink-light: #f8c4d7;
   --color-pink-dark: #a83261;
 
-  /* Extras sugeridos */
-  --color-bg: var(--color-white);
-  --color-text: var(--color-gray);
-  --color-heading: var(--color-black);
+  /* ── Superficies y Fondos Oscuros ── */
+  --color-bg-dark: #0f1014;
+  --color-surface-dark: #1a1b23;
+  --color-card-dark: #242631;
+  --color-text-light: #e0e0e0;
+  --color-text-muted: #a0a0a5;
+
+  /* ── Asignación base (Dark Theme Default) ── */
+  --color-bg: var(--color-bg-dark);
+  --color-text: var(--color-text-light);
+  --color-heading: var(--color-white);
 
   --color-accent: var(--color-pink);
   --color-accent-light: var(--color-pink-light);
   --color-accent-dark: var(--color-pink-dark);
 
-  --font-title:'Syne', italic;
-  --font-body:'Roboto', italic;
-  --font-logo:'Pacifico',cursive;
+  /* ── Colores semánticos (estados) ── */
+  --color-success: #2e7d32;
+  --color-success-bg: rgba(46, 125, 50, 0.12);
+  --color-success-border: rgba(46, 125, 50, 0.3);
+  --color-danger: #c62828;
+  --color-danger-bg: rgba(198, 40, 40, 0.12);
+  --color-warning: #ef6c00;
+  --color-warning-bg: rgba(239, 108, 0, 0.1);
+  --color-warning-border: rgba(239, 108, 0, 0.3);
 
-  
-}
-main {
-  margin-top: 100px; /* Ajusta este valor al alto real de tu header */
-  padding: 1rem;
-}
-h1,h2,h3{
-  font-family: var(--font-title);
-  letter-spacing: 0.02em;
-  font-weight: 700;
-  line-height: 1.4–1.6;
-  font-size: 2rem;
+  /* ── Tipografías ── */
+  --font-title: 'Syne', sans-serif;
+  --font-body: 'Roboto', sans-serif;
+  --font-logo: 'Pacifico', cursive;
 
-}
-p,a,i{
-  font-weight: 400; /* normal */
-  font-family: var(--font-body);
-  line-height: 1.2; /* legible */
-  font-size: 0.8rem;
+  /* ── Glassmorphism ── */
+  --glass-bg: rgba(26, 27, 35, 0.6);
+  --glass-bg-solid: rgba(36, 38, 49, 0.7);
+  --glass-border: rgba(255, 255, 255, 0.1);
+  --glass-border-light: rgba(255, 255, 255, 0.07);
+
+  /* ── Sombras ── */
+  --shadow-modern: 0 8px 32px 0 rgba(0, 0, 0, 0.4);
+  --shadow-soft: 0 4px 15px rgba(0, 0, 0, 0.25);
+  --shadow-medium: 0 0 15px rgba(0, 0, 0, 0.35);
+  --shadow-nav: 0 2px 6px rgba(0, 0, 0, 0.5);
+
+  /* ── Gradientes de fondo ── */
+  --bg-gradient-modern: linear-gradient(135deg, #0f1014 0%, #15161c 100%);
+  --bg-gradient-pink: linear-gradient(135deg, #2a1120 0%, #0f1014 100%);
+
+  /* ── Bordes genéricos ── */
+  --color-border: #333333;
+
+  /* ── Espaciado (Proporción Áurea: base 1rem × 1.618) ── */
+  --space-xs: 0.382rem;
+  --space-sm: 0.618rem;
+  --space-md: 1rem;
+  --space-lg: 1.618rem;
+  --space-xl: 2.618rem;
+  --space-xxl: 4.236rem;
+  --space-xxxl: 6.854rem;
+
+  /* ── Radios y Transiciones ── */
+  --border-radius-sm: 6px;
+  --border-radius-md: 10px;
+  --border-radius-lg: 16px;
+  --border-radius-full: 9999px;
+
+  --transition-smooth: all 0.3s ease-in-out;
+  --transition-fast: all 0.2s ease;
+
+  /* ── Altura de Navbar (usada en app.component para el offset) ── */
+  --navbar-height: 5rem;
 }
 
+/* ── Reset base del body ── */
+html {
+  scroll-padding-top: 90px;
+  scroll-behavior: smooth;
+  overflow-x: hidden;
+}
 
 body {
-  margin-top: 0;
-  padding-bottom: 1rem;
-
+  background-image: var(--bg-gradient-modern);
+  background-attachment: fixed;
+  color: var(--color-text);
+  min-height: 100vh;
+  overflow-x: hidden;
 }
 
+/* ── Imágenes y medios ── */
+img,
+video,
+iframe {
+  max-width: 100%;
+  display: block;
+}
 
+/* ── Tipografía base ── */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-title);
+  color: var(--color-heading);
+  letter-spacing: 0.02em;
+  font-weight: 700;
+  line-height: 1.3;
+}
 
+h1 {
+  font-size: clamp(1.8rem, 4vw, 3rem);
+}
+
+h2 {
+  font-size: clamp(1.5rem, 3vw, 2.5rem);
+}
+
+h3 {
+  font-size: clamp(1.2rem, 2.5vw, 2rem);
+}
+
+p,
+a,
+li,
+label,
+span {
+  font-family: var(--font-body);
+  font-weight: 400;
+  line-height: 1.6;
+  font-size: 1rem;
+}
+
+a {
+  color: var(--color-accent);
+  text-decoration: none;
+  transition: var(--transition-fast);
+}
+
+a:hover {
+  color: var(--color-accent-light);
+}
+
+ul {
+  list-style: none;
+}
+
+/* ── Layout principal ── */
+main {
+  padding: var(--space-md);
+  width: 100%;
+}
+
+/* ── Scrollbar personalizado ── */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-bg-dark);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-pink-dark);
+  border-radius: var(--border-radius-full);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-pink);
+}

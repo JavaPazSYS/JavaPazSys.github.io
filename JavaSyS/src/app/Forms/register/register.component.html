@@ -1,98 +1,77 @@
 <form (ngSubmit)="onSubmit()">
-  <h1>Registro Form</h1>
+  <h1>Crear Cuenta</h1>
 
-  <!-- EMAIL -->
-  <div class="form-group">
-    <label for="email">Correo:</label>
-    <div class="input-icon">
-      <i class="fas fa-envelope"></i>
-      <input
-        id="email"
-        name="email"
-        type="text"
-        [(ngModel)]="email"
-        (ngModelChange)="validateEmail()"
-        (blur)="validateEmail()"
-        class="form-input"
-      />
+  <!-- ── Feedback de éxito ── -->
+  <div *ngIf="registerSuccess" class="auth-feedback success">
+    <i class="fas fa-check-circle"></i>
+    <div>
+      <strong>¡Registro exitoso!</strong>
+      <p>Usuario <strong>{{ user }}</strong> creado correctamente (mock).</p>
+      <!-- TODO: redirigir al login con Router tras registro real -->
     </div>
-    <div *ngIf="errors.email" class="error-message">
-      <small>{{ errors.email }}</small>
-    </div>
+    <button type="button" class="feedback-close" (click)="resetForm()">
+      <i class="fas fa-times"></i>
+    </button>
   </div>
 
-  <!-- USUARIO -->
-  <div class="form-group">
-    <label for="user">Usuario:</label>
-    <div class="input-icon">
-      <i class="fas fa-user"></i>
-      <input
-        id="user"
-        name="user"
-        type="text"
-        [(ngModel)]="user"
-        (ngModelChange)="validateUser()"
-        (blur)="validateUser()"
-        class="form-input"
-      />
-    </div>
-    <div *ngIf="errors.user" class="error-message">
-      <small>{{ errors.user }}</small>
-    </div>
-  </div>
+  <ng-container *ngIf="!registerSuccess">
 
-  <!-- CONTRASEÑA -->
-  <div class="form-group">
-    <label for="password">Contraseña:</label>
-    <div class="input-icon">
-      <i class="fas fa-lock"></i>
-      <input
-        id="password"
-        name="password"
-        [type]="showPassword ? 'text' : 'password'"
-        [(ngModel)]="password"
-        (ngModelChange)="validatePassword()"
-        (blur)="validatePassword()"
-        class="form-input"
-      />
-      <i
-        class="fas eye-icon"
-        [ngClass]="showPassword ? 'fa-eye-slash' : 'fa-eye'"
-        (click)="togglePasswordVisibility()"
-      ></i>
+    <!-- EMAIL -->
+    <div class="form-group">
+      <label for="reg-email">Correo:</label>
+      <div class="input-icon">
+        <i class="fas fa-envelope"></i>
+        <input id="reg-email" name="email" type="text" [(ngModel)]="email" (ngModelChange)="validateEmail()"
+          (blur)="validateEmail()" placeholder="tu@email.com" autocomplete="email" />
+      </div>
+      <small *ngIf="errors.email">{{ errors.email }}</small>
     </div>
-    <div *ngIf="errors.password" class="error-message">
-      <small>{{ errors.password }}</small>
-    </div>
-  </div>
 
-  <!-- CONFIRMAR CONTRASEÑA -->
-  <div class="form-group">
-    <label for="passwordconfirm">Confirmar Contraseña:</label>
-    <div class="input-icon">
-      <i class="fas fa-lock"></i>
-      <input
-        id="passwordconfirm"
-        name="passwordconfirm"
-        [type]="showPasswordConfirm ? 'text' : 'password'"
-        [(ngModel)]="passwordconfirm"
-        (ngModelChange)="validatePasswordConfirm()"
-        (blur)="validatePasswordConfirm()"
-        class="form-input"
-      />
-      <i
-        class="fas eye-icon"
-        [ngClass]="showPasswordConfirm ? 'fa-eye-slash' : 'fa-eye'"
-        (click)="togglePasswordConfirmVisibility()"
-      ></i>
+    <!-- USUARIO -->
+    <div class="form-group">
+      <label for="reg-user">Usuario:</label>
+      <div class="input-icon">
+        <i class="fas fa-user"></i>
+        <input id="reg-user" name="user" type="text" [(ngModel)]="user" (ngModelChange)="validateUser()"
+          (blur)="validateUser()" placeholder="Tu nombre de usuario" autocomplete="username" />
+      </div>
+      <small *ngIf="errors.user">{{ errors.user }}</small>
     </div>
-    <div *ngIf="errors.passwordconfirm" class="error-message">
-      <small>{{ errors.passwordconfirm }}</small>
-    </div>
-  </div>
 
-  <!-- BOTÓN REGISTRO -->
-  <div>
-    <button type="submit" [disabled]="!isFormValid" class="submit-btn">Registrarte</button>
-  </div>
+    <!-- CONTRASEÑA -->
+    <div class="form-group">
+      <label for="reg-password">Contraseña:</label>
+      <div class="input-icon">
+        <i class="fas fa-lock"></i>
+        <input id="reg-password" name="password" [type]="showPassword ? 'text' : 'password'" [(ngModel)]="password"
+          (ngModelChange)="validatePassword()" (blur)="validatePassword()" placeholder="Mínimo 6 caracteres"
+          autocomplete="new-password" />
+        <i class="fas" [class.fa-eye]="!showPassword" [class.fa-eye-slash]="showPassword"
+          (click)="togglePasswordVisibility()" title="Mostrar/ocultar contraseña">
+        </i>
+      </div>
+      <small *ngIf="errors.password">{{ errors.password }}</small>
+    </div>
+
+    <!-- CONFIRMAR CONTRASEÑA -->
+    <div class="form-group">
+      <label for="reg-passwordconfirm">Confirmar Contraseña:</label>
+      <div class="input-icon">
+        <i class="fas fa-lock"></i>
+        <input id="reg-passwordconfirm" name="passwordconfirm" [type]="showPasswordConfirm ? 'text' : 'password'"
+          [(ngModel)]="passwordconfirm" (ngModelChange)="validatePasswordConfirm()" (blur)="validatePasswordConfirm()"
+          placeholder="Repite tu contraseña" autocomplete="new-password" />
+        <i class="fas" [class.fa-eye]="!showPasswordConfirm" [class.fa-eye-slash]="showPasswordConfirm"
+          (click)="togglePasswordConfirmVisibility()" title="Mostrar/ocultar contraseña">
+        </i>
+      </div>
+      <small *ngIf="errors.passwordconfirm">{{ errors.passwordconfirm }}</small>
+    </div>
+
+    <button type="submit" [disabled]="!isFormValid || isLoading">
+      <i class="fas" [class.fa-spinner]="isLoading" [class.fa-spin]="isLoading" [class.fa-user-plus]="!isLoading"></i>
+      {{ isLoading ? 'Creando cuenta...' : 'Registrarte' }}
+    </button>
+
+  </ng-container>
 </form>

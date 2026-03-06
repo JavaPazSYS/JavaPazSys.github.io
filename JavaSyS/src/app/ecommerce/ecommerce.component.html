@@ -1,0 +1,83 @@
+<div class="ecommerce-wrapper">
+
+    <!-- HEADER -->
+    <header class="ecommerce-header">
+        <h2 (click)="setView('catalog')" style="cursor:pointer;">Catálogo Ecommerce</h2>
+        <div class="cart-action">
+            <div class="cart-trigger" (click)="setView('cart')"
+                style="cursor:pointer; display:flex; gap:0.5rem; align-items:center;">
+                <i class="fas fa-shopping-cart"></i>
+                <span>{{cartTotalItems}} Artículos</span>
+            </div>
+        </div>
+    </header>
+
+    <div class="ecommerce-body">
+
+        <!-- SIDEBAR FILTROS -->
+        <aside class="filters-sidebar">
+            <h3>Filtros</h3>
+
+            <div class="filter-group">
+                <h4>Categorías</h4>
+                <label><input type="checkbox" [(ngModel)]="filterCategories['Ropa']" /> Ropa</label>
+                <label><input type="checkbox" [(ngModel)]="filterCategories['Accesorios']" /> Accesorios</label>
+                <label><input type="checkbox" [(ngModel)]="filterCategories['Calzado']" /> Calzado</label>
+            </div>
+
+            <div class="filter-group">
+                <h4>Precio máximo: ${{ filterMaxPrice }}</h4>
+                <input type="range" min="0" max="200" [(ngModel)]="filterMaxPrice" />
+            </div>
+        </aside>
+
+        <!-- GRID DE PRODUCTOS -->
+        <section class="products-grid" *ngIf="currentView === 'catalog'">
+            <article class="product-card" *ngFor="let product of filteredProducts()">
+                <img [src]="product.image" class="placeholder-img" alt="{{product.name}}">
+                <div class="product-info">
+                    <h3>{{product.name}}</h3>
+                    <p class="description">{{product.description}}</p>
+                    <p class="price">${{product.price | number:'1.2-2'}}</p>
+                    <button class="btn-add" (click)="addToCart(product)">Agregar al carrito</button>
+                </div>
+            </article>
+        </section>
+
+        <!-- VISTA CARRITO -->
+        <section class="cart-view" *ngIf="currentView === 'cart'">
+            <h3>Tu Carrito</h3>
+
+            <div *ngIf="cart.length === 0" class="empty-cart">
+                <p>El carrito está vacío.</p>
+                <button class="btn-checkout" (click)="setView('catalog')">Volver al catálogo</button>
+            </div>
+
+            <div class="cart-items" *ngIf="cart.length > 0">
+                <div class="cart-item" *ngFor="let item of cart">
+                    <img [src]="item.image" alt="{{item.name}}">
+                    <div class="item-details">
+                        <h4>{{item.name}}</h4>
+                        <p>${{item.price | number:'1.2-2'}}</p>
+                    </div>
+                    <div class="item-quantity">
+                        <button (click)="updateQuantity(item.id, -1)">-</button>
+                        <span class="qty-display">{{item.quantity}}</span>
+                        <button (click)="updateQuantity(item.id, 1)">+</button>
+                    </div>
+                    <div class="item-total">
+                        ${{item.price * item.quantity | number:'1.2-2'}}
+                    </div>
+                    <button class="btn-remove" (click)="removeFromCart(item.id)">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                </div>
+
+                <div class="cart-summary">
+                    <h4>Subtotal: ${{cartSubtotal | number:'1.2-2'}}</h4>
+                </div>
+            </div>
+        </section>
+
+    </div>
+</div>

@@ -2,11 +2,19 @@
   <aside class="sidebar">
     <h3 (click)="mostrar('login')" [class.active]="activo === 'login'">Login Forms</h3>
     <h3 (click)="mostrar('register')" [class.active]="activo === 'register'">Register Forms</h3>
+    <h3 (click)="mostrar('forget-pass')" [class.active]="activo === 'forget-pass'">Forget Pass</h3>
+    <h3 (click)="mostrar('ecommerce')" [class.active]="activo === 'ecommerce'">Ecommerce</h3>
+    <h3 (click)="mostrar('dashboard')" [class.active]="activo === 'dashboard'">Dashboard</h3>
+    <h3 (click)="mostrar('landing-pages')" [class.active]="activo === 'landing-pages'">Landing Pages</h3>
   </aside>
 
   <!-- Área de contenido -->
   <section class="content">
     <app-login *ngIf="activo === 'login'"></app-login>
     <app-register *ngIf="activo === 'register'"></app-register>
+    <app-forget-pass *ngIf="activo === 'forget-pass'"></app-forget-pass>
+    <app-ecommerce *ngIf="activo === 'ecommerce'"></app-ecommerce>
+    <app-dashboard *ngIf="activo === 'dashboard'"></app-dashboard>
+    <app-landing-pages *ngIf="activo === 'landing-pages'"></app-landing-pages>
   </section>
 </div>

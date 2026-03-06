@@ -1,0 +1,226 @@
+<div class="dashboard-wrapper">
+
+    <!-- ═══════════════════════════════════════════════
+       SIDEBAR de navegación interna
+  ═══════════════════════════════════════════════ -->
+    <aside class="dashboard-sidebar">
+        <div class="admin-profile">
+            <div class="avatar">
+                <i class="fas fa-user-shield"></i>
+            </div>
+            <h4>Admin Sys</h4>
+            <p>Gerencia</p>
+        </div>
+
+        <nav class="dash-nav">
+            <a (click)="setView('analytics')" [class.active]="currentView === 'analytics'" role="button" tabindex="0">
+                <i class="fas fa-chart-line"></i> Analytics
+            </a>
+            <a (click)="setView('usuarios')" [class.active]="currentView === 'usuarios'" role="button" tabindex="0">
+                <i class="fas fa-users"></i> Usuarios
+            </a>
+            <a (click)="setView('config')" [class.active]="currentView === 'config'" role="button" tabindex="0">
+                <i class="fas fa-cog"></i> Configuración
+            </a>
+        </nav>
+    </aside>
+
+    <!-- ═══════════════════════════════════════════════
+       CONTENIDO PRINCIPAL
+  ═══════════════════════════════════════════════ -->
+    <main class="dashboard-content">
+
+        <!-- ──────────────── VISTA: ANALYTICS ──────────────── -->
+        <ng-container *ngIf="currentView === 'analytics'">
+
+            <header class="dashboard-header">
+                <h2><i class="fas fa-chart-line"></i> Resumen Analytics</h2>
+                <button class="btn-export" (click)="exportToExcel()">
+                    <i class="fas fa-file-excel"></i> Exportar Excel
+                </button>
+            </header>
+
+            <!-- KPI Cards dinámicas -->
+            <section class="kpi-grid">
+                <div class="kpi-card" *ngFor="let kpi of kpis">
+                    <h3><i class="fas {{ kpi.icon }}"></i> {{ kpi.label }}</h3>
+                    <p class="metric">{{ kpi.value }}</p>
+                    <span class="trend" [class.positive]="kpi.positive" [class.negative]="!kpi.positive">
+                        {{ kpi.trend }}
+                    </span>
+                </div>
+            </section>
+
+            <!-- Área de gráficos (mock visual, listo para Chart.js o similar) -->
+            <!-- TODO: reemplazar mock-chart-line con canvas de Chart.js -->
+            <section class="charts-area">
+                <div class="chart-container large">
+                    <h3>Tráfico Mensual</h3>
+                    <div class="mock-chart-line"></div>
+                    <p class="chart-hint"><i class="fas fa-info-circle"></i> Conectar con Chart.js o similar</p>
+                </div>
+                <div class="chart-container">
+                    <h3>Fuentes de Ingreso</h3>
+                    <div class="mock-chart-pie"></div>
+                </div>
+            </section>
+
+        </ng-container>
+
+        <!-- ──────────────── VISTA: USUARIOS ──────────────── -->
+        <ng-container *ngIf="currentView === 'usuarios'">
+
+            <header class="dashboard-header">
+                <h2><i class="fas fa-users"></i> Gestión de Usuarios</h2>
+                <div class="header-actions">
+                    <button class="btn-export" (click)="exportToExcel()">
+                        <i class="fas fa-file-excel"></i> Exportar Excel
+                    </button>
+                </div>
+            </header>
+
+            <!-- Barra de búsqueda -->
+            <div class="table-toolbar">
+                <div class="search-box">
+                    <i class="fas fa-search"></i>
+                    <input type="text" placeholder="Buscar por nombre, email o rol..." [(ngModel)]="searchQuery"
+                        class="search-input" />
+                </div>
+                <span class="user-count">{{ filteredUsers.length }} usuario(s)</span>
+            </div>
+
+            <!-- Tabla de usuarios -->
+            <div class="table-wrapper">
+                <table class="users-table">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Nombre</th>
+                            <th>Email</th>
+                            <th>Rol</th>
+                            <th>Estado</th>
+                            <th>Alta</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let user of filteredUsers" [class.editing]="editingUserId === user.id">
+
+                            <!-- ID -->
+                            <td class="td-id">{{ user.id }}</td>
+
+                            <!-- Nombre: modo lectura / modo edición -->
+                            <td>
+                                <span *ngIf="editingUserId !== user.id">{{ user.name }}</span>
+                                <input *ngIf="editingUserId === user.id" [(ngModel)]="user.name" class="inline-input"
+                                    placeholder="Nombre" />
+                            </td>
+
+                            <!-- Email: modo lectura / modo edición -->
+                            <td>
+                                <span *ngIf="editingUserId !== user.id" class="td-email">{{ user.email }}</span>
+                                <input *ngIf="editingUserId === user.id" [(ngModel)]="user.email" class="inline-input"
+                                    placeholder="Email" />
+                            </td>
+
+                            <!-- Rol: badge / select en edición -->
+                            <td>
+                                <span *ngIf="editingUserId !== user.id" class="badge badge-{{ user.role }}"
+                                    (click)="cycleRole(user)" title="Clic para cambiar rol">{{ user.role }}</span>
+                                <select *ngIf="editingUserId === user.id" [(ngModel)]="user.role" class="inline-select">
+                                    <option *ngFor="let r of availableRoles" [value]="r">{{ r }}</option>
+                                </select>
+                            </td>
+
+                            <!-- Estado: badge clicable -->
+                            <td>
+                                <span class="badge badge-status" [class.activo]="user.status === 'activo'"
+                                    [class.inactivo]="user.status === 'inactivo'" (click)="toggleStatus(user)"
+                                    title="Clic para cambiar estado">
+                                    <i class="fas" [class.fa-check-circle]="user.status === 'activo'"
+                                        [class.fa-times-circle]="user.status === 'inactivo'"></i>
+                                    {{ user.status }}
+                                </span>
+                            </td>
+
+                            <!-- Fecha -->
+                            <td class="td-date">{{ user.joined }}</td>
+
+                            <!-- Acciones -->
+                            <td class="td-actions">
+                                <!-- Modo lectura -->
+                                <ng-container *ngIf="editingUserId !== user.id">
+                                    <button class="action-btn edit" (click)="startEdit(user)" title="Editar usuario">
+                                        <i class="fas fa-pen"></i>
+                                    </button>
+                                    <button class="action-btn delete" (click)="deleteUser(user.id)"
+                                        title="Eliminar usuario">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </ng-container>
+                                <!-- Modo edición -->
+                                <ng-container *ngIf="editingUserId === user.id">
+                                    <button class="action-btn save" (click)="saveEdit(user)" title="Guardar cambios">
+                                        <i class="fas fa-check"></i>
+                                    </button>
+                                    <button class="action-btn cancel" (click)="cancelEdit(user)"
+                                        title="Cancelar edición">
+                                        <i class="fas fa-times"></i>
+                                    </button>
+                                </ng-container>
+                            </td>
+
+                        </tr>
+
+                        <!-- Fila vacía si no hay resultados -->
+                        <tr *ngIf="filteredUsers.length === 0">
+                            <td colspan="7" class="td-empty">
+                                <i class="fas fa-search"></i> No se encontraron usuarios.
+                            </td>
+                        </tr>
+
+                    </tbody>
+                </table>
+            </div>
+
+        </ng-container>
+
+        <!-- ──────────────── VISTA: CONFIGURACIÓN ──────────────── -->
+        <ng-container *ngIf="currentView === 'config'">
+
+            <header class="dashboard-header">
+                <h2><i class="fas fa-cog"></i> Configuración</h2>
+            </header>
+
+            <div class="config-panel glass-panel">
+                <h3>Ajustes del Sitio</h3>
+                <p class="config-hint">
+                    <!-- TODO: conectar con API de configuración del sistema -->
+                    Estos valores se guardan localmente (mock). Conectar con backend para persistencia real.
+                </p>
+
+                <div class="config-group">
+                    <label for="siteName">Nombre del sitio</label>
+                    <input id="siteName" type="text" [(ngModel)]="siteName" class="config-input" />
+                </div>
+
+                <div class="config-group">
+                    <label for="siteEmail">Email de contacto</label>
+                    <input id="siteEmail" type="email" [(ngModel)]="siteEmail" class="config-input" />
+                </div>
+
+                <button class="btn-export" (click)="saveConfig()">
+                    <i class="fas fa-save"></i> Guardar Configuración
+                </button>
+
+
+            </div>
+            <!-- NOTIFICACIÓN TEMPORAL -->
+            <div *ngIf="notificationMessage" class="notification" [class.success]="notificationType === 'success'"
+                [class.error]="notificationType === 'error'">
+                {{ notificationMessage }}
+            </div>
+        </ng-container>
+
+    </main>
+</div>
