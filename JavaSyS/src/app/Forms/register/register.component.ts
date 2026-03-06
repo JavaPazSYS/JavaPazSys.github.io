@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { ToastService } from '../../shared/services/toast/toast.service';
 
 @Component({
   selector: 'app-register',
@@ -10,6 +11,8 @@ import { CommonModule } from '@angular/common';
   styleUrl: './register.component.css'
 })
 export class RegisterComponent {
+  // Servicio de notificaciones globales
+  toastService = inject(ToastService);
 
   // ── Estado del formulario ─────────────────────────────────────────────────
   email: string = '';
@@ -118,6 +121,7 @@ export class RegisterComponent {
       // TODO: conectar base de datos aquí → guardar usuario real
       this.isLoading = false;
       this.registerSuccess = true;
+      this.toastService.show(`Usuario ${this.user} registrado con éxito`, 'success');
       console.log('Registro mock:', { email: this.email, user: this.user });
     }, 1000);
   }

@@ -42,7 +42,7 @@
 
             <!-- KPI Cards dinámicas -->
             <section class="kpi-grid">
-                <div class="kpi-card" *ngFor="let kpi of kpis">
+                <div class="kpi-card" *ngFor="let kpi of kpis; trackBy: trackByKpiLabel">
                     <h3><i class="fas {{ kpi.icon }}"></i> {{ kpi.label }}</h3>
                     <p class="metric">{{ kpi.value }}</p>
                     <span class="trend" [class.positive]="kpi.positive" [class.negative]="!kpi.positive">
@@ -104,7 +104,8 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr *ngFor="let user of filteredUsers" [class.editing]="editingUserId === user.id">
+                        <tr *ngFor="let user of filteredUsers; trackBy: trackByUserId"
+                            [class.editing]="editingUserId === user.id">
 
                             <!-- ID -->
                             <td class="td-id">{{ user.id }}</td>
@@ -215,12 +216,13 @@
 
 
             </div>
-            <!-- NOTIFICACIÓN TEMPORAL -->
-            <div *ngIf="notificationMessage" class="notification" [class.success]="notificationType === 'success'"
-                [class.error]="notificationType === 'error'">
-                {{ notificationMessage }}
-            </div>
         </ng-container>
+
+        <!-- MODAL DE ELIMINACIÓN -->
+        <app-modal [isOpen]="isDeleteModalOpen" title="Eliminar Usuario"
+            message="¿Estás seguro de que deseas eliminar este usuario? Esta acción no se puede deshacer."
+            confirmText="Sí, eliminar" cancelText="Cancelar" (onConfirm)="confirmDelete()" (onCancel)="cancelDelete()">
+        </app-modal>
 
     </main>
 </div>

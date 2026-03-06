@@ -1,5 +1,5 @@
-/* ==========================================================================
-   LANDING PAGES COMPONENT — Responsive Landing Demo
+/* ========================================================================== 
+   LANDING PAGES COMPONENT — Responsive Landing Optimized
    ========================================================================== */
 
 .landing-page-wrapper {
@@ -96,41 +96,146 @@
     color: var(--color-pink-dark);
 }
 
-/* ── Features Section ── */
-.features-section {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-    gap: var(--space-lg);
-}
-
-.feature-card {
-    background: var(--glass-bg-solid);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    padding: var(--space-xl);
+/* ==================== CAROUSEL ADAPTADO ==================== */
+.carousel-container {
+    position: relative;
+    overflow: hidden;
+    width: 100%;
     border-radius: var(--border-radius-lg);
-    border: 1px solid var(--glass-border-light);
-    box-shadow: var(--shadow-soft);
-    text-align: center;
-    transition: var(--transition-smooth);
 }
 
-.feature-card:hover {
-    transform: translateY(-4px);
+.carousel-track-viewport {
+    overflow: hidden;
+    width: 100%;
+}
+
+.carousel-track {
+    display: flex;
+    transition: transform 0.5s ease;
+    gap: var(--space-md);
+}
+
+.carousel-slide {
+    flex: 0 0 100%;
+    min-width: 100%;
+    text-align: center;
+    background: var(--glass-bg-solid);
+    border-radius: var(--border-radius-lg);
+    padding: var(--space-lg);
+    box-shadow: var(--shadow-soft);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.carousel-slide:hover {
+    transform: translateY(-5px) scale(1.02);
     box-shadow: var(--shadow-modern);
 }
 
-.feature-card i {
+.carousel-slide .slide-icon {
     font-size: 2.5rem;
     color: var(--color-pink);
-    margin-bottom: var(--space-md);
-    display: block;
+    margin-bottom: var(--space-sm);
 }
 
-.feature-card h3 {
-    color: var(--color-pink-light);
-    margin-bottom: var(--space-sm);
-    font-size: clamp(1rem, 1.8vw, 1.3rem);
+/* Botones */
+.nav-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: var(--glass-bg-solid);
+    border: none;
+    border-radius: 50%;
+    padding: var(--space-xs);
+    cursor: pointer;
+    z-index: 10;
+    box-shadow: var(--shadow-soft);
+    transition: transform 0.2s ease;
+}
+
+.nav-btn:hover {
+    transform: translateY(-50%) scale(1.1);
+}
+
+.nav-btn.prev {
+    left: var(--space-sm);
+}
+
+.nav-btn.next {
+    right: var(--space-sm);
+}
+
+/* Dots */
+.dots-container {
+    display: flex;
+    justify-content: center;
+    gap: var(--space-xs);
+    margin-top: var(--space-md);
+}
+
+.dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--color-gray-light);
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.dot.active {
+    background: var(--color-pink);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .carousel-slide {
+        padding: var(--space-md);
+    }
+
+    .nav-btn {
+        padding: var(--space-xs);
+    }
+}
+
+@media (max-width: 480px) {
+    .carousel-slide {
+        padding: var(--space-sm);
+    }
+}
+
+/* ==================== RESPONSIVE CAROUSEL ==================== */
+
+/* Tablet / móvil grande (≤ 768px) */
+@media(max-width: 768px) {
+    .carousel-card {
+        flex: 0 0 80%;
+    }
+
+    .carousel-btn {
+        padding: var(--space-xs);
+    }
+}
+
+/* Móvil pequeño (≤ 480px) */
+@media(max-width: 480px) {
+    .carousel-card {
+        flex: 0 0 90%;
+    }
+
+    .carousel-btn {
+        padding: var(--space-xs);
+    }
+}
+
+/* Móvil muy pequeño (≤ 320px) */
+@media(max-width: 320px) {
+    .carousel-card {
+        flex: 0 0 95%;
+        padding: var(--space-sm);
+    }
+
+    .carousel-card h3 {
+        font-size: 1rem;
+    }
 }
 
 /* ── CTA Section ── */
@@ -187,7 +292,8 @@
 /* Móvil pequeño (≤ 480px) */
 @media (max-width: 480px) {
     .features-section {
-        grid-template-columns: 1fr;
+        flex: 1 0 100%;
+        /* carrusel full width */
     }
 
     .feature-card {
@@ -207,5 +313,13 @@
 
     .hero-section {
         padding: var(--space-lg) var(--space-sm);
+    }
+
+    .feature-card {
+        padding: var(--space-md);
+    }
+
+    .feature-card h3 {
+        font-size: 1rem;
     }
 }

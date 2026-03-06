@@ -1,6 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { ToastService } from '../shared/services/toast/toast.service';
+import { ModalComponent } from '../shared/components/modal/modal.component';
 
 // ── Modelos de datos ──────────────────────────────────────────────────────────
 
@@ -29,18 +31,20 @@ export interface KpiCard {
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, ModalComponent],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.css'
 })
 export class DashboardComponent implements OnInit {
+  // Inyección del servicio de notificaciones globales
+  toastService = inject(ToastService);
 
   // ── Navegación interna del Dashboard ─────────────────────────────────────
   currentView: DashView = 'analytics';
 
   setView(view: DashView): void {
     this.currentView = view;
-    // Cerrar edición al cambiar de vista
+    // Cerrar edición al cambiar de vista para evitar inconsistencias de estado
     this.editingUserId = null;
   }
 
@@ -77,6 +81,15 @@ export class DashboardComponent implements OnInit {
     );
   }
 
+  // Optimización de renderizado para Angular *ngFor
+  trackByUserId(index: number, user: MockUser): number {
+    return user.id;
+  }
+
+  trackByKpiLabel(index: number, kpi: KpiCard): string {
+    return kpi.label;
+  }
+
   // ── CRUD de usuarios ──────────────────────────────────────────────────────
 
   editingUserId: number | null = null;
@@ -93,9 +106,10 @@ export class DashboardComponent implements OnInit {
   /** Confirma los cambios editados */
   saveEdit(user: MockUser): void {
     // TODO: conectar con API → this.userService.updateUser(user)
-    // Por ahora sólo actualiza el estado local
+    // Por ahora sólo actualiza el estado local y notifica
     this.editingUserId = null;
     this.editSnapshot = {};
+    this.toastService.show(`Usuario ${user.name} actualizado`, 'success');
   }
 
   /** Cancela la edición y restaura los valores originales */
@@ -105,11 +119,31 @@ export class DashboardComponent implements OnInit {
     this.editSnapshot = {};
   }
 
-  /** Elimina un usuario del listado local */
+  // Estado para el modal de eliminación de usuarios
+  isDeleteModalOpen = false;
+  userToDeleteId: number | null = null;
+
+  /** Solicita confirmación para eliminar un usuario abriendo el modal reactivo */
   deleteUser(id: number): void {
-    // TODO: conectar con API → this.userService.deleteUser(id)
-    if (!confirm('¿Seguro que deseas eliminar este usuario?')) return;
-    this.users = this.users.filter(u => u.id !== id);
+    this.userToDeleteId = id;
+    this.isDeleteModalOpen = true;
+  }
+
+  /** Función ejecutada cuando el usuario confirma en el modal de eliminación */
+  confirmDelete(): void {
+    if (this.userToDeleteId !== null) {
+      // TODO: conectar con API → this.userService.deleteUser(id)
+      this.users = this.users.filter(u => u.id !== this.userToDeleteId);
+      this.toastService.show('Usuario eliminado correctamente', 'success');
+    }
+    this.isDeleteModalOpen = false;
+    this.userToDeleteId = null;
+  }
+
+  /** Función ejecutada cuando el usuario cancela en el modal de eliminación */
+  cancelDelete(): void {
+    this.isDeleteModalOpen = false;
+    this.userToDeleteId = null;
   }
 
   /** Cambia el rol entre admin / editor / viewer cíclicamente */
@@ -118,32 +152,17 @@ export class DashboardComponent implements OnInit {
     const roles: UserRole[] = ['viewer', 'editor', 'admin'];
     const current = roles.indexOf(user.role);
     user.role = roles[(current + 1) % roles.length];
+    this.toastService.show(`Rol cambiado a ${user.role} para ${user.name}`, 'info');
   }
 
   /** Alterna el estado activo/inactivo del usuario */
   toggleStatus(user: MockUser): void {
     // TODO: conectar con API → this.userService.toggleStatus(user.id)
     user.status = user.status === 'activo' ? 'inactivo' : 'activo';
+    this.toastService.show(`Estado de ${user.name} cambiado a ${user.status}`, 'info');
   }
-  // Mensaje temporal en pantalla
-  notificationMessage: string = '';
-  notificationType: 'success' | 'error' = 'success';
-  notificationTimeout: any;
-
-  /** Muestra una notificación temporal */
-  showNotification(message: string, type: 'success' | 'error' = 'success', duration: number = 3000) {
-    this.notificationMessage = message;
-    this.notificationType = type;
-
-    // Limpia cualquier timeout previo
-    if (this.notificationTimeout) {
-      clearTimeout(this.notificationTimeout);
-    }
-
-    this.notificationTimeout = setTimeout(() => {
-      this.notificationMessage = '';
-    }, duration);
-  }
+  // Nota: Las funciones de notificaciones locales se han eliminado 
+  // para usar el nuevo ToastService global.
   // ── Exportar a Excel ──────────────────────────────────────────────────────
 
   /**
@@ -186,9 +205,11 @@ export class DashboardComponent implements OnInit {
       const fecha = new Date().toISOString().slice(0, 10);
       XLSX.writeFile(wb, `usuarios_javapaz_${fecha}.xlsx`);
 
+      this.toastService.show('Archivo Excel exportado con éxito', 'success');
+
     } catch (err) {
       console.error('Error al exportar Excel:', err);
-      alert('No se pudo generar el archivo.');
+      this.toastService.show('No se pudo generar el archivo Excel', 'error');
     }
   }
 
@@ -199,7 +220,7 @@ export class DashboardComponent implements OnInit {
 
   saveConfig(): void {
     // TODO: conectar con API → this.configService.save({ siteName, siteEmail })
-    this.showNotification(`Configuración guardada!`, 'success');
+    this.toastService.show('Configuración guardada correctamente', 'success');
   }
 
   // ── Roles disponibles para el <select> ───────────────────────────────────

@@ -116,7 +116,7 @@ small {
   background-color: var(--color-pink-dark);
   border: none;
   border-radius: var(--border-radius-sm);
-  color: var(--color-white);
+  color: #ffffff;
   font-size: 1rem;
   cursor: pointer;
   transition: var(--transition-smooth);
@@ -132,7 +132,7 @@ form button[type="submit"] {
   background-color: var(--color-pink);
   border: none;
   border-radius: var(--border-radius-sm);
-  color: var(--color-white);
+  color: #ffffff;
   font-size: 1rem;
   cursor: pointer;
   transition: var(--transition-smooth);
@@ -163,7 +163,7 @@ button:hover:not(:disabled) {
   background-color: var(--color-pink);
   border: none;
   border-radius: var(--border-radius-sm);
-  color: var(--color-white);
+  color: #ffffff;
   font-size: 1rem;
   cursor: pointer;
   transition: var(--transition-smooth);

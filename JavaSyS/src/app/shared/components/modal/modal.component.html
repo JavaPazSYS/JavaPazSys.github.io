@@ -1,0 +1,19 @@
+<div class="modal-overlay" *ngIf="isOpen" (click)="cancel()">
+    <div class="modal-dialog glass-panel" (click)="$event.stopPropagation()">
+        <header class="modal-header">
+            <h3>{{ title }}</h3>
+            <button class="close-btn" (click)="cancel()" aria-label="Cerrar modal">
+                <i class="fas fa-times"></i>
+            </button>
+        </header>
+
+        <div class="modal-content">
+            <p>{{ message }}</p>
+        </div>
+
+        <footer class="modal-footer">
+            <button class="btn-cancel" (click)="cancel()">{{ cancelText }}</button>
+            <button class="btn-confirm" (click)="confirm()">{{ confirmText }}</button>
+        </footer>
+    </div>
+</div>

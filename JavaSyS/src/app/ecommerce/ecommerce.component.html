@@ -33,7 +33,7 @@
 
         <!-- GRID DE PRODUCTOS -->
         <section class="products-grid" *ngIf="currentView === 'catalog'">
-            <article class="product-card" *ngFor="let product of filteredProducts()">
+            <article class="product-card" *ngFor="let product of filteredProducts(); trackBy: trackByProductId">
                 <img [src]="product.image" class="placeholder-img" alt="{{product.name}}">
                 <div class="product-info">
                     <h3>{{product.name}}</h3>
@@ -54,7 +54,7 @@
             </div>
 
             <div class="cart-items" *ngIf="cart.length > 0">
-                <div class="cart-item" *ngFor="let item of cart">
+                <div class="cart-item" *ngFor="let item of cart; trackBy: trackByCartItem">
                     <img [src]="item.image" alt="{{item.name}}">
                     <div class="item-details">
                         <h4>{{item.name}}</h4>
@@ -75,6 +75,13 @@
 
                 <div class="cart-summary">
                     <h4>Subtotal: ${{cartSubtotal | number:'1.2-2'}}</h4>
+                </div>
+
+                <hr style="margin: 2rem 0; border: none; border-top: 1px solid var(--glass-border);">
+
+                <div class="cart-faq">
+                    <h3 style="margin-bottom: 1rem;">Preguntas Frecuentes</h3>
+                    <app-accordion [items]="faqItems"></app-accordion>
                 </div>
             </div>
         </section>

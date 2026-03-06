@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { ToastService } from '../shared/services/toast/toast.service';
 
 
 @Component({
@@ -10,6 +11,9 @@ import { CommonModule } from '@angular/common';
   styleUrl: './forget-pass.component.css'
 })
 export class ForgetPassComponent {
+  // Servicio de notificaciones globales
+  toastService = inject(ToastService);
+
   // ── Estado formulario ─────────────────────────────────────
   email: string = '';
   isLoading: boolean = false;
@@ -49,6 +53,7 @@ export class ForgetPassComponent {
       this.isLoading = false
       this.emailSent = true
 
+      this.toastService.show(`Instrucciones enviadas a ${this.email}`, 'success');
       console.log('Mock email enviado a:', this.email)
 
       // iniciar bloqueo de reenvío
@@ -65,6 +70,7 @@ export class ForgetPassComponent {
     // TODO: conectar API real
     // POST /api/auth/forgot-password
 
+    this.toastService.show(`Correo reenviado a ${this.email}`, 'info');
     console.log("Reenviando correo a:", this.email)
 
     this.startResendCountdown()

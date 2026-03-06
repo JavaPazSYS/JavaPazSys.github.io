@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { ToastService } from '../../shared/services/toast/toast.service';
 
 // ── Usuarios mock para simular autenticación ──────────────────────────────────
 // TODO: reemplazar este mock por llamada al endpoint de autenticación
@@ -20,8 +21,11 @@ const MOCK_USERS = [
   styleUrl: './login.component.css'
 })
 export class LoginComponent {
+  // ── Servicios inyectados ──────────────────────────────────────────────────
+  toastService = inject(ToastService);
 
   // ── Estado del formulario ─────────────────────────────────────────────────
+  // Variables bidireccionales vinculadas por ngModel
   email: string = '';
   password: string = '';
   showPassword: boolean = false;
@@ -110,10 +114,12 @@ export class LoginComponent {
         // Login exitoso (mock)
         this.loginSuccess = true;
         this.loggedUserName = found.name;
+        this.toastService.show(`Bienvenido ${found.name}`, 'success');
         // TODO: guardar token JWT, redirigir con Router:
         //   this.router.navigate(['/dashboard']);
       } else {
         this.loginError = 'Usuario no existe';
+        this.toastService.show(this.loginError, 'error');
       }
     }, 800); // 800ms simulando latencia de red
   }

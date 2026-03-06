@@ -1,11 +1,14 @@
 <div class="repositorio-layout" id="repositorio">
   <aside class="sidebar">
-    <h3 (click)="mostrar('login')" [class.active]="activo === 'login'">Login Forms</h3>
-    <h3 (click)="mostrar('register')" [class.active]="activo === 'register'">Register Forms</h3>
-    <h3 (click)="mostrar('forget-pass')" [class.active]="activo === 'forget-pass'">Forget Pass</h3>
-    <h3 (click)="mostrar('ecommerce')" [class.active]="activo === 'ecommerce'">Ecommerce</h3>
-    <h3 (click)="mostrar('dashboard')" [class.active]="activo === 'dashboard'">Dashboard</h3>
-    <h3 (click)="mostrar('landing-pages')" [class.active]="activo === 'landing-pages'">Landing Pages</h3>
+    <h3 (click)="mostrar('login')" [class.active]="activo === 'login'" role="button" tabindex="0">Login Forms</h3>
+    <h3 (click)="mostrar('register')" [class.active]="activo === 'register'" role="button" tabindex="0">Register Forms
+    </h3>
+    <h3 (click)="mostrar('forget-pass')" [class.active]="activo === 'forget-pass'" role="button" tabindex="0">Forget
+      Pass</h3>
+    <h3 (click)="mostrar('ecommerce')" [class.active]="activo === 'ecommerce'" role="button" tabindex="0">Ecommerce</h3>
+    <h3 (click)="mostrar('dashboard')" [class.active]="activo === 'dashboard'" role="button" tabindex="0">Dashboard</h3>
+    <h3 (click)="mostrar('landing-pages')" [class.active]="activo === 'landing-pages'" role="button" tabindex="0">
+      Landing Pages</h3>
   </aside>
 
   <!-- Área de contenido -->

@@ -1,15 +1,23 @@
 <nav class="nav" aria-label="Navegación principal">
   <div class="nav__logo">
-    <a href="#Inicio" aria-label="Ir al inicio">
+    <a (click)="scrollTo('Inicio', $event)" style="cursor: pointer;" aria-label="Ir al inicio">
       &lt; Java/S<span class="logo-sys">y</span>S &gt;
     </a>
   </div>
 
   <ul class="nav__links" [class.show]="menuOpen" role="menu">
-    <li role="menuitem"><a href="#Inicio" (click)="closeMenu()">Inicio</a></li>
-    <li role="menuitem"><a href="#AboutMe" (click)="closeMenu()">Sobre mí</a></li>
-    <li role="menuitem"><a href="#Skills" (click)="closeMenu()">Tecnologías</a></li>
-    <li role="menuitem"><a href="#Contacto" id="contact-link" (click)="closeMenu()">Contacto</a></li>
+    <li role="menuitem"><a (click)="scrollTo('Inicio', $event)" style="cursor: pointer;">Inicio</a></li>
+    <li role="menuitem"><a (click)="scrollTo('AboutMe', $event)" style="cursor: pointer;">Sobre mí</a></li>
+    <li role="menuitem"><a (click)="scrollTo('Skills', $event)" style="cursor: pointer;">Tecnologías</a></li>
+    <li role="menuitem"><a routerLink="/repositorio" (click)="closeMenu()" style="cursor: pointer;"
+        routerLinkActive="active-link">Repositorio</a></li>
+    <li role="menuitem"><a (click)="scrollTo('Contacto', $event)" id="contact-link"
+        style="cursor: pointer;">Contacto</a></li>
+    <li role="menuitem">
+      <button class="theme-toggle-btn" (click)="themeService.toggleTheme()" aria-label="Cambiar tema">
+        <i class="fas" [class.fa-sun]="themeService.isDarkTheme()" [class.fa-moon]="!themeService.isDarkTheme()"></i>
+      </button>
+    </li>
   </ul>
 
   <!-- Overlay para cerrar el menú al tocar fuera -->

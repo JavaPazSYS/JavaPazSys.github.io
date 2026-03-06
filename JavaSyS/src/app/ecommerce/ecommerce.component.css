@@ -43,7 +43,7 @@
 
 .btn-checkout {
     background: var(--color-pink-dark);
-    color: var(--color-white);
+    color: #ffffff;
     border: none;
     padding: var(--space-xs) var(--space-md);
     border-radius: var(--border-radius-md);
@@ -152,7 +152,7 @@
 .btn-add {
     margin-top: auto;
     background: var(--color-pink);
-    color: var(--color-white);
+    color: #ffffff;
     border: none;
     padding: var(--space-sm);
     border-radius: var(--border-radius-md);

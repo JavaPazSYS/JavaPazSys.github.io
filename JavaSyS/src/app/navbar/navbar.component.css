@@ -45,7 +45,7 @@ section {
 .nav__logo .logo-sys {
   font-family: var(--font-logo);
   color: var(--color-accent);
-  font-size: 2rem;
+  font-size: clamp(1.6rem, 4vw, 2.5rem);
 }
 
 /* ── Links (desktop) ── */
@@ -93,13 +93,15 @@ section {
 
 .nav__links a:hover::after,
 .nav__links a:focus::after {
-  width: 100%;
+  padding-bottom: 0.25rem;
 }
 
-.nav__links a.active {
+.nav__links a.active-link,
+.nav__links a:hover {
   color: var(--color-accent);
 }
 
+.nav__links a.active-link::after,
 .nav__links a.active::after {
   width: 100%;
 }
@@ -136,6 +138,24 @@ section {
 .nav__toggle:hover {
   color: var(--color-accent);
   background: var(--glass-border-light);
+}
+
+/* ── Botón Toggle Theme ── */
+.theme-toggle-btn {
+  background: none;
+  border: none;
+  font-size: 1.4rem;
+  color: var(--color-text);
+  cursor: pointer;
+  transition: var(--transition-fast);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.theme-toggle-btn:hover {
+  color: var(--color-accent);
+  transform: scale(1.1);
 }
 
 /* ── Overlay (fondo oscuro al abrir en móvil) ── */

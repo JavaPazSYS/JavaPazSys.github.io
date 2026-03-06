@@ -102,6 +102,34 @@
   --navbar-height: 5rem;
 }
 
+/* ── Light Theme Variables ── */
+[data-theme="light"] {
+  color-scheme: light;
+  --color-pink-light: #e4598e;
+  --color-black: #ffffff;
+  --color-black-light: #f4f4f4;
+  --color-white: #121212;
+  --color-gray-light: #696868;
+  --color-gray: #4a4848;
+  --color-gray-dark: #313030;
+
+  --color-bg-dark: #f0f2f5;
+  --color-surface-dark: #ffffff;
+  --color-card-dark: #f9f9f9;
+  --color-text-light: #111111;
+  --color-text-muted: #666666;
+
+  --glass-bg: rgba(255, 255, 255, 0.75);
+  --glass-bg-solid: rgba(240, 242, 245, 0.85);
+  --glass-border: rgba(0, 0, 0, 0.15);
+  --glass-border-light: rgba(0, 0, 0, 0.05);
+
+  --bg-gradient-modern: linear-gradient(135deg, #f0f2f5 0%, #e0e5ec 100%);
+  --bg-gradient-pink: linear-gradient(135deg, #fce4ec 0%, #f0f2f5 100%);
+
+  --color-border: #cccccc;
+}
+
 /* ── Reset base del body ── */
 html {
   scroll-padding-top: 90px;
