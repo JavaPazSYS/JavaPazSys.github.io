@@ -13,17 +13,17 @@
         routerLinkActive="active-link">Repositorio</a></li>
     <li role="menuitem"><a (click)="scrollTo('Contacto', $event)" id="contact-link"
         style="cursor: pointer;">Contacto</a></li>
-    <li role="menuitem">
-      <button class="theme-toggle-btn" (click)="themeService.toggleTheme()" aria-label="Cambiar tema">
-        <i class="fas" [class.fa-sun]="themeService.isDarkTheme()" [class.fa-moon]="!themeService.isDarkTheme()"></i>
-      </button>
-    </li>
   </ul>
 
   <!-- Overlay para cerrar el menú al tocar fuera -->
   <div class="nav__overlay" [class.show]="menuOpen" (click)="closeMenu()" aria-hidden="true"></div>
 
-  <button class="nav__toggle" (click)="toggleMenu()" [attr.aria-expanded]="menuOpen" aria-label="Abrir o cerrar menú">
-    {{ menuOpen ? '✕' : '☰' }}
-  </button>
+  <div class="nav__actions">
+    <button class="theme-toggle-btn" (click)="themeService.toggleTheme()" aria-label="Cambiar tema">
+      <i class="fas" [class.fa-sun]="themeService.isDarkTheme()" [class.fa-moon]="!themeService.isDarkTheme()"></i>
+    </button>
+    <button class="nav__toggle" [class.open]="menuOpen" (click)="toggleMenu()" [attr.aria-expanded]="menuOpen" aria-label="Abrir o cerrar menú">
+      {{ menuOpen ? '✕' : '☰' }}
+    </button>
+  </div>
 </nav>

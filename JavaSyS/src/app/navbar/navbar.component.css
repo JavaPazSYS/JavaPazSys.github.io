@@ -119,20 +119,32 @@ section {
   width: 100%;
 }
 
+/* ── Acciones de Navegación ── */
+.nav__actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md, 1rem);
+  z-index: 2500;
+}
+
 /* ── Botón Toggle (oculto en desktop) ── */
 .nav__toggle {
   display: none;
   background: none;
   border: none;
-  color: var(--color-white);
+  color: var(--color-text);
   font-size: 1.8rem;
   cursor: pointer;
   padding: var(--space-xs);
   line-height: 1;
   border-radius: var(--border-radius-sm);
-  transition: var(--transition-fast);
+  transition: transform 0.3s ease, color 0.3s ease, background-color 0.3s ease;
   flex-shrink: 0;
-  z-index: 1100;
+  z-index: 2500;
+}
+
+.nav__toggle.open {
+  transform: rotate(90deg);
 }
 
 .nav__toggle:hover {
@@ -166,11 +178,13 @@ section {
   background: rgba(0, 0, 0, 0.6);
   z-index: 1500;
   opacity: 0;
-  transition: opacity 0.3s ease;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
 }
 
 .nav__overlay.show {
   opacity: 1;
+  visibility: visible;
 }
 
 /* ============================================================
@@ -186,7 +200,6 @@ section {
     display: flex;
     align-items: center;
     justify-content: center;
-    order: 3;
   }
 
   /* Mostrar el overlay */

@@ -3,14 +3,15 @@
 
   <!-- ── Feedback de éxito ── -->
   <div *ngIf="registerSuccess" class="auth-feedback success">
-    <i class="fas fa-check-circle"></i>
-    <div>
+    <div class="feedback-content">
+      <i class="fas fa-check-circle"></i>
       <strong>¡Registro exitoso!</strong>
       <p>Usuario <strong>{{ user }}</strong> creado correctamente (mock).</p>
       <!-- TODO: redirigir al login con Router tras registro real -->
     </div>
     <button type="button" class="feedback-close" (click)="resetForm()">
-      <i class="fas fa-times"></i>
+      Volver atrás
+      <i class="fas fa-arrow-left"></i>
     </button>
   </div>
 

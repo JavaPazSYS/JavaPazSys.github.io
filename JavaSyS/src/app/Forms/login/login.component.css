@@ -98,22 +98,49 @@ small {
   padding-left: var(--space-xs);
 }
 
-.feedback-content {
+/* ── Feedback Animations & Styles ── */
+@keyframes feedbackEnter {
+  0% { opacity: 0; transform: translateY(-15px) scale(0.98); }
+  100% { opacity: 1; transform: translateY(0) scale(1); }
+}
 
+.auth-feedback.success {
+  animation: feedbackEnter 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+  display: flex;
+  flex-direction: column;
   align-items: center;
-  padding: var(--space-md);
+  width: 100%;
+}
+
+.feedback-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: var(--space-lg);
   border: 1px solid var(--color-success);
+  background-color: var(--color-success-bg, rgba(46, 125, 50, 0.12));
   border-radius: var(--border-radius-lg);
-  margin-bottom: var(--space-lg);
-  align-content: center;
-  margin: 0 auto;
+  margin-bottom: var(--space-md);
+  width: 100%;
+  text-align: center;
+}
+
+.feedback-content i.fa-check-circle {
+  font-size: 3rem;
+  color: var(--color-success);
+  margin-bottom: var(--space-xs);
 }
 
 .feedback-close {
-  margin-top: var(--space-md);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: var(--space-sm);
+  margin-top: 0;
   width: 100%;
   padding: var(--space-md);
-  background-color: var(--color-pink-dark);
+  background-color: var(--color-pink);
   border: none;
   border-radius: var(--border-radius-sm);
   color: #ffffff;
@@ -122,6 +149,11 @@ small {
   transition: var(--transition-smooth);
   font-family: inherit;
   font-weight: 600;
+}
+
+.feedback-close:hover {
+  background-color: var(--color-pink-dark);
+  transform: translateY(-2px);
 }
 
 /* ── Botón Submit ── */

@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+# Archivo SEO recomendado para crawlers
+Sitemap: https://javasys.netlify.app/sitemap.xml
