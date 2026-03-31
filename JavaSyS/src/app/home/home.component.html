@@ -41,7 +41,7 @@
           sistema integrado.
         </p>
 
-        <a href="/CVJavieraBecerra.pdf" download class="btn-download">
+        <a href="CVJavieraBecerra.pdf" download class="btn-download">
           <i class="fas fa-file-pdf"></i>
           Descargar CV Aquí!
         </a>
@@ -142,7 +142,8 @@
       <p>Estoy disponible para nuevos proyectos y oportunidades laborales. Construyamos algo increíble.</p>
 
       <div class="contact-links">
-        <a href="https://mail.google.com/mail/?view=cm&fs=1&to=jp.becerradiaz@gmail.com" target="_blank"
+        <!-- Email Dynamically Set based on Device -->
+        <a [href]="emailLink" target="_blank"
           rel="noopener noreferrer" class="btn-contact btn-email">
           <i class="fas fa-envelope"></i>
           Enviame un Email

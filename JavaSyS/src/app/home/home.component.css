@@ -384,6 +384,7 @@
   color: var(--color-white);
 }
 
+ 
 .btn-linkedin {
   background: var(--glass-bg-solid);
   color: var(--color-white);
@@ -457,6 +458,13 @@
     gap: var(--space-xl);
   }
 
+  .typewriter {
+    white-space: normal;
+    width: 100%;
+    border-right: none;
+    animation: fadeZoomIn 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+
   .about-container {
     flex-direction: column;
   }
@@ -492,6 +500,7 @@
     max-width: 100%;
   }
 
+ 
   .categorized-grid {
     grid-template-columns: 1fr;
   }
