@@ -1,0 +1,432 @@
+/* ==========================================================================
+   Página 404 — «fe de erratas» de una edición impresa
+   ========================================================================== */
+
+.errata {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  /* Esta página no lleva la cabecera del sitio: ocupa la pantalla completa. */
+  min-height: 100vh;
+  padding-top: clamp(1.5rem, 4vw, 2.5rem);
+  overflow: hidden;
+}
+
+.errata > .contenedor {
+  flex: 1;
+}
+
+/* ── Cornisa: la línea que encabeza cada página de un libro ── */
+
+.errata__cornisa {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  padding-bottom: 0.875rem;
+  border-bottom: 1px solid var(--gris-700);
+  font-size: var(--t-xs);
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--gris-300);
+}
+
+.errata__pliego {
+  display: grid;
+  grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+  gap: 3rem clamp(2.5rem, 6vw, 5.5rem);
+  align-items: end;
+  padding-block: clamp(2rem, 5vw, 4rem) clamp(3rem, 6vw, 5rem);
+}
+
+/* ── El número ── */
+
+.numero {
+  display: flex;
+  align-items: center;
+  gap: 0.04em;
+  margin-left: -0.05em;
+  font-family: var(--serif);
+  /* Es ilustración, no texto: se mide contra el ancho de su columna. */
+  font-size: min(24vw, 22rem);
+  line-height: 0.82;
+  color: var(--hueso);
+  user-select: none;
+}
+
+.numero__cifra {
+  display: inline-block;
+  animation: asentar 1.4s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+
+/* La última cifra quedó torcida: algo en esta página no está en su sitio. */
+.numero__cifra--ultima {
+  --caida: 9deg;
+  transform-origin: 30% 85%;
+  animation:
+    asentar 1.4s cubic-bezier(0.2, 0.8, 0.2, 1) 0.18s both,
+    mecer 7s ease-in-out 1.6s infinite;
+}
+
+.numero__brujula {
+  flex-shrink: 0;
+  width: 0.62em;
+  height: 0.62em;
+  margin-top: 0.06em;
+  overflow: visible;
+  animation: asentar 1.4s cubic-bezier(0.2, 0.8, 0.2, 1) 0.09s both;
+}
+
+.brujula__aro {
+  fill: none;
+  stroke: var(--hueso);
+  stroke-width: 2.4;
+  stroke-dasharray: 290;
+  stroke-dashoffset: 290;
+  animation: trazar 1.6s cubic-bezier(0.6, 0, 0.2, 1) 0.3s forwards;
+}
+
+.brujula__esfera {
+  transform-origin: 50px 50px;
+  animation: girar 90s linear infinite;
+}
+
+.brujula__guia {
+  fill: none;
+  stroke: var(--gris-700);
+  stroke-width: 0.6;
+}
+
+.brujula__marca {
+  stroke: var(--gris-500);
+  stroke-width: 0.8;
+}
+
+.brujula__marca--mayor {
+  stroke: var(--hueso);
+  stroke-width: 1.2;
+}
+
+/* Sin cursor, la aguja vaga: duda, se pasa y vuelve. */
+.brujula__aguja {
+  transform-origin: 50px 50px;
+  animation: vagar 9s cubic-bezier(0.45, 0, 0.3, 1) 1.2s infinite;
+}
+
+.numero__brujula--sigue .brujula__aguja {
+  animation: none;
+  transition: rotate 0.35s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.brujula__norte {
+  fill: var(--vino-vivo);
+}
+
+.brujula__sur {
+  fill: var(--gris-500);
+}
+
+.brujula__eje {
+  fill: var(--negro);
+  stroke: var(--hueso);
+  stroke-width: 1.4;
+}
+
+/* ── Texto ── */
+
+.errata__titulo {
+  margin-top: clamp(1.5rem, 4vw, 2.5rem);
+  color: var(--gris-300);
+}
+
+.errata__lema {
+  margin-top: 0.875rem;
+  max-width: 14em;
+  font-family: var(--serif);
+  font-size: var(--t-2xl);
+  line-height: 1.02;
+  text-wrap: balance;
+}
+
+.errata__texto {
+  margin-top: 1.25rem;
+  max-width: 30em;
+  color: var(--gris-300);
+}
+
+.errata__direccion {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.25rem 0.75rem;
+  margin-top: 1.5rem;
+  font-size: var(--t-s);
+  color: var(--gris-500);
+  animation: aparecer 0.6s ease both;
+}
+
+.errata__direccion code {
+  padding: 0.125rem 0.5rem;
+  border: 1px solid var(--gris-700);
+  border-radius: var(--radio);
+  font-family: var(--mono);
+  font-size: var(--t-s);
+  color: var(--hueso);
+  overflow-wrap: anywhere;
+  /* Tachada: es la dirección que no existe. */
+  text-decoration: line-through;
+  text-decoration-color: var(--vino-vivo);
+  text-decoration-thickness: 1.5px;
+}
+
+.errata__acciones {
+  margin-top: 2rem;
+}
+
+/* ── Índice ── */
+
+.indice ol {
+  margin-top: 1rem;
+  border-top: 1px solid var(--gris-700);
+}
+
+.indice a {
+  position: relative;
+  display: grid;
+  /* Si el título ocupa dos líneas, los puntos conductores ceden todo su espacio. */
+  grid-template-columns: 5.25rem auto minmax(0, 1fr) auto;
+  align-items: baseline;
+  gap: 0.75rem;
+  padding-block: 0.9375rem;
+  border-bottom: 1px solid var(--grafito);
+  text-decoration: none;
+  transition: padding-left 0.35s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+/* Filete vino que crece desde la izquierda al pasar por la fila. */
+.indice a::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -1px;
+  width: 100%;
+  height: 1px;
+  background: var(--vino-vivo);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.indice a:hover,
+.indice a:focus-visible {
+  padding-left: 0.75rem;
+}
+
+.indice a:hover::before,
+.indice a:focus-visible::before {
+  transform: scaleX(1);
+}
+
+.indice__seccion {
+  font-size: var(--t-xs);
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--gris-500);
+}
+
+.indice__titulo {
+  min-width: 0;
+  font-family: var(--serif);
+  font-size: var(--t-xl);
+  line-height: 1.1;
+}
+
+/* Puntos conductores, como en el índice de un libro. */
+.indice__puntos {
+  align-self: end;
+  height: 0.3em;
+  margin-bottom: 0.3em;
+  background-image: radial-gradient(circle, var(--gris-700) 1px, transparent 1.4px);
+  background-size: 8px 4px;
+  background-repeat: repeat-x;
+  background-position: left bottom;
+}
+
+.indice__flecha {
+  color: var(--gris-500);
+  transition:
+    color 0.2s,
+    translate 0.35s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.indice a:hover .indice__flecha,
+.indice a:focus-visible .indice__flecha {
+  color: var(--hueso);
+  translate: 0.375rem 0;
+}
+
+/* ── Cinta inferior ── */
+
+.cinta {
+  border-top: 1px solid var(--gris-700);
+  overflow: hidden;
+}
+
+.cinta__pista {
+  display: flex;
+  align-items: center;
+  gap: 2.5rem;
+  width: max-content;
+  padding-block: 1rem;
+  font-family: var(--serif);
+  font-size: var(--t-2xl);
+  line-height: 1;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+  color: transparent;
+  -webkit-text-stroke: 1px var(--gris-700);
+  /* La pista contiene seis repeticiones: un sexto de recorrido cierra el ciclo sin costura. */
+  animation: correr 28s linear infinite;
+}
+
+.cinta__loto {
+  flex-shrink: 0;
+  width: 2.25rem;
+  height: auto;
+}
+
+.errata__sello {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.errata__sello img {
+  width: 1.375rem;
+  height: auto;
+}
+
+/* ── Entrada escalonada ── */
+
+.entra {
+  animation: subir 0.9s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+  animation-delay: calc(var(--orden, 0) * 90ms + 250ms);
+}
+
+@keyframes subir {
+  from {
+    opacity: 0;
+    translate: 0 1.25rem;
+  }
+}
+
+@keyframes aparecer {
+  from {
+    opacity: 0;
+  }
+}
+
+@keyframes asentar {
+  from {
+    opacity: 0;
+    translate: 0 0.12em;
+    filter: blur(10px);
+  }
+}
+
+@keyframes trazar {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes girar {
+  to {
+    rotate: 360deg;
+  }
+}
+
+@keyframes mecer {
+  0%,
+  100% {
+    rotate: 0deg;
+  }
+  40% {
+    rotate: var(--caida);
+  }
+  55% {
+    rotate: calc(var(--caida) * 0.72);
+  }
+  70% {
+    rotate: var(--caida);
+  }
+}
+
+/* La aguja busca: gira, se pasa, corrige, vuelve a dudar. */
+@keyframes vagar {
+  0% {
+    rotate: -24deg;
+  }
+  14% {
+    rotate: 68deg;
+  }
+  22% {
+    rotate: 51deg;
+  }
+  30% {
+    rotate: 60deg;
+  }
+  52% {
+    rotate: 205deg;
+  }
+  60% {
+    rotate: 188deg;
+  }
+  68% {
+    rotate: 196deg;
+  }
+  88% {
+    rotate: 322deg;
+  }
+  100% {
+    rotate: 336deg;
+  }
+}
+
+@keyframes correr {
+  to {
+    translate: calc(-100% / 6) 0;
+  }
+}
+
+/* ── Pantallas angostas ── */
+
+@media (max-width: 900px) {
+  .errata__pliego {
+    grid-template-columns: 1fr;
+    align-items: start;
+  }
+
+  .numero {
+    font-size: min(40vw, 22rem);
+  }
+}
+
+@media (max-width: 480px) {
+  .indice a {
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 0.125rem 0.75rem;
+  }
+
+  .indice__seccion {
+    grid-column: 1 / -1;
+  }
+
+  .indice__puntos {
+    display: none;
+  }
+}
+
+

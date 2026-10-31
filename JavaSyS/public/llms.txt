@@ -1,0 +1,19 @@
+# Javiera Paz B.
+
+> Portafolio de Javiera Paz B., ingeniera en Informática: diseño UI/UX, QA y desarrollo frontend. Describe su método de trabajo por área y documenta casos reales con sus pruebas.
+
+## Áreas
+
+- [Diseño UI/UX](https://javasys.netlify.app/diseno-ui-ux): diagnóstico medido, sistema de diseño, plan de pruebas de UI/UX y libro de marca.
+- [QA](https://javasys.netlify.app/qa): ciclo de pruebas completo, del plan con matriz de riesgo al informe de cierre.
+- [Frontend](https://javasys.netlify.app/frontend): rendimiento, llamadas eficientes, seguridad y código con pruebas.
+
+## Casos
+
+- [VillaHome: sitio y panel](https://javasys.netlify.app/casos/villahome): Rediseño editorial del sitio y del panel de un taller de tapicería, y dos ciclos de QA: el panel muestra 1.206 órdenes donde antes mostraba 200, carga 20 KB de código en vez de 129 y 13 de 14 defectos quedaron corregidos y verificados.
+- [Semestra Docente: el año del profesor](https://javasys.netlify.app/casos/semestra-docente): Un producto propio llevado de la primera línea de código al dominio publicado, construido desde la restricción legal: trata datos de menores, así que los nombres se cifran en el navegador y los cinco derechos del titular son funciones, no un correo en el pie. 15 pantallas, 481 pruebas escritas y una auditoría de seguridad externa atendida.
+- [Marquesina: pedidos de bollería y rotisería](https://javasys.netlify.app/casos/marquesina): El sitio de pedidos de un negocio familiar de bollería y rotisería, diseñado y construido desde cero: quien pide arma su pedido y elige cuándo recibirlo, sin pagos en la web. Con libro de marca de 29 páginas, 88 pruebas automatizadas y un ciclo de QA de 95 casos: 12 defectos, 11 corregidos y verificados.
+
+## Contacto
+
+- [Portada y contacto](https://javasys.netlify.app/)

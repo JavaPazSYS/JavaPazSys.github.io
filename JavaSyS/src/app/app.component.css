@@ -1,20 +1,306 @@
-/* ==========================================================================
-   APP COMPONENT — Layout raíz
-   ========================================================================== */
-
-.main-content {
-    /* Respeta la altura fija de la navbar usando la variable centralizada */
-    padding-top: var(--navbar-height);
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    overflow-x: hidden;
+/* Oculto hasta recibir el foco: sin posicionarlo fuera de la pantalla. */
+.salto {
+  position: absolute;
+  left: 1rem;
+  top: 1rem;
+  z-index: 100;
+  padding: 0.75rem 1rem;
+  background: var(--hueso);
+  color: var(--tinta);
+  border-radius: var(--radio);
 }
 
-/* ── Responsive: en móvil la navbar puede ser un poco menor ── */
-@media (max-width: 480px) {
-    .main-content {
-        padding-top: var(--navbar-height);
-    }
+.salto:not(:focus) {
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.cabecera {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: rgb(13 12 12 / 0.92);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--grafito);
+}
+
+.cabecera__fila {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  min-height: var(--alto-cabecera);
+}
+
+/* La marca JavaSyS, abreviada: <j/SyS>. Las letras en la serif del sitio, la «y» en
+   cursiva y los signos de código en la sans, finos y en gris, para que lean como marco. */
+.cabecera__marca {
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.cabecera__marca {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.marca__loto {
+  width: 2.6rem;
+  height: auto;
+  flex: none;
+}
+
+.marca {
+  display: inline-flex;
+  align-items: baseline;
+  font-family: var(--serif);
+  font-size: var(--t-xl);
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: 0.01em;
+  color: var(--hueso);
+}
+
+.marca em {
+  font-style: italic;
+  margin-inline: 0.02em 0.04em;
+}
+
+.marca__signo {
+  font-family: var(--sans);
+  font-size: 0.62em;
+  font-weight: 300;
+  color: var(--gris-500);
+  margin-inline: 0.12em;
+  transform: translateY(-0.12em);
+  transition: color 0.2s ease;
+}
+
+.marca__signo--barra {
+  margin-inline: 0.06em 0.1em;
+}
+
+.cabecera__marca:hover .marca__signo,
+.cabecera__marca:focus-visible .marca__signo {
+  color: var(--hueso);
+}
+
+.cabecera__menu ul {
+  display: flex;
+  align-items: center;
+  gap: clamp(1rem, 2.5vw, 2.25rem);
+}
+
+.cabecera__menu a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.75rem;
+  font-size: var(--t-s);
+  color: var(--gris-300);
+  text-decoration: none;
+  transition: color 0.15s;
+}
+
+.cabecera__menu a:hover,
+.cabecera__menu a.cabecera__actual {
+  color: var(--hueso);
+}
+
+/* La página en que se está: un filete vino bajo su nombre. */
+.cabecera__menu a.cabecera__actual {
+  box-shadow: inset 0 -2px 0 var(--vino-vivo);
+}
+
+.cabecera__menu a.cabecera__cv {
+  min-height: 2.25rem;
+  padding-inline: 1rem;
+  border: 1px solid var(--gris-500);
+  border-radius: var(--radio);
+  color: var(--hueso);
+  font-weight: 500;
+}
+
+.cabecera__menu a.cabecera__cv:hover {
+  background: var(--vino);
+  border-color: var(--vino);
+}
+
+.cabecera__boton-menu {
+  display: none;
+  min-height: 2.75rem;
+  padding-inline: 1rem;
+  background: transparent;
+  border: 1px solid var(--gris-700);
+  border-radius: var(--radio);
+  font-size: var(--t-s);
+  cursor: pointer;
+}
+
+/* El pie queda abajo desde el primer dibujo: no salta cuando llega el contenido. */
+main {
+  display: block;
+  min-height: calc(100vh - var(--alto-cabecera));
+}
+
+main:focus {
+  outline: none;
+}
+
+.pie {
+  border-top: 1px solid var(--grafito);
+  padding-block: 2rem;
+  font-size: var(--t-s);
+  color: var(--gris-500);
+}
+
+.pie__fila {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem 2rem;
+}
+
+.pie__firma {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.pie__loto {
+  width: 1.375rem;
+  height: auto;
+  flex: none;
+}
+
+.pie__enlaces {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem 1.5rem;
+}
+
+.pie__enlaces a,
+.pie__enlaces button {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.75rem;
+  padding: 0;
+  background: none;
+  border: 0;
+  font-size: inherit;
+  color: var(--gris-300);
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+  cursor: pointer;
+}
+
+.pie__enlaces a:hover,
+.pie__enlaces button:hover {
+  color: var(--hueso);
+}
+
+/* ── Aviso de medición de visitas ──
+   Va en el flujo, sobre la cabecera: nunca tapa el contenido. Está siempre en el HTML y
+   se muestra solo si <html> lleva la clase «medicion-pendiente» (la pone index.html antes
+   del primer dibujo y la quita ConsentimientoService). */
+
+.aviso-medicion {
+  display: none;
+  background: var(--carbon);
+  border-bottom: 1px solid var(--gris-700);
+  color: var(--hueso);
+}
+
+:host-context(.medicion-pendiente) .aviso-medicion {
+  display: block;
+}
+
+.aviso-medicion__fila {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem 2rem;
+  padding-block: 0.875rem;
+}
+
+.aviso-medicion p {
+  flex: 1 1 18rem;
+  font-size: var(--t-s);
+  color: var(--gris-300);
+}
+
+.aviso-medicion a {
+  color: var(--hueso);
+  text-underline-offset: 0.2em;
+  white-space: nowrap;
+}
+
+.aviso-medicion__acciones {
+  display: flex;
+  gap: 0.5rem;
+}
+
+@media (max-width: 400px) {
+  .cabecera__fila {
+    gap: 0.75rem;
+  }
+
+  .marca {
+    font-size: var(--t-l);
+  }
+
+  .marca__loto {
+    width: 2rem;
+  }
+
+  .cabecera__marca {
+    gap: 0.45rem;
+  }
+}
+
+@media (max-width: 720px) {
+  .cabecera__boton-menu {
+    display: inline-flex;
+    align-items: center;
+  }
+
+  .cabecera__menu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: var(--negro);
+    border-bottom: 1px solid var(--grafito);
+    padding: 0.5rem var(--borde) 1.25rem;
+  }
+
+  .cabecera__menu--abierto {
+    display: block;
+  }
+
+  .cabecera__menu ul {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+  }
+
+  .cabecera__menu a {
+    width: 100%;
+    min-height: 3rem;
+    font-size: var(--t-m);
+    border-bottom: 1px solid var(--grafito);
+  }
+
+  .cabecera__menu a.cabecera__cv {
+    justify-content: center;
+    min-height: 3rem;
+    margin-top: 1rem;
+  }
 }

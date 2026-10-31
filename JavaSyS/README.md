@@ -1,59 +1,65 @@
-# JavaSyS
+# Portafolio de Javiera Becerra
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.2.4.
+Sitio público del portafolio: diseño UI/UX, QA y desarrollo frontend.
+Angular 19, prerenderizado a HTML estático. Se publica en https://javasys.netlify.app.
 
-## Development server
-
-To start a local development server, run:
-
-```bash
-ng serve
-```
-
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
-
-## Code scaffolding
-
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+## Desarrollo
 
 ```bash
-ng generate component component-name
+npm ci
+npm start        # servidor de desarrollo en http://localhost:4200
+npm run build    # genera dist/javasys/browser, con una página HTML por ruta
 ```
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+Para revisar el build tal como se publica (compresión, 404 real, páginas prerenderizadas):
 
 ```bash
-ng generate --help
+node scripts/servir-build.mjs 4321
 ```
 
-## Building
+## De dónde sale el contenido
 
-To build the project run:
+| Contenido | Dónde se edita |
+|---|---|
+| Portada: presentación, método, trayectoria, contacto | `src/app/datos/perfil.ts` |
+| Casos | En el portafolio privado (un `datos.js` por caso). Aquí no se escriben: se sincronizan |
+| Textos de presentación que reemplazan a los del portafolio | `scripts/textos-publicos.json` |
+| Política de privacidad | `src/app/privacidad/` |
+
+## Sincronizar los casos
 
 ```bash
-ng build
+node scripts/sincronizar-casos.mjs "C:/ruta/al/portafolio"
 ```
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+Copia a `public/casos/` solo lo publicable de cada caso. No salen el entorno de pruebas, las
+ramas, los commits, las causas técnicas, los defectos sin cerrar ni los documentos internos.
+También escribe `public/sitemap.xml` y `src/app/casos/casos.generado.ts`, que usa el
+prerenderizado. Después de sincronizar hay que volver a compilar.
 
-## Running unit tests
+## Scripts de imágenes
 
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
+Usan Playwright desde una instalación externa (se pasa la ruta de su `node_modules/playwright`),
+para no sumar dependencias al sitio. Solo hace falta ejecutarlos cuando cambian las capturas.
 
-```bash
-ng test
-```
+| Script | Qué hace | Resultado |
+|---|---|---|
+| `censurar-capturas.mjs` | Tapa datos reales en las capturas indicadas | `scripts/censuradas/` |
+| `optimizar-capturas.mjs` | Pasa las capturas pesadas a WebP de 1600 px | `scripts/optimizadas/` |
+| `portada-libro.mjs` | Saca la portada de un libro de marca en PDF | `scripts/portadas/` |
+| `imagen-compartir.mjs` | Genera la imagen de vista previa de los enlaces | `public/compartir.png` |
 
-## Running end-to-end tests
+El sincronizador publica de cada captura la mejor versión disponible: optimizada, si no
+censurada, si no la original.
 
-For end-to-end (e2e) testing, run:
+## Publicación
 
-```bash
-ng e2e
-```
+En Netlify, el comando de compilación debe ser `npm run build` y la carpeta publicada
+`dist/javasys/browser` (confirmarlo en la configuración del sitio).
+`public/_redirects` hace que cualquier dirección inexistente responda con código 404.
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+## Privacidad y medición
 
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+Google Analytics 4 se carga únicamente si la persona acepta el aviso
+(`src/app/consentimiento.service.ts`). Con la señal Global Privacy Control o Do Not Track del
+navegador se entiende rechazado sin preguntar.

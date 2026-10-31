@@ -1,0 +1,245 @@
+<!-- ── Portada ── -->
+<section class="portada oscuro">
+  <div #agua class="portada__agua" aria-hidden="true"><span class="portada__superficie"></span><i></i><i></i><i></i></div>
+  <div class="contenedor">
+    <p #rol class="etiqueta portada__rol">{{ perfil.rol }}</p>
+    <div class="portada__firma">
+      <svg #loto class="portada__loto" viewBox="1 6 62 58" aria-hidden="true" focusable="false">
+        <defs><linearGradient id="portada-centro" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#6b1e2b"/><stop offset="1" stop-color="#c4566f"/></linearGradient><linearGradient id="portada-int" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#7a2236"/><stop offset="1" stop-color="#c97088"/></linearGradient><linearGradient id="portada-ext" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#4a1420"/><stop offset="1" stop-color="#9a4a5e"/></linearGradient><linearGradient id="portada-hoja" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#232120"/><stop offset="1" stop-color="#55504c"/></linearGradient><linearGradient id="portada-brillo" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#c4566f"/><stop offset="1" stop-color="#c97088"/></linearGradient></defs>
+        <g class="petalo" data-paso="0"><path d="M0 0 C-7 -3.06 -6.44 -12.24 0 -17 C6.44 -12.24 7 -3.06 0 0 Z" transform="translate(32 52) rotate(-122)" fill="url(#portada-hoja)" stroke="#160c0f" stroke-width="1.4" stroke-linejoin="round"/></g>
+        <g class="petalo" data-paso="0"><path d="M0 0 C-7 -3.06 -6.44 -12.24 0 -17 C6.44 -12.24 7 -3.06 0 0 Z" transform="translate(32 52) rotate(122)" fill="url(#portada-hoja)" stroke="#160c0f" stroke-width="1.4" stroke-linejoin="round"/></g>
+        <g class="petalo" data-paso="1"><path d="M0 0 C-8 -5.22 -7.36 -20.88 0 -29 C7.36 -20.88 8 -5.22 0 0 Z" transform="translate(32 52) rotate(-80)" fill="url(#portada-hoja)" stroke="#160c0f" stroke-width="1.4" stroke-linejoin="round"/></g>
+        <g class="petalo" data-paso="1"><path d="M0 0 C-8 -5.22 -7.36 -20.88 0 -29 C7.36 -20.88 8 -5.22 0 0 Z" transform="translate(32 52) rotate(80)" fill="url(#portada-hoja)" stroke="#160c0f" stroke-width="1.4" stroke-linejoin="round"/></g>
+        <g class="petalo" data-paso="2"><path d="M0 0 C-10.5 -5.58 -9.66 -22.32 0 -31 C9.66 -22.32 10.5 -5.58 0 0 Z" transform="translate(32 52) rotate(-56)" fill="url(#portada-ext)" stroke="#160c0f" stroke-width="1.4" stroke-linejoin="round"/></g>
+        <g class="petalo" data-paso="2"><path d="M0 0 C-10.5 -5.58 -9.66 -22.32 0 -31 C9.66 -22.32 10.5 -5.58 0 0 Z" transform="translate(32 52) rotate(56)" fill="url(#portada-ext)" stroke="#160c0f" stroke-width="1.4" stroke-linejoin="round"/></g>
+        <g class="petalo" data-paso="3"><path d="M0 0 C-10.5 -6.84 -9.66 -27.36 0 -38 C9.66 -27.36 10.5 -6.84 0 0 Z" transform="translate(32 52) rotate(-27)" fill="url(#portada-int)" stroke="#160c0f" stroke-width="1.4" stroke-linejoin="round"/></g>
+        <g class="petalo" data-paso="3"><path d="M0 0 C-10.5 -6.84 -9.66 -27.36 0 -38 C9.66 -27.36 10.5 -6.84 0 0 Z" transform="translate(32 52) rotate(27)" fill="url(#portada-int)" stroke="#160c0f" stroke-width="1.4" stroke-linejoin="round"/></g>
+        <g class="petalo" data-paso="4"><path d="M0 0 C-11.5 -7.92 -10.58 -31.68 0 -44 C10.58 -31.68 11.5 -7.92 0 0 Z" transform="translate(32 52) rotate(0)" fill="url(#portada-centro)" stroke="#160c0f" stroke-width="1.4" stroke-linejoin="round"/></g>
+        <g class="petalo" data-paso="4"><path d="M0 0 C-5.5 -5.3999999999999995 -5.0600000000000005 -21.599999999999998 0 -30 C5.0600000000000005 -21.599999999999998 5.5 -5.3999999999999995 0 0 Z" transform="translate(32 52) rotate(0)" fill="url(#portada-brillo)" opacity="0.55"/></g>
+      </svg>
+      <h1 #nombre class="portada__nombre">
+        <span class="portada__linea">Javiera</span> <br><span class="portada__linea">Paz B.</span>
+        <span class="portada__ondas" aria-hidden="true"><i></i><i></i><i></i></span>
+      </h1>
+    </div>
+
+    <div #base class="portada__base">
+      <p class="portada__titular">{{ perfil.titular }}</p>
+      <div class="portada__texto">
+        <p>{{ perfil.intro }}</p>
+        <div class="portada__acciones">
+          <a class="boton boton--principal" routerLink="/" fragment="casos">Ver casos</a>
+          <a class="boton boton--linea" routerLink="/" fragment="areas">Áreas de trabajo</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Áreas ── -->
+<section id="areas" class="seccion claro">
+  <div class="contenedor">
+    <header class="seccion__cabecera">
+      <span class="seccion__numero">01</span>
+      <h2 class="seccion__titulo">Áreas de trabajo</h2>
+      <img class="seccion__etapa" src="etapa-4-abriendo.svg" alt="" width="88" height="56" loading="lazy">
+    </header>
+
+    <p class="areas__intro">
+      Trabajo en tres áreas con un mismo criterio. Cada una tiene su página, con el método, las pruebas y los casos
+      que le corresponden.
+    </p>
+
+    <ul class="areas">
+      @for (area of areas; track area.clave) {
+        <li>
+          <a class="area" [routerLink]="['/', area.ruta]">
+            <span class="area__numero">{{ area.numero }}</span>
+            <h3 class="area__nombre">{{ area.nombre }}</h3>
+            <p class="area__lema">{{ area.lema }}</p>
+            <ul class="area__puntos">
+              @for (punto of area.resumen; track punto) {
+                <li>{{ punto }}</li>
+              }
+            </ul>
+            <span class="area__ver">Ver {{ area.nombre }} <span aria-hidden="true">→</span></span>
+          </a>
+        </li>
+      }
+    </ul>
+
+    <p class="etiqueta principios__rotulo">Lo esencial del método</p>
+    <ul class="principios">
+      @for (principio of principios; track principio.titulo) {
+        <li>
+          <h3>{{ principio.titulo }}</h3>
+          <p>{{ principio.texto }}</p>
+        </li>
+      }
+    </ul>
+
+    <div class="forma">
+      <div>
+        <h3 class="etiqueta">Metodología ágil</h3>
+        <ul class="forma__lista">
+          @for (practica of forma.agil; track practica.titulo) {
+            <li>
+              <h4>{{ practica.titulo }}</h4>
+              <p>{{ practica.texto }}</p>
+            </li>
+          }
+        </ul>
+      </div>
+      <div>
+        <h3 class="etiqueta">Normas de referencia</h3>
+        <ul class="forma__lista">
+          @for (norma of forma.normas; track norma.nombre) {
+            <li>
+              <h4>{{ norma.nombre }} <span>{{ norma.ambito }}</span></h4>
+              <p>{{ norma.uso }}</p>
+            </li>
+          }
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Casos ── -->
+<section id="casos" class="seccion oscuro">
+  <div class="contenedor">
+    <header class="seccion__cabecera">
+      <span class="seccion__numero">02</span>
+      <h2 class="seccion__titulo">Casos</h2>
+      <img class="seccion__etapa" src="etapa-3-capullo.svg" alt="" width="88" height="46" loading="lazy">
+    </header>
+
+    <div class="casos__intro">
+      <p>
+        Proyectos reales, documentados con una misma estructura: estado inicial, diagnóstico, intervención, resultado
+        y pruebas. Las cifras provienen de entornos reproducibles con datos sintéticos.
+      </p>
+    </div>
+
+    @if (error()) {
+      <p class="casos__aviso" role="alert">No fue posible cargar los casos. Actualice la página para intentarlo nuevamente.</p>
+    }
+
+    <ol class="casos">
+      @for (caso of casos(); track caso.slug) {
+        <li>
+          <a class="caso" [routerLink]="['/casos', caso.slug]">
+            <div class="caso__imagen">
+              @if (caso.portada) {
+                <img [src]="'casos/' + caso.slug + '/' + caso.portada" alt="" [attr.width]="caso.dimensiones?.[0]"
+                  [attr.height]="caso.dimensiones?.[1]" loading="lazy">
+              }
+            </div>
+            <div class="caso__cuerpo">
+              <p class="caso__meta">
+                <span class="caso__numero">{{ caso.numero }}</span>
+                <span>{{ caso.cliente }}</span>
+                <span>{{ caso.periodo }}</span>
+              </p>
+              <h3 class="caso__titulo">{{ caso.titulo }}</h3>
+              <p class="caso__resumen">{{ caso.resumen }}</p>
+              <div class="caso__base">
+                <p class="caso__kpi">
+                  <strong>{{ caso.kpi.valor }}</strong>
+                  <span>{{ caso.kpi.etiqueta }}</span>
+                </p>
+                <ul class="chips" aria-label="Disciplinas">
+                  @for (d of caso.disciplinas; track d) {
+                    <li class="chip">{{ nombreDisciplina[d] }}</li>
+                  }
+                </ul>
+              </div>
+              <span class="caso__ver">Ver caso <span aria-hidden="true">→</span></span>
+            </div>
+          </a>
+        </li>
+      }
+    </ol>
+  </div>
+</section>
+
+<!-- ── Trayectoria ── -->
+<section id="trayectoria" class="seccion claro">
+  <div class="contenedor">
+    <header class="seccion__cabecera">
+      <span class="seccion__numero">03</span>
+      <h2 class="seccion__titulo">Trayectoria</h2>
+      <img class="seccion__etapa" src="etapa-2-nenufar.svg" alt="" width="88" height="32" loading="lazy">
+    </header>
+
+    <div class="trayectoria">
+      <div>
+        <h3 class="etiqueta trayectoria__subtitulo">Experiencia</h3>
+        @for (e of experiencia; track e.empresa) {
+          <article class="puesto">
+            <p class="puesto__periodo">{{ e.periodo }}</p>
+            <div>
+              <h4 class="puesto__cargo">{{ e.cargo }}</h4>
+              <p class="puesto__empresa">{{ e.empresa }}</p>
+              <ul class="puesto__puntos">
+                @for (punto of e.puntos; track punto) {
+                  <li>{{ punto }}</li>
+                }
+              </ul>
+            </div>
+          </article>
+        }
+      </div>
+
+      <aside class="formacion">
+        <h3 class="etiqueta trayectoria__subtitulo">Educación</h3>
+        <ul class="formacion__lista">
+          @for (e of educacion; track e.titulo) {
+            <li>
+              <span class="formacion__anio">{{ e.periodo }}</span>
+              <strong>{{ e.titulo }}</strong>
+              <span>{{ e.lugar }}</span>
+            </li>
+          }
+        </ul>
+
+        <h3 class="etiqueta trayectoria__subtitulo">Cursos</h3>
+        <ul class="formacion__lista">
+          @for (c of cursos; track c.titulo) {
+            <li>
+              <span class="formacion__anio">{{ c.anio }}</span>
+              <strong>{{ c.titulo }}</strong>
+              @if (c.lugar) {
+                <span>{{ c.lugar }}</span>
+              }
+            </li>
+          }
+        </ul>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<!-- ── Contacto ── -->
+<section id="contacto" class="seccion contacto oscuro">
+  <app-estanque />
+  <div class="contenedor">
+    <span class="contacto__adorno" aria-hidden="true">
+      <img class="contacto__loto" src="etapa-1-naciendo.svg" alt="" width="88" height="32" loading="lazy">
+      <span class="contacto__luz"></span>
+    </span>
+    <p class="etiqueta">04</p>
+    <h2 class="contacto__titulo">Contacto</h2>
+    <p class="contacto__texto">
+      Para consultas profesionales y propuestas de trabajo en diseño UI/UX, QA o desarrollo frontend.
+    </p>
+    <div class="contacto__acciones">
+      <a class="boton boton--principal" [href]="escribirCorreo" target="_blank" rel="noopener noreferrer">Correo</a>
+      <a class="boton boton--linea" [href]="perfil.linkedin" target="_blank" rel="noopener noreferrer" (click)="copiarMensajeLinkedin()">LinkedIn</a>
+      @for (cv of perfil.cv; track cv.archivo) {
+        <a class="boton boton--linea" [href]="cv.archivo" target="_blank" rel="noopener">{{ cv.nombre }}</a>
+      }
+    </div>
+    <p class="contacto__aviso" role="status">{{ aviso() }}</p>
+  </div>
+</section>

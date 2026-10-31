@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-12 22 88 32" aria-hidden="true">
+  <!-- Loto de la marca Java/SyS: etapa-1-naciendo. Dibujo propio. -->
+  <defs>
+    <linearGradient id="e1-hoja" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#6e6862"/><stop offset="1" stop-color="#2b2826"/></linearGradient>
+    <linearGradient id="e1-vino" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#6b1e2b"/><stop offset="1" stop-color="#c4566f"/></linearGradient>
+    <linearGradient id="e1-vino-claro" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#7a2236"/><stop offset="1" stop-color="#d07a91"/></linearGradient>
+  </defs><ellipse cx="32" cy="40" rx="16" ry="4.5" fill="none" stroke="#8f8a85" stroke-opacity="0.60" stroke-width="0.9"/><ellipse cx="32" cy="40" rx="27" ry="6.9" fill="none" stroke="#8f8a85" stroke-opacity="0.44" stroke-width="0.9"/><ellipse cx="32" cy="40" rx="38" ry="9.3" fill="none" stroke="#8f8a85" stroke-opacity="0.28" stroke-width="0.9"/><path d="M32 39 L45.0 39.3 A13 4.8 0 1 1 42.5 36.2 Z" fill="url(#e1-hoja)" stroke="#1d1715" stroke-width="1" stroke-linejoin="round"/><path d="M32 39 L38.7 42.0 M32 39 L31.1 42.8 M32 39 L24.0 41.5 M32 39 L21.6 38.7 M32 39 L25.3 36.0 M32 39 L32.9 35.2 M32 39 L40.0 36.5" fill="none" stroke="#b9b2aa" stroke-opacity="0.35" stroke-width="0.6"/>
+</svg>

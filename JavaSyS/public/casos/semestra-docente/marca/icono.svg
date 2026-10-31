@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32">
+  <!-- Semestra: la manzana del profesor, en sólido para que se lea a 16 píxeles.
+       El verde botella es el color con que parte la aplicación (core/paleta.ts). -->
+  <rect width="32" height="32" rx="7" fill="#0f4c3a"/>
+  <g fill="#ffffff">
+    <ellipse cx="12.8" cy="19.8" rx="6.2" ry="6.8"/>
+    <ellipse cx="19.2" cy="19.8" rx="6.2" ry="6.8"/>
+    <ellipse cx="19.6" cy="8.1" rx="3.4" ry="1.7" transform="rotate(-18 19.6 8.1)"/>
+    <rect x="15.1" y="8.6" width="1.8" height="5.6" rx="0.9"/>
+  </g>
+  <ellipse cx="16" cy="13" rx="2.8" ry="2.8" fill="#0f4c3a"/>
+</svg>

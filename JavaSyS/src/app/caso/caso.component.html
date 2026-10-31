@@ -1,0 +1,565 @@
+@if (!caso()) {
+  <section class="seccion oscuro">
+    <div class="contenedor">
+      <h1 class="cabeza__titulo">No fue posible abrir el caso</h1>
+      <p class="cabeza__bajada">El enlace puede ser incorrecto o la conexión pudo fallar.</p>
+      <a class="boton boton--linea" routerLink="/" fragment="casos">Volver a los casos</a>
+    </div>
+  </section>
+}
+
+@if (caso(); as c) {
+  <article>
+    <!-- ── Cabeza ── -->
+    <header class="cabeza oscuro">
+      <div class="contenedor">
+        <nav class="migas" aria-label="Migas de pan">
+          <ol>
+            <li><a routerLink="/">Inicio</a></li>
+            <li><a routerLink="/" fragment="casos">Casos</a></li>
+            <li aria-current="page">{{ c.meta.titulo }}</li>
+          </ol>
+        </nav>
+
+        <p class="etiqueta cabeza__numero">Caso {{ c.meta.numero }}</p>
+        <h1 class="cabeza__titulo">{{ c.meta.titulo }}</h1>
+        @if (c.meta.bajada) {
+          <p class="cabeza__bajada">{{ c.meta.bajada }}</p>
+        }
+
+        <dl class="ficha">
+          @if (cliente()) {
+            <div>
+              <dt>Cliente</dt>
+              <dd>{{ cliente() }}</dd>
+            </div>
+          }
+          @if (c.meta.rol) {
+            <div>
+              <dt>Rol</dt>
+              <dd>{{ c.meta.rol }}</dd>
+            </div>
+          }
+          @if (c.meta.periodo) {
+            <div>
+              <dt>Período</dt>
+              <dd>{{ c.meta.periodo }}</dd>
+            </div>
+          }
+          @if (sitio(); as s) {
+            <div>
+              <dt>Sitio</dt>
+              <dd><a [href]="s.url" target="_blank" rel="noopener">{{ s.texto }}<span class="solo-lectores"> (se abre en otra pestaña)</span></a></dd>
+            </div>
+          }
+          <div>
+            <dt>Disciplinas</dt>
+            <dd>
+              <ul class="chips">
+                @for (d of c.meta.disciplinas; track d) {
+                  <li class="chip">{{ nombreDisciplina[d] }}</li>
+                }
+              </ul>
+            </dd>
+          </div>
+        </dl>
+
+        <div class="cabeza__acciones">
+          <button type="button" class="boton boton--linea" (click)="compartir()">Compartir caso</button>
+          <span role="status">{{ copiado() ? 'Enlace copiado' : '' }}</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- ── Antes y después ── -->
+    @if (c.resultado.comparaciones.length) {
+      <section class="vistas oscuro" aria-label="Antes y después">
+        <div class="contenedor">
+          <div class="vistas__pestanas" role="group" aria-label="Vista que se compara">
+            @for (comparacion of c.resultado.comparaciones; track comparacion.titulo; let i = $index) {
+              <button type="button" class="vistas__pestana" [class.vistas__pestana--activa]="vista() === i"
+                [attr.aria-pressed]="vista() === i" (click)="vista.set(i)">
+                {{ comparacion.titulo }}
+              </button>
+            }
+          </div>
+
+          @for (comparacion of c.resultado.comparaciones; track comparacion.titulo; let i = $index) {
+            @if (vista() === i) {
+              <figure>
+                <app-comparador [antes]="ruta(comparacion.antes)" [despues]="ruta(comparacion.despues)"
+                  [ancho]="ancho(comparacion.despues)" [alto]="alto(comparacion.despues)"
+                  [titulo]="comparacion.titulo" />
+                <figcaption class="vistas__pie">{{ comparacion.pie }}</figcaption>
+              </figure>
+            }
+          }
+        </div>
+      </section>
+    } @else if (c.resultado.galeria.length) {
+      <!-- Sin antes y después: las vistas del producto van primero. -->
+      <section class="vistas oscuro" [attr.aria-label]="c.resultado.galeria_titulo || 'Vistas del producto'">
+        <div class="contenedor">
+          <div class="vistas__pestanas" role="group" aria-label="Vista que se muestra">
+            @for (imagen of c.resultado.galeria; track imagen.src; let i = $index) {
+              <button type="button" class="vistas__pestana" [class.vistas__pestana--activa]="vista() === i"
+                [attr.aria-pressed]="vista() === i" [attr.aria-label]="imagen.pie" (click)="vista.set(i)">
+                {{ (i + 1).toString().padStart(2, '0') }}
+              </button>
+            }
+          </div>
+
+          @for (imagen of c.resultado.galeria; track imagen.src; let i = $index) {
+            @if (vista() === i) {
+              <figure class="vistas__foto">
+                <img [src]="ruta(imagen.src)" [alt]="imagen.pie" [attr.width]="ancho(imagen.src)" [attr.height]="alto(imagen.src)">
+                <figcaption class="vistas__pie">{{ imagen.pie }}</figcaption>
+              </figure>
+            }
+          }
+        </div>
+      </section>
+    }
+
+    <!-- ── Cifras ── -->
+    @if (c.kpis.length) {
+      <section class="oscuro" aria-label="Indicadores del caso">
+        <div class="contenedor">
+          <p class="etiqueta kpis__rotulo">En resumen</p>
+          <ul class="kpis">
+            @for (kpi of c.kpis; track kpi.etiqueta) {
+              <li>
+                <strong>{{ cambio(kpi) }}</strong>
+                <span class="kpis__etiqueta">{{ kpi.etiqueta }}</span>
+              </li>
+            }
+          </ul>
+        </div>
+      </section>
+    }
+
+    <div class="claro">
+      <!-- ── Presentación ── -->
+      @if (c.resumen.frase || c.resumen.descripcion || c.meta.objetivo) {
+        <section class="bloque contenedor">
+          <h2 class="bloque__titulo" id="presentacion">Presentación</h2>
+          <div class="bloque__cuerpo">
+            @if (c.resumen.frase) {
+              <p class="destacado">{{ c.resumen.frase }}</p>
+            }
+            @if (c.meta.objetivo) {
+              <p class="etiqueta">Objetivo</p>
+              <p class="prosa">{{ c.meta.objetivo }}</p>
+            }
+            <div class="prosa">
+              @for (p of parrafos(c.resumen.descripcion); track $index) {
+                <p>{{ p }}</p>
+              }
+            </div>
+            @if (c.meta.stack.length) {
+              <p class="etiqueta">Stack</p>
+              <ul class="chips">
+                @for (s of c.meta.stack; track s) {
+                  <li class="chip">{{ s }}</li>
+                }
+              </ul>
+            }
+          </div>
+        </section>
+      }
+
+      <!-- ── Contexto ── -->
+      @if (c.contexto.problema || c.contexto.alcance || c.contexto.requerimientos.length) {
+        <section class="bloque contenedor">
+          <h2 class="bloque__titulo" id="contexto">Contexto</h2>
+          <div class="bloque__cuerpo">
+            <div class="prosa">
+              @for (p of parrafos(c.contexto.problema); track $index) {
+                <p>{{ p }}</p>
+              }
+            </div>
+
+            <dl class="definiciones">
+              @if (c.contexto.alcance) {
+                <div>
+                  <dt>Alcance</dt>
+                  <dd>{{ c.contexto.alcance }}</dd>
+                </div>
+              }
+            </dl>
+
+            @if (c.contexto.requerimientos.length) {
+              <p class="etiqueta">Requerimientos</p>
+              <ul class="requerimientos">
+                @for (r of c.contexto.requerimientos; track r.texto) {
+                  <li>
+                    <span>{{ r.texto }}</span>
+                    <span class="estado" [class]="'estado estado--' + r.estado">{{ estadoRequerimiento[r.estado] }}</span>
+                  </li>
+                }
+              </ul>
+            }
+          </div>
+        </section>
+      }
+
+      <!-- ── El antes ── -->
+      @if (c.diagnostico.hallazgos.length || c.diagnostico.descripcion) {
+        <section class="bloque contenedor">
+          <h2 class="bloque__titulo" id="diagnostico">Diagnóstico</h2>
+          <div class="bloque__cuerpo">
+            <div class="prosa">
+              @for (p of parrafos(c.diagnostico.descripcion); track $index) {
+                <p>{{ p }}</p>
+              }
+            </div>
+
+            @if (c.diagnostico.hallazgos.length) {
+              <p class="etiqueta">Hallazgos</p>
+              <ul class="hallazgos">
+                @for (h of c.diagnostico.hallazgos; track h.titulo) {
+                  <li>
+                    <details>
+                      <summary>
+                        <span class="hallazgos__meta">
+                          <span class="severidad" [class]="'severidad severidad--' + h.severidad.toLowerCase()">{{ h.severidad }}</span>
+                          <span>{{ h.area }}</span>
+                        </span>
+                        <span class="hallazgos__titulo">{{ h.titulo }}</span>
+                        @if (h.dato) {
+                          <span class="hallazgos__dato">{{ h.dato }}</span>
+                        }
+                        <span class="hallazgos__abrir" aria-hidden="true"></span>
+                      </summary>
+
+                      <div class="hallazgos__analisis">
+                        <dl class="definiciones">
+                          @if (h.esperado) {
+                            <div>
+                              <dt>Esperado</dt>
+                              <dd>
+                                {{ h.esperado }}
+                              </dd>
+                            </div>
+                          }
+                          @if (h.porque) {
+                            <div>
+                              <dt>Impacto</dt>
+                              <dd>{{ h.porque }}</dd>
+                            </div>
+                          }
+                          @if (h.solucion) {
+                            <div>
+                              <dt>Solución</dt>
+                              <dd>{{ h.solucion }}</dd>
+                            </div>
+                          }
+                        </dl>
+                      </div>
+                    </details>
+                  </li>
+                }
+              </ul>
+            }
+
+            @if (c.diagnostico.capturas.length) {
+              <div class="galeria">
+                @for (captura of c.diagnostico.capturas; track captura.src) {
+                  <figure>
+                    <a [href]="ruta(captura.src)" target="_blank" rel="noopener">
+                      <img [src]="ruta(captura.src)" [alt]="captura.pie" [attr.width]="ancho(captura.src)" [attr.height]="alto(captura.src)" loading="lazy">
+                    </a>
+                    <figcaption>{{ captura.pie }}</figcaption>
+                  </figure>
+                }
+              </div>
+            }
+          </div>
+        </section>
+      }
+
+      <!-- ── Intervención ── -->
+      @if (pasos().length || c.intervencion.enfoque || c.intervencion.decisiones.length) {
+        <section class="bloque contenedor">
+          <h2 class="bloque__titulo" id="intervencion">Intervención</h2>
+          <div class="bloque__cuerpo">
+            <div class="prosa">
+              @for (p of parrafos(c.intervencion.enfoque); track $index) {
+                <p>{{ p }}</p>
+              }
+            </div>
+
+            @for (grupo of pasos(); track grupo.nombre) {
+              <p class="etiqueta">{{ grupo.nombre }}</p>
+              <ol class="pasos">
+                @for (paso of grupo.pasos; track paso.titulo) {
+                  <li>
+                    <h3>{{ paso.titulo }}</h3>
+                    <p>{{ paso.detalle }}</p>
+                  </li>
+                }
+              </ol>
+            }
+
+            @if (c.intervencion.decisiones.length) {
+              <p class="etiqueta">Decisiones</p>
+              <ul class="decisiones">
+                @for (d of c.intervencion.decisiones; track d.decision) {
+                  <li>
+                    <h3>{{ d.decision }}</h3>
+                    <p>{{ d.porque }}</p>
+                    @if (d.alternativa) {
+                      <p class="decisiones__alternativa"><strong>Alternativa descartada:</strong> {{ d.alternativa }}</p>
+                    }
+                  </li>
+                }
+              </ul>
+            }
+          </div>
+        </section>
+      }
+
+      <!-- ── Marca ── -->
+      @if (c.marca; as m) {
+        <section class="bloque contenedor">
+          <h2 class="bloque__titulo" id="marca">Marca</h2>
+          <div class="bloque__cuerpo">
+            @if (m.concepto) {
+              <p class="destacado">{{ m.concepto }}</p>
+            }
+            <div class="prosa">
+              @for (p of parrafos(m.descripcion); track $index) {
+                <p>{{ p }}</p>
+              }
+            </div>
+
+            @if (m.logo.versiones.length) {
+              <div class="logos">
+                @for (logo of m.logo.versiones; track logo.src) {
+                  <figure [class]="'logos__pieza logos__pieza--' + logo.fondo">
+                    <img [src]="ruta(logo.src)" [alt]="logo.nombre" width="320" height="144" loading="lazy">
+                    <figcaption>{{ logo.nombre }}</figcaption>
+                  </figure>
+                }
+              </div>
+            }
+
+            @if (m.paleta.length) {
+              <p class="etiqueta">Paleta</p>
+              <ul class="paleta">
+                @for (color of m.paleta; track color.hex + color.nombre) {
+                  <li>
+                    <span class="paleta__muestra" [style.background]="color.hex"></span>
+                    <strong>{{ color.nombre }}</strong>
+                    <code>{{ color.hex.toUpperCase() }}</code>
+                    <span class="paleta__uso">{{ color.uso }}</span>
+                  </li>
+                }
+              </ul>
+            }
+
+            @if (m.tipografias.length) {
+              <p class="etiqueta">Tipografía</p>
+              <ul class="tipografias">
+                @for (t of m.tipografias; track t.familia) {
+                  <li>
+                    <p class="tipografias__muestra" [style.font-family]="familia(t.familia)">{{ t.familia }}</p>
+                    <p><strong>{{ t.uso }}</strong></p>
+                    @if (t.detalle) {
+                      <p>{{ t.detalle }}</p>
+                    }
+                  </li>
+                }
+              </ul>
+            }
+
+            @if (m.reglas.si.length || m.reglas.no.length) {
+              <div class="reglas">
+                <div>
+                  <p class="etiqueta">Sí</p>
+                  <ul>
+                    @for (regla of m.reglas.si; track regla) {
+                      <li>{{ regla }}</li>
+                    }
+                  </ul>
+                </div>
+                <div class="reglas--no">
+                  <p class="etiqueta">No</p>
+                  <ul>
+                    @for (regla of m.reglas.no; track regla) {
+                      <li>{{ regla }}</li>
+                    }
+                  </ul>
+                </div>
+              </div>
+            }
+
+            @if (m.tono) {
+              <dl class="definiciones">
+                <div>
+                  <dt>Tono</dt>
+                  <dd>{{ m.tono }}</dd>
+                </div>
+              </dl>
+            }
+          </div>
+        </section>
+      }
+
+      <!-- ── El después ── -->
+      @if (c.resultado.descripcion || c.resultado.metricas.length || (c.resultado.galeria.length && c.resultado.comparaciones.length)) {
+        <section class="bloque contenedor">
+          <h2 class="bloque__titulo" id="resultado">Resultado</h2>
+          <div class="bloque__cuerpo">
+            <div class="prosa">
+              @for (p of parrafos(c.resultado.descripcion); track $index) {
+                <p>{{ p }}</p>
+              }
+            </div>
+
+            @if (c.resultado.metricas.length) {
+              <p class="etiqueta">Mediciones</p>
+              <ul class="metricas">
+                @for (m of c.resultado.metricas; track m.metrica) {
+                  <li>
+                    <div>
+                      <h3>{{ m.metrica }}</h3>
+                    </div>
+                    <p class="metricas__valor">
+                      <strong>{{ numero(m.antes) }} → {{ numero(m.despues) }}{{ unidad(m.unidad) }}</strong>
+                      <span>Umbral {{ operador(m.operador) }} {{ numero(m.umbral) }}{{ unidad(m.unidad) }}</span>
+                    </p>
+                  </li>
+                }
+              </ul>
+            }
+
+            @if (c.resultado.galeria.length && c.resultado.comparaciones.length) {
+              <p class="etiqueta">{{ c.resultado.galeria_titulo || 'Otras vistas del resultado' }}</p>
+              <div class="galeria">
+                @for (imagen of c.resultado.galeria; track imagen.src) {
+                  <figure>
+                    <a [href]="ruta(imagen.src)" target="_blank" rel="noopener">
+                      <img [src]="ruta(imagen.src)" [alt]="imagen.pie" [attr.width]="ancho(imagen.src)" [attr.height]="alto(imagen.src)" loading="lazy">
+                    </a>
+                    <figcaption>{{ imagen.pie }}</figcaption>
+                  </figure>
+                }
+              </div>
+            }
+          </div>
+        </section>
+      }
+    </div>
+
+    <!-- ── Pruebas ── -->
+    @if (c.pruebas.descripcion || totales().length || c.pruebas.tipos.length) {
+      <div class="oscuro">
+        <section class="bloque contenedor">
+          <h2 class="bloque__titulo" id="pruebas">Pruebas</h2>
+          <div class="bloque__cuerpo">
+            <div class="prosa">
+              @for (p of parrafos(c.pruebas.descripcion); track $index) {
+                <p>{{ p }}</p>
+              }
+            </div>
+
+            @if (totales().length) {
+              <ul class="totales">
+                @for (total of totales(); track total[0]) {
+                  <li>
+                    <strong>{{ numero(total[1]) }}</strong>
+                    <span>{{ total[0] }}</span>
+                  </li>
+                }
+              </ul>
+            }
+
+            @if (c.pruebas.tipos.length) {
+              <p class="etiqueta">Tipos de prueba</p>
+              <ul class="tipos">
+                @for (t of c.pruebas.tipos; track t.nombre) {
+                  <li>
+                    <strong>{{ t.nombre }}</strong>
+                    <span>{{ t.tipo }} · {{ t.herramienta }}@if (t.casos) { · {{ numero(t.casos) }} {{ t.casos === 1 ? 'caso' : 'casos' }}}</span>
+                  </li>
+                }
+              </ul>
+            }
+          </div>
+        </section>
+      </div>
+    }
+
+    <!-- ── Cierre ── -->
+    @if (c.herramientas.length || c.aprendizajes.length || c.anexos.length) {
+      <div class="claro">
+        <section class="bloque contenedor">
+          <h2 class="bloque__titulo">Cierre</h2>
+          <div class="bloque__cuerpo">
+            @if (c.aprendizajes.length) {
+              <p class="etiqueta">Aprendizajes</p>
+              <ul class="aprendizajes">
+                @for (a of c.aprendizajes; track a) {
+                  <li>{{ a }}</li>
+                }
+              </ul>
+            }
+            @if (c.herramientas.length) {
+              <p class="etiqueta">Herramientas</p>
+              <ul class="chips">
+                @for (h of c.herramientas; track h) {
+                  <li class="chip">{{ h }}</li>
+                }
+              </ul>
+            }
+            @if (c.anexos.length) {
+              <p class="etiqueta">Anexos</p>
+              <ul class="anexos">
+                @for (anexo of c.anexos; track anexo.ruta) {
+                  <li><a class="enlace" [href]="ruta(anexo.ruta)" target="_blank" rel="noopener">{{ anexo.titulo }}</a></li>
+                }
+              </ul>
+            }
+          </div>
+        </section>
+      </div>
+    }
+  </article>
+
+  <!-- ── Otros casos ── -->
+  @if (otros().length) {
+    <section class="otros claro" aria-labelledby="otros-casos">
+      <div class="contenedor">
+        <h2 id="otros-casos" class="etiqueta">Otros casos</h2>
+        <ul class="otros__lista">
+          @for (o of otros(); track o.slug) {
+            <li>
+              <a [routerLink]="['/casos', o.slug]">
+                <span class="otros__numero">{{ o.numero }}</span>
+                <span class="otros__titulo">{{ o.titulo }}</span>
+                <span class="otros__kpi">{{ o.kpi.valor }}</span>
+              </a>
+            </li>
+          }
+        </ul>
+        <p class="otros__metodo">
+          El método detrás de estos casos, por área:
+          @for (area of areas; track area.clave; let ultima = $last) {
+            <a class="enlace" [routerLink]="['/', area.ruta]">{{ area.nombre }}</a>{{ ultima ? '.' : ', ' }}
+          }
+        </p>
+      </div>
+    </section>
+  }
+
+  <!-- ── Siguiente ── -->
+  @if (siguiente(); as s) {
+    <a class="siguiente oscuro" [routerLink]="['/casos', s.slug]">
+      <div class="contenedor">
+        <span class="etiqueta">Siguiente caso · {{ s.numero }}</span>
+        <span class="siguiente__titulo">{{ s.titulo }} <span aria-hidden="true">→</span></span>
+      </div>
+    </a>
+  }
+}

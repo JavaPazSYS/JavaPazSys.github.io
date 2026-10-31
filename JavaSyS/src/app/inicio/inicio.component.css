@@ -1,0 +1,722 @@
+/* ── Portada ── */
+
+.portada {
+  position: relative;
+  /* Durante la entrada la flor grande no debe abrir un desplazamiento lateral. */
+  overflow-x: clip;
+  padding-block: clamp(3.5rem, 9vw, 7rem) clamp(4rem, 9vw, 7rem);
+}
+
+.portada__rol {
+  color: var(--gris-300);
+  margin-bottom: 1.5rem;
+}
+
+.portada__firma {
+  display: flex;
+  align-items: flex-start;
+  gap: clamp(0.75rem, 2.5vw, 2rem);
+}
+
+/* El loto va a la derecha del nombre, girado 90° a la izquierda: los pétalos apuntan hacia el nombre. */
+.portada__loto {
+  order: 2;
+  flex: none;
+  /* Del alto de las dos líneas del nombre (interlineado 0,9). */
+  width: calc(var(--t-portada) * 1.8);
+  height: calc(var(--t-portada) * 1.8);
+  transform: rotate(-90deg);
+  overflow: visible;
+}
+
+/* En un teléfono el nombre y la flor tienen que caber juntos en el ancho. */
+@media (max-width: 480px) {
+  .portada__firma {
+    --t-portada: 13vw;
+  }
+}
+
+/* El agua de la entrada: superficie y ondas bajo la flor. Solo se ve durante la entrada. */
+.portada__agua {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: min(70vw, 760px);
+  height: 140px;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  opacity: 0;
+}
+
+.portada__superficie {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgb(242 238 231 / 0.45), transparent);
+}
+
+.portada__agua i {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 180px;
+  height: 30px;
+  margin: -15px 0 0 -90px;
+  border: 1px solid var(--hueso);
+  border-radius: 50%;
+  opacity: 0;
+}
+
+/* El nombre sale del agua: cada línea sube y se aclara, y abajo se abren ondas. */
+.portada__nombre {
+  position: relative;
+}
+
+.portada__linea {
+  display: inline-block;
+}
+
+.portada__ondas {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -0.16em;
+  height: 0.22em;
+  pointer-events: none;
+}
+
+.portada__ondas i {
+  position: absolute;
+  inset: 0;
+  border: 1px solid var(--hueso);
+  border-radius: 50%;
+  opacity: 0;
+}
+
+/* Los pétalos rosados se pueden soltar con un clic (ver deshojar en el componente). */
+.petalo--suelto {
+  cursor: pointer;
+}
+
+.petalo--suelto:hover {
+  filter: brightness(1.15);
+}
+
+/* Cada pétalo crece desde la base de la flor. */
+.petalo {
+  transform-origin: 32px 52px;
+}
+
+/* Antes de la entrada: escondidos, sin parpadeo. Lo pone un script de index.html. */
+:host-context(.entrada-pendiente) .portada__loto,
+:host-context(.entrada-pendiente) .portada__nombre,
+:host-context(.entrada-pendiente) .portada__rol,
+:host-context(.entrada-pendiente) .portada__base {
+  opacity: 0;
+}
+
+.portada__nombre {
+  font-family: var(--serif);
+  font-weight: 400;
+  font-size: var(--t-portada);
+  line-height: 0.9;
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
+  margin-left: -0.04em;
+}
+
+.portada__base {
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  gap: 2rem clamp(2rem, 6vw, 5rem);
+  align-items: start;
+  margin-top: clamp(2.5rem, 6vw, 4.5rem);
+  padding-top: 2rem;
+  border-top: 1px solid var(--gris-700);
+}
+
+.portada__titular {
+  font-family: var(--serif);
+  font-size: var(--t-xl);
+  font-weight: 400;
+  line-height: 1.12;
+  max-width: 16em;
+}
+
+.portada__texto p {
+  color: var(--gris-300);
+  max-width: 34em;
+}
+
+.portada__acciones {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 1.75rem;
+}
+
+/* ── Áreas ── */
+
+.areas__intro {
+  max-width: 30em;
+  font-family: var(--serif);
+  font-size: var(--t-xl);
+  line-height: 1.2;
+  text-wrap: pretty;
+}
+
+.areas {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  margin-top: clamp(2rem, 5vw, 3.5rem);
+  background: var(--linea);
+  border: 1px solid var(--linea);
+}
+
+.area {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: clamp(1.5rem, 3vw, 2.25rem);
+  background: var(--hueso);
+  text-decoration: none;
+  transition: background-color 0.25s;
+}
+
+/* Filete vino que crece desde la izquierda al pasar por la tarjeta. */
+.area::before {
+  content: '';
+  position: absolute;
+  inset: 0 0 auto;
+  height: 3px;
+  background: var(--vino);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.area:hover,
+.area:focus-visible {
+  background: #fbf9f4;
+}
+
+.area:hover::before,
+.area:focus-visible::before {
+  transform: scaleX(1);
+}
+
+.area__numero {
+  font-size: var(--t-xs);
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  color: var(--vino);
+}
+
+.area__nombre {
+  margin-top: clamp(2rem, 5vw, 4rem);
+  font-family: var(--serif);
+  font-weight: 400;
+  font-size: var(--t-2xl);
+  line-height: 1;
+}
+
+.area__lema {
+  margin-top: 0.875rem;
+  color: var(--tinta-suave);
+}
+
+.area__puntos {
+  flex: 1;
+  margin-block: 1.5rem;
+  border-top: 1px solid var(--linea);
+}
+
+.area__puntos li {
+  padding-block: 0.75rem;
+  border-bottom: 1px solid var(--linea);
+  font-size: var(--t-s);
+  line-height: 1.5;
+  color: var(--tinta-suave);
+}
+
+.area__ver {
+  align-self: flex-start;
+  font-weight: 500;
+  border-bottom: 1px solid currentColor;
+}
+
+.area:hover .area__ver {
+  color: var(--vino);
+}
+
+.principios__rotulo {
+  margin-top: clamp(2.5rem, 6vw, 4.5rem);
+  color: var(--acento);
+}
+
+.principios {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1px;
+  margin-top: 0.875rem;
+  background: var(--linea);
+  border-block: 1px solid var(--linea);
+}
+
+.principios li {
+  padding: 1.5rem 1.5rem 1.75rem 0;
+  background: var(--hueso);
+}
+
+.principios li + li {
+  padding-left: 1.5rem;
+}
+
+.principios h3 {
+  font-size: var(--t-m);
+  font-weight: 600;
+  line-height: 1.35;
+}
+
+.principios p {
+  margin-top: 0.5rem;
+  color: var(--texto-suave);
+}
+
+/* Metodología y normas: dos columnas de filas, bajo los principios. */
+.forma {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 2.5rem clamp(2rem, 5vw, 4rem);
+  margin-top: clamp(2.5rem, 6vw, 4.5rem);
+}
+
+.forma .etiqueta {
+  color: var(--acento);
+}
+
+.forma__lista {
+  margin-top: 0.875rem;
+  border-top: 1px solid var(--linea);
+}
+
+.forma__lista li {
+  padding-block: 1.125rem;
+  border-bottom: 1px solid var(--linea);
+}
+
+.forma__lista h4 {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.25rem 0.75rem;
+  font-size: var(--t-m);
+  font-weight: 600;
+  line-height: 1.35;
+}
+
+.forma__lista h4 span {
+  font-size: var(--t-s);
+  font-weight: 400;
+  color: var(--texto-suave);
+}
+
+.forma__lista p {
+  margin-top: 0.375rem;
+  color: var(--texto-suave);
+}
+
+@media (max-width: 900px) {
+  .forma {
+    grid-template-columns: 1fr;
+  }
+
+  .areas {
+    grid-template-columns: 1fr;
+  }
+
+  .area__nombre {
+    margin-top: 1.25rem;
+  }
+
+  .principios {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .principios li:nth-child(odd) {
+    padding-left: 0;
+  }
+}
+
+@media (max-width: 560px) {
+  .principios {
+    grid-template-columns: 1fr;
+  }
+
+  .principios li,
+  .principios li + li {
+    padding-inline: 0;
+  }
+}
+
+/* ── Casos ── */
+
+.casos__intro {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: end;
+  justify-content: space-between;
+  gap: 1.5rem 3rem;
+  margin-bottom: 2.5rem;
+}
+
+.casos__intro p {
+  max-width: 36em;
+  color: var(--texto-suave);
+}
+
+.casos__aviso {
+  padding: 1rem 1.25rem;
+  border-left: 3px solid var(--acento);
+  background: var(--superficie);
+}
+
+.casos > li {
+  border-top: 1px solid var(--linea);
+}
+
+.casos > li:last-child {
+  border-bottom: 1px solid var(--linea);
+}
+
+.caso {
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
+  gap: clamp(1.5rem, 4vw, 3.5rem);
+  padding-block: clamp(1.75rem, 4vw, 3rem);
+  text-decoration: none;
+}
+
+.caso__imagen {
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+  background: var(--superficie);
+  border: 1px solid var(--linea);
+  border-radius: var(--radio);
+}
+
+.caso__imagen img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top left;
+  transition: transform 0.5s ease;
+}
+
+.caso:hover .caso__imagen img {
+  transform: scale(1.03);
+}
+
+.caso__cuerpo {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.caso__meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem 1rem;
+  font-size: var(--t-s);
+  color: var(--texto-suave);
+}
+
+.caso__numero {
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  color: var(--acento);
+}
+
+.caso__titulo {
+  margin-top: 0.75rem;
+  font-family: var(--serif);
+  font-weight: 500;
+  font-size: var(--t-xl);
+  line-height: 1.08;
+}
+
+.caso__resumen {
+  max-width: var(--medida);
+  margin-top: 0.875rem;
+  color: var(--texto-suave);
+  font-size: var(--t-m);
+  max-width: 38em;
+}
+
+.caso__base {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: end;
+  justify-content: space-between;
+  gap: 1rem 2rem;
+  width: 100%;
+  margin-top: 1.5rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--linea);
+}
+
+.caso__kpi {
+  display: flex;
+  flex-direction: column;
+}
+
+.caso__kpi strong {
+  font-family: var(--serif);
+  font-weight: 500;
+  font-size: var(--t-xl);
+  line-height: 1.05;
+  color: var(--acento);
+}
+
+.caso__kpi span {
+  font-size: var(--t-s);
+  color: var(--texto-suave);
+}
+
+.caso__ver {
+  margin-top: 1.5rem;
+  font-size: var(--t-m);
+  font-weight: 500;
+  border-bottom: 1px solid currentColor;
+}
+
+.caso:hover .caso__ver {
+  color: var(--acento);
+}
+
+/* ── Trayectoria ── */
+
+.trayectoria {
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 3fr);
+  gap: 3rem clamp(2.5rem, 6vw, 5rem);
+}
+
+.trayectoria__subtitulo {
+  margin-bottom: 1.25rem;
+}
+
+.puesto {
+  display: grid;
+  grid-template-columns: 9.5rem minmax(0, 1fr);
+  gap: 0.5rem 1.5rem;
+  padding-block: 1.75rem;
+  border-top: 1px solid var(--linea);
+}
+
+.puesto__periodo {
+  font-size: var(--t-s);
+  color: var(--tinta-suave);
+  padding-top: 0.375rem;
+}
+
+.puesto__cargo {
+  font-family: var(--serif);
+  font-weight: 500;
+  font-size: var(--t-xl);
+  line-height: 1.1;
+}
+
+.puesto__empresa {
+  margin-top: 0.25rem;
+  font-weight: 600;
+  font-size: var(--t-m);
+  color: var(--vino);
+}
+
+.puesto__puntos {
+  margin-top: 1rem;
+}
+
+.puesto__puntos li {
+  position: relative;
+  padding-left: 1.125rem;
+  margin-top: 0.5rem;
+  font-size: var(--t-m);
+  color: var(--tinta-suave);
+}
+
+.puesto__puntos li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.7em;
+  width: 0.5rem;
+  height: 1px;
+  background: var(--vino);
+}
+
+.formacion__lista {
+  margin-bottom: 2.5rem;
+  border-top: 1px solid var(--linea);
+}
+
+.formacion__lista li {
+  display: flex;
+  flex-direction: column;
+  padding-block: 0.875rem;
+  border-bottom: 1px solid var(--linea);
+  font-size: var(--t-m);
+  line-height: 1.4;
+}
+
+.formacion__lista strong {
+  font-weight: 600;
+}
+
+.formacion__lista span {
+  color: var(--tinta-suave);
+  font-size: var(--t-s);
+}
+
+/* ── Contacto ── */
+
+.contacto {
+  border-top: 1px solid var(--grafito);
+}
+
+/* El estanque (app-estanque) ocupa la sección detrás del texto. */
+.contacto {
+  position: relative;
+  overflow: hidden;
+}
+
+.contacto > .contenedor {
+  position: relative;
+}
+
+/* En un teléfono la escena va debajo del texto: se le deja espacio abajo. */
+@media (max-width: 720px) {
+  .contacto {
+    padding-bottom: 60vw;
+  }
+}
+
+/* Sobre el nenúfar que nace flota una luciérnaga: solo adorno, no tiene que ver con la rana. */
+.contacto__adorno {
+  position: relative;
+  display: inline-block;
+  padding-top: 2.25rem;
+}
+
+.contacto__luz {
+  position: absolute;
+  left: 58%;
+  top: 0.4rem;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #f7eab2;
+  box-shadow:
+    0 0 8px 3px rgb(247 234 178 / 0.6),
+    0 0 22px 8px rgb(247 234 178 / 0.15);
+  animation:
+    luz-flota 6s ease-in-out infinite,
+    luz-titila 2.8s ease-in-out infinite;
+}
+
+@keyframes luz-flota {
+  0%, 100% { translate: 0 0; }
+  25% { translate: 10px -6px; }
+  50% { translate: 3px -12px; }
+  75% { translate: -8px -5px; }
+}
+
+@keyframes luz-titila {
+  0%, 100% { opacity: 1; }
+  40% { opacity: 0.35; }
+  55% { opacity: 1; }
+  70% { opacity: 0.7; }
+}
+
+.contacto__loto {
+  display: block;
+  width: 7rem;
+  height: auto;
+  margin-bottom: 1.25rem;
+}
+
+.contacto__titulo {
+  margin-top: 1.25rem;
+  font-family: var(--serif);
+  font-weight: 400;
+  font-size: var(--t-3xl);
+  line-height: 0.9;
+  text-transform: uppercase;
+}
+
+.contacto__texto {
+  margin-top: 1.5rem;
+  max-width: 34em;
+  color: var(--gris-300);
+}
+
+
+
+/* Al apretar un botón de contacto se pone en el vino rosado más oscuro; queda así un momento
+   mientras la rana se traga la luciérnaga (la clase la pone app-estanque). */
+.contacto .boton:active,
+.contacto .boton.boton--atrapado {
+  background: var(--vino);
+  border-color: var(--vino);
+  color: var(--hueso);
+}
+
+/* El botón principal ya es vino: al apretarlo baja al tono más oscuro de la flor. */
+.contacto .boton--principal:active,
+.contacto .boton--principal.boton--atrapado {
+  background: #4a1420;
+  border-color: #4a1420;
+}
+
+.contacto__aviso {
+  min-height: 1.5em;
+  margin-top: 1rem;
+  font-size: var(--t-s);
+  color: var(--gris-300);
+}
+
+.contacto__acciones {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 2.5rem;
+}
+
+/* ── Pantallas angostas ── */
+
+@media (max-width: 900px) {
+  .portada__base,
+  .trayectoria {
+    grid-template-columns: 1fr;
+  }
+
+}
+
+@media (max-width: 720px) {
+  .caso {
+    grid-template-columns: 1fr;
+  }
+
+  .puesto {
+    grid-template-columns: 1fr;
+  }
+
+  .puesto__periodo {
+    padding-top: 0;
+  }
+}

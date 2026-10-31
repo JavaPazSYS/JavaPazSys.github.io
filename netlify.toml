@@ -1,0 +1,8 @@
+# Publicación del sitio en Netlify. El proyecto vive en la carpeta JavaSyS.
+[build]
+  base = "JavaSyS"
+  command = "npm run build"
+  publish = "dist/javasys/browser"
+
+[build.environment]
+  NODE_VERSION = "22"

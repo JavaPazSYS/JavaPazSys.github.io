@@ -1,0 +1,3 @@
+# Cualquier direccion que no exista responde con codigo 404. Se entrega la aplicacion sin
+# contenido prerenderizado, y ella misma muestra la pagina de error.
+/*    /index.csr.html   404

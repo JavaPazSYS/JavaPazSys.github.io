@@ -1,0 +1,162 @@
+<article>
+  <!-- ── Cabeza ── -->
+  <header class="cabeza oscuro">
+    <div class="contenedor">
+      <nav class="migas" aria-label="Migas de pan">
+        <ol>
+          <li><a routerLink="/">Inicio</a></li>
+          <li aria-current="page">{{ area().nombre }}</li>
+        </ol>
+      </nav>
+
+      <p class="etiqueta cabeza__numero">Área {{ area().numero }}</p>
+      <h1 class="cabeza__titulo">{{ area().titulo }}</h1>
+      <p class="cabeza__lema">{{ area().lema }}</p>
+      <p class="cabeza__texto">{{ area().descripcion }}</p>
+
+      <div class="acciones">
+        <a class="boton boton--principal" [routerLink]="['/', area().ruta]" fragment="casos">Ver casos de {{ area().nombre }}</a>
+        <a class="boton boton--linea" [href]="cv().archivo" target="_blank" rel="noopener">{{ cv().nombre }}</a>
+      </div>
+    </div>
+  </header>
+
+  <div class="claro">
+    <!-- ── En resumen ── -->
+    <section class="contenedor resumen" aria-labelledby="en-resumen">
+      <p id="en-resumen" class="etiqueta">En resumen</p>
+      <ul>
+        @for (punto of area().resumen; track punto) {
+          <li>{{ punto }}</li>
+        }
+      </ul>
+    </section>
+
+    <!-- ── Método ── -->
+    @for (bloque of area().bloques; track bloque.titulo) {
+      <section class="bloque contenedor">
+        <h2 class="bloque__titulo">{{ bloque.titulo }}</h2>
+        <div class="bloque__cuerpo">
+          @if (bloque.introduccion) {
+            <p class="bloque__introduccion">{{ bloque.introduccion }}</p>
+          }
+          @if (bloque.tipo === 'etapas') {
+            <ol class="etapas">
+              @for (etapa of bloque.etapas; track etapa.titulo) {
+                <li>
+                  <h3>{{ etapa.titulo }}</h3>
+                  <p>{{ etapa.detalle }}</p>
+                </li>
+              }
+            </ol>
+          } @else {
+            <ul class="lista">
+              @for (punto of bloque.puntos; track punto) {
+                <li>{{ punto }}</li>
+              }
+            </ul>
+          }
+        </div>
+      </section>
+    }
+
+    <!-- ── Normas y forma de trabajo ── -->
+    <section class="bloque contenedor">
+      <h2 class="bloque__titulo">Normas de referencia</h2>
+      <div class="bloque__cuerpo">
+        <ul class="lista lista--detalle">
+          @for (norma of normas(); track norma.nombre) {
+            <li>
+              <h3>{{ norma.nombre }} <span>{{ norma.ambito }}</span></h3>
+              <p>{{ norma.uso }}</p>
+            </li>
+          }
+        </ul>
+      </div>
+    </section>
+
+    <section class="bloque contenedor">
+      <h2 class="bloque__titulo">Trabajo en equipo</h2>
+      <div class="bloque__cuerpo">
+        <ul class="lista lista--detalle">
+          @for (practica of agil; track practica.titulo) {
+            <li>
+              <h3>{{ practica.titulo }}</h3>
+              <p>{{ practica.texto }}</p>
+            </li>
+          }
+        </ul>
+      </div>
+    </section>
+
+    <!-- ── Entregables y herramientas ── -->
+    <section class="bloque contenedor">
+      <h2 class="bloque__titulo">Entregables</h2>
+      <div class="bloque__cuerpo entrega">
+        <ul class="lista">
+          @for (entregable of area().entregables; track entregable) {
+            <li>{{ entregable }}</li>
+          }
+        </ul>
+        <div>
+          <p class="etiqueta">Herramientas</p>
+          <ul class="chips">
+            @for (herramienta of area().herramientas; track herramienta) {
+              <li class="chip">{{ herramienta }}</li>
+            }
+          </ul>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- ── Casos del área ── -->
+  <section id="casos" class="seccion oscuro">
+    <div class="contenedor">
+      <header class="seccion__cabecera">
+        <span class="seccion__numero">{{ area().numero }}</span>
+        <h2 class="seccion__titulo">Casos de {{ area().nombre }}</h2>
+      </header>
+
+      <ol class="casos">
+        @for (caso of casosDelArea(); track caso.slug) {
+          <li>
+            <a [routerLink]="['/casos', caso.slug]" [fragment]="caso.ancla">
+              <span class="casos__numero">{{ caso.numero }}</span>
+              <span class="casos__cuerpo">
+                <span class="casos__titulo">{{ caso.titulo }}</span>
+                <span class="casos__enfoque">{{ caso.enfoque }}</span>
+                <span class="casos__cliente">{{ caso.cliente }} · {{ caso.periodo }}</span>
+              </span>
+              <span class="casos__flecha" aria-hidden="true">→</span>
+            </a>
+          </li>
+        }
+      </ol>
+    </div>
+  </section>
+</article>
+
+<!-- ── Otras áreas y contacto ── -->
+<section class="cierre claro">
+  <div class="contenedor cierre__fila">
+    <div>
+      <h2 class="etiqueta">Otras áreas</h2>
+      <ul class="cierre__areas">
+        @for (otra of otras(); track otra.clave) {
+          <li>
+            <a [routerLink]="['/', otra.ruta]">
+              <span class="cierre__nombre">{{ otra.nombre }}</span>
+              <span class="cierre__lema">{{ otra.lema }}</span>
+            </a>
+          </li>
+        }
+      </ul>
+    </div>
+    <div>
+      <h2 class="etiqueta">Contacto</h2>
+      <p class="cierre__texto">Para consultas y propuestas de trabajo en {{ area().nombre }}:</p>
+      <a class="boton boton--principal" [href]="escribirCorreo" target="_blank" rel="noopener noreferrer">Correo</a>
+    </div>
+  </div>
+</section>

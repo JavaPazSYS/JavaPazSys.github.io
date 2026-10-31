@@ -1,0 +1,79 @@
+<section class="errata oscuro" (pointermove)="apuntar($event)" (pointerleave)="soltar()">
+  <div class="contenedor">
+    <!-- Cabecera de página, como en una edición impresa -->
+    <p class="errata__cornisa entra" style="--orden: 0">
+      <span class="errata__sello"><img src="loto.svg" alt="" width="22" height="21">Fe de erratas</span>
+      <span>Folio 404</span>
+    </p>
+
+    <div class="errata__pliego">
+      <div class="errata__principal">
+        <!-- El número es ilustración: el cero es una brújula que no encuentra el norte -->
+        <div class="numero" aria-hidden="true">
+          <span class="numero__cifra numero__cifra--primera">4</span>
+          <svg #brujula class="numero__brujula" viewBox="0 0 100 100" [class.numero__brujula--sigue]="siguiendo()">
+            <circle class="brujula__aro" cx="50" cy="50" r="46" />
+            <g class="brujula__esfera">
+              <circle class="brujula__guia" cx="50" cy="50" r="37" />
+              @for (marca of [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]; track marca) {
+                <line class="brujula__marca" [class.brujula__marca--mayor]="marca % 3 === 0" x1="50" y1="8" x2="50"
+                  [attr.y2]="marca % 3 === 0 ? 15 : 12" [attr.transform]="'rotate(' + marca * 30 + ' 50 50)'" />
+              }
+            </g>
+            <g #aguja class="brujula__aguja">
+              <polygon class="brujula__norte" points="50,17 55.5,50 44.5,50" />
+              <polygon class="brujula__sur" points="50,83 55.5,50 44.5,50" />
+              <circle class="brujula__eje" cx="50" cy="50" r="3.2" />
+            </g>
+          </svg>
+          <span class="numero__cifra numero__cifra--ultima">4</span>
+        </div>
+
+        <h1 class="etiqueta errata__titulo entra" style="--orden: 2">Página no encontrada</h1>
+        <p class="errata__lema entra" style="--orden: 3">Esta página se extravió antes de llegar a imprenta.</p>
+        <p class="errata__texto entra" style="--orden: 4">
+          La dirección solicitada no existe o cambió de lugar. El resto de la edición sigue en su sitio.
+        </p>
+
+        @if (direccion()) {
+          <p class="errata__direccion">
+            <span>Dirección solicitada</span>
+            <code>{{ direccion() }}</code>
+          </p>
+        }
+
+        <div class="errata__acciones entra" style="--orden: 5">
+          <a class="boton boton--principal" routerLink="/">Volver a la portada</a>
+        </div>
+      </div>
+
+      <nav class="indice" aria-labelledby="indice-titulo">
+        <h2 id="indice-titulo" class="etiqueta entra" style="--orden: 3">Índice de lo que sí existe</h2>
+        <ol>
+          @for (entrada of indice(); track entrada.titulo; let i = $index) {
+            <li class="entra" [style.--orden]="4 + i">
+              <a [routerLink]="entrada.enlace" [fragment]="entrada.ancla">
+                <span class="indice__seccion">{{ entrada.seccion }}</span>
+                <span class="indice__titulo">{{ entrada.titulo }}</span>
+                <span class="indice__puntos" aria-hidden="true"></span>
+                <span class="indice__flecha" aria-hidden="true">→</span>
+              </a>
+            </li>
+          }
+        </ol>
+      </nav>
+    </div>
+  </div>
+
+  <!-- Cinta inferior: puramente decorativa -->
+  <div class="cinta" aria-hidden="true">
+    <div class="cinta__pista">
+      @for (vuelta of cinta; track $index) {
+        <span>Página no encontrada</span>
+        <img class="cinta__loto" src="loto.svg" alt="">
+        <span>Error 404</span>
+        <img class="cinta__loto" src="loto.svg" alt="">
+      }
+    </div>
+  </div>
+</section>

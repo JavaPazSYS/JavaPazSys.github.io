@@ -1,8 +1,70 @@
-<app-navbar></app-navbar>
+<a class="salto" href="#contenido">Saltar al contenido</a>
 
-<div class="main-content">
+<!-- Siempre está en el HTML; se ve solo mientras la decisión está pendiente (clase en <html>). -->
+<aside class="aviso-medicion" aria-label="Medición de visitas">
+  <div class="contenedor aviso-medicion__fila">
+    <p>
+      Este sitio cuenta sus visitas con Google Analytics únicamente si se acepta. No tiene publicidad ni otros rastreadores.
+      <a routerLink="/privacidad">Política de privacidad</a>
+    </p>
+    <div class="aviso-medicion__acciones">
+      <button type="button" class="boton boton--linea" (click)="consentimiento.decidir('rechazado')">Rechazar</button>
+      <button type="button" class="boton boton--principal" (click)="consentimiento.decidir('aceptado')">Aceptar</button>
+    </div>
+  </div>
+</aside>
+
+@if (!sinCabecera()) {
+<header class="cabecera oscuro">
+  <div class="contenedor cabecera__fila">
+    <a class="cabecera__marca" routerLink="/" (click)="menuAbierto.set(false)" aria-label="Java/SyS, Javiera Paz B.: inicio"
+      title="Java/SyS: Javiera, Java y JavaScript; SyS, de sistemas y de sis, hermana">
+      <svg class="marca__loto" aria-hidden="true" focusable="false" viewBox="1 6 62 58"><defs><linearGradient id="loto-centro" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#6b1e2b"/><stop offset="1" stop-color="#c4566f"/></linearGradient><linearGradient id="loto-int" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#7a2236"/><stop offset="1" stop-color="#c97088"/></linearGradient><linearGradient id="loto-ext" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#4a1420"/><stop offset="1" stop-color="#9a4a5e"/></linearGradient><linearGradient id="loto-hoja" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#232120"/><stop offset="1" stop-color="#55504c"/></linearGradient><linearGradient id="loto-brillo" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#c4566f"/><stop offset="1" stop-color="#c97088"/></linearGradient></defs><path d="M0 0 C-7 -3.06 -6.44 -12.24 0 -17 C6.44 -12.24 7 -3.06 0 0 Z" transform="translate(32 52) rotate(-122)" fill="url(#loto-hoja)" stroke="#160c0f" stroke-width="1.4" stroke-linejoin="round"/><path d="M0 0 C-7 -3.06 -6.44 -12.24 0 -17 C6.44 -12.24 7 -3.06 0 0 Z" transform="translate(32 52) rotate(122)" fill="url(#loto-hoja)" stroke="#160c0f" stroke-width="1.4" stroke-linejoin="round"/><path d="M0 0 C-8 -5.22 -7.36 -20.88 0 -29 C7.36 -20.88 8 -5.22 0 0 Z" transform="translate(32 52) rotate(-80)" fill="url(#loto-hoja)" stroke="#160c0f" stroke-width="1.4" stroke-linejoin="round"/><path d="M0 0 C-8 -5.22 -7.36 -20.88 0 -29 C7.36 -20.88 8 -5.22 0 0 Z" transform="translate(32 52) rotate(80)" fill="url(#loto-hoja)" stroke="#160c0f" stroke-width="1.4" stroke-linejoin="round"/><path d="M0 0 C-10.5 -5.58 -9.66 -22.32 0 -31 C9.66 -22.32 10.5 -5.58 0 0 Z" transform="translate(32 52) rotate(-56)" fill="url(#loto-ext)" stroke="#160c0f" stroke-width="1.4" stroke-linejoin="round"/><path d="M0 0 C-10.5 -5.58 -9.66 -22.32 0 -31 C9.66 -22.32 10.5 -5.58 0 0 Z" transform="translate(32 52) rotate(56)" fill="url(#loto-ext)" stroke="#160c0f" stroke-width="1.4" stroke-linejoin="round"/><path d="M0 0 C-10.5 -6.84 -9.66 -27.36 0 -38 C9.66 -27.36 10.5 -6.84 0 0 Z" transform="translate(32 52) rotate(-27)" fill="url(#loto-int)" stroke="#160c0f" stroke-width="1.4" stroke-linejoin="round"/><path d="M0 0 C-10.5 -6.84 -9.66 -27.36 0 -38 C9.66 -27.36 10.5 -6.84 0 0 Z" transform="translate(32 52) rotate(27)" fill="url(#loto-int)" stroke="#160c0f" stroke-width="1.4" stroke-linejoin="round"/><path d="M0 0 C-11.5 -7.92 -10.58 -31.68 0 -44 C10.58 -31.68 11.5 -7.92 0 0 Z" transform="translate(32 52) rotate(0)" fill="url(#loto-centro)" stroke="#160c0f" stroke-width="1.4" stroke-linejoin="round"/><path d="M0 0 C-5.5 -5.3999999999999995 -5.0600000000000005 -21.599999999999998 0 -30 C5.0600000000000005 -21.599999999999998 5.5 -5.3999999999999995 0 0 Z" transform="translate(32 52) rotate(0)" fill="url(#loto-brillo)" opacity="0.55"/></svg>
+      <span class="marca" aria-hidden="true"><span class="marca__signo">&lt;</span>Java<span class="marca__signo marca__signo--barra">/</span>S<em>y</em>S<span class="marca__signo">&gt;</span></span>
+    </a>
+
+    <button class="cabecera__boton-menu" type="button" [attr.aria-expanded]="menuAbierto()" aria-controls="menu-principal"
+      (click)="menuAbierto.set(!menuAbierto())">
+      {{ menuAbierto() ? 'Cerrar' : 'Menú' }}
+    </button>
+
+    <nav id="menu-principal" class="cabecera__menu" [class.cabecera__menu--abierto]="menuAbierto()"
+      aria-label="Navegación principal">
+      <ul>
+        @for (area of areas; track area.clave) {
+          <li>
+            <a [routerLink]="['/', area.ruta]" routerLinkActive="cabecera__actual" ariaCurrentWhenActive="page"
+              (click)="menuAbierto.set(false)">{{ area.nombre }}</a>
+          </li>
+        }
+        @for (enlace of enlaces; track enlace.ancla) {
+          <li>
+            <a routerLink="/" [fragment]="enlace.ancla" (click)="menuAbierto.set(false)">{{ enlace.texto }}</a>
+          </li>
+        }
+        <li>
+          <a class="cabecera__cv" [href]="perfil.cv[0].archivo" target="_blank" rel="noopener">CV</a>
+        </li>
+      </ul>
+    </nav>
+  </div>
+</header>
+}
+
+<main id="contenido" tabindex="-1">
   <router-outlet></router-outlet>
-</div>
+</main>
 
-<!-- Global Toasts -->
-<app-toast></app-toast>
+<footer class="pie oscuro">
+  <div class="contenedor pie__fila">
+    <p class="pie__firma"><img class="pie__loto" src="loto.svg" alt="" width="22" height="21">© {{ anio }} {{ perfil.nombre }} · {{ perfil.rol }}</p>
+    <ul class="pie__enlaces">
+      <li><a routerLink="/privacidad">Política de privacidad</a></li>
+      <li><button type="button" (click)="consentimiento.reabrir()">Preferencia de medición</button></li>
+      <li>
+        <button type="button" (click)="compartir()">{{ copiado() ? 'Enlace copiado' : 'Compartir esta página' }}</button>
+      </li>
+    </ul>
+  </div>
+</footer>
+

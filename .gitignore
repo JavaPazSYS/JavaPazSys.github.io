@@ -1,0 +1,11 @@
+
+# Portafolio de casos: privado (fichas e informes internos). Solo se publica lo que genera scripts/sincronizar-casos.mjs
+/JavaSyS/portafolio/
+
+# Material de trabajo de los casos (capturas censuradas, optimizadas, portadas y textos):
+# se usa solo en local para sincronizar; lo publicado ya está en public/casos/.
+/JavaSyS/scripts/censuradas/
+/JavaSyS/scripts/optimizadas/
+/JavaSyS/scripts/portadas/
+/JavaSyS/scripts/textos-publicos.json
+/JavaSyS/scripts/censurar-capturas.mjs

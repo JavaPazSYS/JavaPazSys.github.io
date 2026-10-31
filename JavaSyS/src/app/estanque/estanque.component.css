@@ -1,0 +1,135 @@
+/* Ocupa toda la sección de contacto, detrás del texto y sin capturar clics. */
+:host {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.estanque__escena {
+  position: absolute;
+  right: max(0px, calc((100vw - 1320px) / 2 - 2rem));
+  bottom: 0;
+  width: min(52vw, 680px);
+}
+
+.estanque__escena img,
+.estanque__rana {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.estanque__rana {
+  position: absolute;
+  inset: 0;
+  overflow: visible;
+}
+
+/* La lengua y la luciérnaga van delante del texto y de los botones (el anfitrión no crea
+   contexto de apilamiento, así que este z-index compite con el contenido de la sección). */
+.estanque__frente {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  z-index: 2;
+  pointer-events: none;
+}
+
+/* La rana: línea fina en blanco roto con relleno oscuro, como el resto de la escena. */
+.rana path,
+.rana circle {
+  stroke: var(--hueso);
+  stroke-opacity: 0.8;
+  stroke-width: 1.1;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.rana__cuerpo,
+.rana__ojo {
+  fill: #3b3836;
+  fill-opacity: 0.85;
+}
+
+.rana__linea,
+.rana__boca {
+  fill: none;
+}
+
+.rana__boca {
+  stroke-opacity: 0.55;
+}
+
+.rana__garganta {
+  fill: #6b5f5a;
+  stroke-opacity: 0.6 !important;
+  transform-box: fill-box;
+  transform-origin: 50% 20%;
+  transform: scale(0);
+}
+
+.rana__pupila {
+  fill: var(--hueso);
+  stroke: none !important;
+}
+
+.onda {
+  transform-box: fill-box;
+  transform-origin: center;
+  fill: none;
+  stroke: var(--hueso);
+  stroke-width: 1;
+  opacity: 0;
+}
+
+.lengua {
+  stroke: #c4566f;
+  stroke-width: 2.2;
+  stroke-linecap: round;
+}
+
+.lengua__punta {
+  fill: #c4566f;
+}
+
+/* La luciérnaga: un punto de luz cálida que titila. */
+.luciernaga {
+  position: absolute;
+  z-index: 2;
+  left: 0;
+  top: 0;
+  width: 6px;
+  height: 6px;
+  margin: -3px 0 0 -3px;
+  border-radius: 50%;
+  background: #f7eab2;
+  box-shadow:
+    0 0 8px 3px rgb(247 234 178 / 0.6),
+    0 0 26px 10px rgb(247 234 178 / 0.16);
+  opacity: 0;
+  transition: opacity 0.6s ease;
+  will-change: transform;
+}
+
+.luciernaga--visible {
+  opacity: 1;
+  animation: titilar 2.6s ease-in-out infinite;
+}
+
+@keyframes titilar {
+  0%, 100% { filter: brightness(1); }
+  45% { filter: brightness(0.55); }
+  60% { filter: brightness(1.15); }
+}
+
+/* En un teléfono la escena va abajo, a todo el ancho, debajo del texto. */
+@media (max-width: 720px) {
+  .estanque__escena {
+    width: 100%;
+    right: 0;
+  }
+}
+

@@ -1,0 +1,29 @@
+<!-- Escena del estanque de contacto: bambú y nenúfares (imagen fija), la rana y la luciérnaga. Decorativa. -->
+<div class="estanque__escena">
+  <img src="estanque.svg" alt="" width="640" height="440" loading="lazy">
+  <svg #lienzo class="estanque__rana" viewBox="0 0 640 440" focusable="false">
+    <!-- Onda que se abre en el agua cuando la rana cae en un nenúfar -->
+    <ellipse #onda class="onda" cx="330" cy="382" rx="10" ry="3" />
+
+    <!-- La rana, sentada en un nenúfar, de perfil. Mira a la izquierda; se da vuelta y salta por código -->
+    <g #rana class="rana" transform="translate(330 376) scale(1.05)">
+      <!-- La garganta se infla cuando traga -->
+      <ellipse #garganta class="rana__garganta" cx="-19" cy="-2" rx="6.5" ry="4.2" />
+      <path class="rana__cuerpo"
+        d="M-26 0 C-30 -6 -28 -14 -20 -17 C-14 -19 -8 -18 -2 -15 C8 -12 18 -10 24 -3 C26 0 24 2 20 2 L-22 2 Z" />
+      <circle class="rana__ojo" cx="-17" cy="-18" r="4.6" />
+      <circle #pupila class="rana__pupila" cx="-17.6" cy="-18.4" r="1.6" />
+      <path class="rana__boca" d="M-28.5 -8 C-24 -5.8 -19 -6 -14.5 -8.5" />
+      <path class="rana__linea" d="M9 -7 C20 -9 27 -2 22 2 M22 2 C15 3.2 9 3.2 4 2.2 M4 2.2 L-2 3.6 M4 2.2 L-0.5 5" />
+      <path class="rana__linea" d="M-15 -6 C-16.5 -2 -17 0.5 -19 2.6 M-19 2.6 L-24.5 3.4 M-19 2.6 L-22.5 5.2" />
+    </g>
+  </svg>
+
+  <!-- Capa delantera: la lengua va por encima del texto y de los botones (mismo dibujo, mismas coordenadas) -->
+  <svg class="estanque__frente" viewBox="0 0 640 440" focusable="false">
+    <line #lengua class="lengua" x1="300" y1="368" x2="300" y2="368" />
+    <circle #punta class="lengua__punta" cx="300" cy="368" r="0" />
+  </svg>
+</div>
+
+<span #luciernaga class="luciernaga"></span>
