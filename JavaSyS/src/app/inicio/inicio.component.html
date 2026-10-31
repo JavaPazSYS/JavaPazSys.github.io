@@ -139,7 +139,7 @@
               <p class="caso__meta">
                 <span class="caso__numero">{{ caso.numero }}</span>
                 <span>{{ caso.cliente }}</span>
-                <span>{{ caso.periodo }}</span>
+                @if (caso.periodo) {<span>{{ caso.periodo }}</span>}
               </p>
               <h3 class="caso__titulo">{{ caso.titulo }}</h3>
               <p class="caso__resumen">{{ caso.resumen }}</p>

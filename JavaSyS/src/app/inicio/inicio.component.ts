@@ -156,13 +156,16 @@ export class InicioComponent {
     }
 
     // Distancia desde el lugar final del loto hasta el centro de la pantalla visible.
+    // El centro se toma bajo la cabecera fija, para que en el teléfono la flor no quede tapada.
     const caja = loto.getBoundingClientRect();
-    const centroY = Math.min(window.innerHeight, 760) / 2;
+    const techo = document.querySelector('header')?.getBoundingClientRect().bottom ?? 0;
+    const visible = Math.min(window.innerHeight, 760) - techo;
+    const centroY = techo + visible / 2;
     const dx = window.innerWidth / 2 - (caja.left + caja.width / 2);
     const dy = centroY - (caja.top + caja.height / 2);
     const suave = 'cubic-bezier(0.22, 1, 0.36, 1)';
-    // Al centro se ve grande: cerca de la mitad del alto de la pantalla.
-    const escala = Math.max(1.2, Math.min(window.innerHeight * 0.5, 440, window.innerWidth * 0.8) / caja.height);
+    // Al centro se ve grande: cerca de la mitad del alto que queda bajo la cabecera.
+    const escala = Math.max(1.2, Math.min(visible * 0.5, 440, window.innerWidth * 0.8) / caja.height);
     // Sale del agua: parte un poco más abajo y sube mientras se abre.
     const subida = caja.height * escala * 0.16;
     const alCentro = (giro: number, bajo = 0) =>

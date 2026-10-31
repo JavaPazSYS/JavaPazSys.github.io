@@ -98,10 +98,22 @@
 /* Los pétalos rosados se pueden soltar con un clic (ver deshojar en el componente). */
 .petalo--suelto {
   cursor: pointer;
+  /* Sin el recuadro azul que el teléfono pinta al tocar, ni selección al tocar seguido. */
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+  outline: none;
 }
 
-.petalo--suelto:hover {
-  filter: brightness(1.15);
+.portada__loto {
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+}
+
+/* El brillo solo con mouse: en el teléfono quedaría pegado después de tocar. */
+@media (hover: hover) {
+  .petalo--suelto:hover {
+    filter: brightness(1.15);
+  }
 }
 
 /* Cada pétalo crece desde la base de la flor. */

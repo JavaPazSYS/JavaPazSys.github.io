@@ -126,7 +126,7 @@
               <span class="casos__cuerpo">
                 <span class="casos__titulo">{{ caso.titulo }}</span>
                 <span class="casos__enfoque">{{ caso.enfoque }}</span>
-                <span class="casos__cliente">{{ caso.cliente }} · {{ caso.periodo }}</span>
+                <span class="casos__cliente">{{ caso.cliente }}@if (caso.periodo) { · {{ caso.periodo }}}</span>
               </span>
               <span class="casos__flecha" aria-hidden="true">→</span>
             </a>

@@ -12,7 +12,7 @@ export interface CasoResumen {
   slug: string;
   titulo: string;
   cliente: string;
-  periodo: string;
+  periodo?: string;
   disciplinas: Disciplina[];
   resumen: string;
   kpi: { valor: string; etiqueta: string };
@@ -92,7 +92,7 @@ export interface Caso {
     bajada: string;
     objetivo: string;
     cliente: { nombre: string; autorizado: boolean; descripcion_anonima: string; sector: string };
-    periodo: string;
+    periodo?: string;
     rol: string;
     disciplinas: Disciplina[];
     stack: string[];

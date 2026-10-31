@@ -61,16 +61,16 @@ const LINKEDIN = (frase, clase = '') => `<!doctype html><html lang="es"><head><m
            background: radial-gradient(ellipse 620px 360px at 640px 200px, rgba(107,30,43,.30), rgba(107,30,43,0) 70%),
                        linear-gradient(90deg, #1b1918 0%, #121110 45%, #0d0c0c 100%); }
     /* Centro: lo que hace, como sumario de revista. Queda a la derecha de la foto de perfil. */
-    .oficios { position: absolute; left: 440px; top: 0; bottom: 0; display: flex; flex-direction: column; justify-content: center; gap: 13px; }
-    .oficios li { list-style: none; display: flex; align-items: baseline; gap: 16px; font-size: 19px; color: #d9d2c7; }
-    .oficios em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 22px; color: #8f8a85; width: 26px; }
-    .divisor { position: absolute; left: 892px; top: 70px; bottom: 70px; width: 1px; background: linear-gradient(#3b3836, #8b2a3c, #3b3836); }
-    .bloque { position: absolute; right: 80px; top: 0; bottom: 0; width: 580px; display: flex; flex-direction: column; justify-content: center; gap: 22px; }
+    .oficios { position: absolute; left: 440px; top: 0; bottom: 0; display: flex; flex-direction: column; justify-content: center; gap: 15px; }
+    .oficios li { list-style: none; display: flex; align-items: baseline; gap: 14px; font-size: 22px; color: #eee8de; }
+    .oficios em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 26px; color: #a8a29b; width: 28px; }
+    .divisor { position: absolute; left: 922px; top: 70px; bottom: 70px; width: 1px; background: linear-gradient(#3b3836, #8b2a3c, #3b3836); }
+    .bloque { position: absolute; right: 80px; top: 0; bottom: 0; width: 560px; display: flex; flex-direction: column; justify-content: center; gap: 22px; }
     .marca { font-size: 46px; }
-    .rol { font-size: 17px; }
+    .rol { font-size: 20px; color: #d4cec6; }
     .frase { font-size: 34px; max-width: 560px; }
-    .linea { width: 64px; height: 2px; background: #8b2a3c; }
-    .web { font-size: 17px; }
+    .linea { width: 72px; height: 3px; background: #8b2a3c; }
+    .web { font-size: 20px; color: #b0aaa3; }
     .frase.cita { font-style: italic; font-size: 38px; }
   </style></head><body>
   <ul class="oficios">
@@ -91,17 +91,25 @@ const LINKEDIN = (frase, clase = '') => `<!doctype html><html lang="es"><head><m
 </body></html>`;
 
 const navegador = await chromium.launch();
-async function dibujar(html, ancho, alto, destino) {
+/* escala 2 exporta al doble de resolución: LinkedIn achica la portada y, sin margen, el texto se ve borroso. */
+async function dibujar(html, ancho, alto, destino, escala = 1) {
   mkdirSync(dirname(destino), { recursive: true });
-  const hoja = await navegador.newPage({ viewport: { width: ancho, height: alto } });
+  const hoja = await navegador.newPage({ viewport: { width: ancho, height: alto }, deviceScaleFactor: escala });
   await hoja.setContent(html, { waitUntil: 'networkidle' });
   await hoja.evaluate(() => document.fonts.ready);
+  // La lista del centro no debe cruzar el divisor.
+  const cruce = await hoja.evaluate(() => {
+    const lista = document.querySelector('.oficios');
+    const divisor = document.querySelector('.divisor');
+    return lista && divisor ? lista.getBoundingClientRect().right - divisor.getBoundingClientRect().left : null;
+  });
+  if (cruce !== null && cruce > -24) console.warn(`  ¡la lista queda a ${-cruce}px del divisor!`);
   await hoja.screenshot({ path: destino });
   await hoja.close();
-  console.log(`${ancho} × ${alto} → ${destino.slice(raiz.length + 1)}`);
+  console.log(`${ancho * escala} × ${alto * escala} → ${destino.slice(raiz.length + 1)}`);
 }
 await dibujar(COMPARTIR, 1200, 630, join(raiz, 'public', 'compartir.png'));
-await dibujar(LINKEDIN('Diseño interfaces, las implemento y verifico su calidad con evidencia.'), 1584, 396, join(raiz, 'marca', 'linkedin-banner.png'));
+await dibujar(LINKEDIN('Diseño interfaces, las implemento y verifico su calidad con evidencia.'), 1584, 396, join(raiz, 'marca', 'linkedin-banner.png'), 2);
 // Variante con su frase de marca.
-await dibujar(LINKEDIN('«Entre arte y lógica nace la identidad»', 'cita'), 1584, 396, join(raiz, 'marca', 'linkedin-banner-frase.png'));
+await dibujar(LINKEDIN('«Entre arte y lógica nace la identidad»', 'cita'), 1584, 396, join(raiz, 'marca', 'linkedin-banner-frase.png'), 2);
 await navegador.close();

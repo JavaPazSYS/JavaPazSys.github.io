@@ -100,6 +100,8 @@ function publicable(caso) {
   caso.contexto.requerimientos = caso.contexto.requerimientos
     .filter((r) => r.estado !== 'no')
     .map(({ texto, estado }) => ({ texto, estado }));
+  // Sin fechas de proyecto: el período queda solo en el portafolio privado.
+  delete caso.meta.periodo;
   delete caso.contexto.restricciones;
   delete caso.contexto.fuera_de_alcance;
 
